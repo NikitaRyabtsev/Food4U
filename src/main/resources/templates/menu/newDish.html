@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Добавление</title>
+    </head>
+    <body>
+        <form th:action="@{/menu/new}" th:method="POST" th:object="${dish}">
+            <label for="name">Введите название</label>
+            <input type="text" th:field="*{name}" id="name">
+            <br/>
+            <label for="type">Введите тип</label>
+            <input type="text" th:field="*{type}" id="type">
+            <br/>
+            <label for="price">Введите цену</label>
+            <input type="number" th:field="*{price}" id="price">
+            <br/>
+            <label for="name">Введите калории</label>
+            <input type="number" th:field="*{calories}" id="calories">
+            <br/>
+            <label for="isAvailable">Есть ли он в наличии</label>
+            <input type="checkbox" th:checked="*{isAvailable}" value="true" id="isAvailable">
+            <br/>
+            <label for="weight">Введите вес</label>
+            <input type="number" th:field="*{weight}" id="weight">
+            <br/>
+            <input type="submit" value="создать">
+        </form>
+    </body>
+</html>
