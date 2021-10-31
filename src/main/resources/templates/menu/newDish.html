@@ -5,6 +5,7 @@
         <title>Добавление</title>
     </head>
     <body>
+        <h3>Добавить новое блюдо</h3>
         <form th:action="@{/menu/new}" th:method="POST" th:object="${dish}">
             <label for="name">Введите название</label>
             <input type="text" th:field="*{name}" id="name">
@@ -15,7 +16,7 @@
             <label for="price">Введите цену</label>
             <input type="number" th:field="*{price}" id="price">
             <br/>
-            <label for="name">Введите калории</label>
+            <label for="calories">Введите калории</label>
             <input type="number" th:field="*{calories}" id="calories">
             <br/>
             <label for="isAvailable">Есть ли он в наличии</label>
@@ -24,7 +25,7 @@
             <label for="weight">Введите вес</label>
             <input type="number" th:field="*{weight}" id="weight">
             <br/>
-            <input type="submit" value="создать">
+            <input type="submit" value="Создать">
         </form>
     </body>
 </html>

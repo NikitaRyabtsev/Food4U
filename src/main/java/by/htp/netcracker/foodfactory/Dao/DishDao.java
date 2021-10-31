@@ -9,8 +9,6 @@ public interface DishDao {
 
     List<Dish> showDishes() throws DaoException;
 
-    void addMenuElement(Dish dish) throws DaoException;
-
     void addDish(Dish dish) throws DaoException;
 
     Dish showDishById(int id) throws DaoException;

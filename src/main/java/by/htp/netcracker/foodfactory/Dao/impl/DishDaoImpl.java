@@ -29,13 +29,6 @@ public class DishDaoImpl implements DishDao {
     }
 
     @Override
-    public void addMenuElement(Dish dish) throws DaoException {
-        dish.setId(DISH_COUNT++);
-        dish.setId(DISH_COUNT++);
-        dishes.add(dish);
-    }
-
-    @Override
     public void addDish(Dish dish) throws DaoException {
         dish.setId(DISH_COUNT++);
         dishes.add(dish);
