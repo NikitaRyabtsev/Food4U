@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <style>
+
+        .nav {
+            /*  ширна произвольная, не стесняйтесь экспериментировать */
+            width: 260px;
+            min-width: 260px;
+            /* фиксируем и выставляем высоту панели на максимум */
+            height: 100%;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            margin: 0;
+            /* сдвигаем (прячем) панель относительно левого края страницы */
+            left: -260px;
+            /* внутренние отступы */
+            padding: 15px 20px;
+            /* плавный переход смещения панели */
+            -webkit-transition: left 0.3s;
+            -moz-transition: left 0.3s;
+            transition: left 0.3s;
+            /* определяем цвет фона панели */
+            background: #16a085;
+            /* поверх других элементов */
+            z-index: 2000;
+        }
+
+
+        /**
+         * Кнопка переключения панели
+         * тег <label>
+         */
+
+        .nav-toggle {
+            /* абсолютно позиционируем */
+            position: absolute;
+            /* относительно левого края панели */
+            left: 320px;
+            /* отступ от верхнего края панели */
+            top: 1em;
+            /* внутренние отступы */
+            padding: 0.5em;
+            /* определяем цвет фона переключателя
+             * чаще вчего в соответствии с цветом фона панели
+            */
+            background: inherit;
+            /* цвет текста */
+            color: #dadada;
+            /* вид курсора */
+            cursor: pointer;
+            /* размер шрифта */
+            font-size: 1.2em;
+            line-height: 1;
+            /* всегда поверх других элементов страницы */
+            z-index: 2001;
+            /* анимируем цвет текста при наведении */
+            -webkit-transition: color .25s ease-in-out;
+            -moz-transition: color .25s ease-in-out;
+            transition: color .25s ease-in-out;
+        }
+
+        .nav-toggle:after {
+            content: '\2630';
+            text-decoration: none;
+        }
+
+        .nav-toggle:hover {
+            color: #f4f4f4;
+        }
+
+
+
+        [id='nav-toggle'] {
+            position: absolute;
+            display: none;
+        }
+
+
+        [id='nav-toggle']:checked ~ .nav > .nav-toggle {
+            left: auto;
+            right: 2px;
+            top: 1em;
+        }
+
+
+        [id='nav-toggle']:checked ~ .nav {
+            left: 0;
+            box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        [id='nav-toggle']:checked ~ main > article {
+            -webkit-transform: translateX(320px);
+            -moz-transform: translateX(320px);
+            transform: translateX(320px);
+        }
+
+
+        [id='nav-toggle']:checked ~ .nav > .nav-toggle:after {
+            content: '\2715';
+        }
+
+
+
+        .nav h2 {
+            width: 90%;
+            padding: 0;
+            margin: 10px 0;
+            text-align: center;
+            text-shadow: rgba(255, 255, 255, .1) -1px -1px 1px, rgba(0, 0, 0, .5) 1px 1px 1px;
+            font-size: 1.3em;
+            line-height: 1.3em;
+            opacity: 0;
+            transform: scale(0.1, 0.1);
+            -ms-transform: scale(0.1, 0.1);
+            -moz-transform: scale(0.1, 0.1);
+            -webkit-transform: scale(0.1, 0.1);
+            transform-origin: 0% 0%;
+            -ms-transform-origin: 0% 0%;
+            -moz-transform-origin: 0% 0%;
+            -webkit-transform-origin: 0% 0%;
+            transition: opacity 0.8s, transform 0.8s;
+            -ms-transition: opacity 0.8s, -ms-transform 0.8s;
+            -moz-transition: opacity 0.8s, -moz-transform 0.8s;
+            -webkit-transition: opacity 0.8s, -webkit-transform 0.8s;
+        }
+
+        .nav h2 a {
+            color: #dadada;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        [id='nav-toggle']:checked ~ .nav h2 {
+            opacity: 1;
+            transform: scale(1, 1);
+            -ms-transform: scale(1, 1);
+            -moz-transform: scale(1, 1);
+            -webkit-transform: scale(1, 1);
+        }
+
+
+        .nav > ul {
+            display: block;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav > ul > li {
+            line-height: 2.5;
+            opacity: 0;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            -webkit-transition: opacity .5s .1s, -webkit-transform .5s .1s;
+            -moz-transition: opacity .5s .1s, -moz-transform .5s .1s;
+            -ms-transition: opacity .5s .1s, -ms-transform .5s .1s;
+            transition: opacity .5s .1s, transform .5s .1s;
+        }
+
+        [id='nav-toggle']:checked ~ .nav > ul > li {
+            opacity: 1;
+            -webkit-transform: translateX(0);
+            -moz-transform: translateX(0);
+            -ms-transform: translateX(0);
+            transform: translateX(0);
+        }
+
+
+        .nav > ul > li:nth-child(2) {
+            -webkit-transition: opacity .5s .2s, -webkit-transform .5s .2s;
+            transition: opacity .5s .2s, transform .5s .2s;
+        }
+
+        .nav > ul > li:nth-child(3) {
+            -webkit-transition: opacity .5s .3s, -webkit-transform .5s .3s;
+            transition: opacity .5s .3s, transform .5s .3s;
+        }
+
+        .nav > ul > li:nth-child(4) {
+            -webkit-transition: opacity .5s .4s, -webkit-transform .5s .4s;
+            transition: opacity .5s .4s, transform .5s .4s;
+        }
+
+        .nav > ul > li:nth-child(5) {
+            -webkit-transition: opacity .5s .5s, -webkit-transform .5s .5s;
+            transition: opacity .5s .5s, transform .5s .5s;
+        }
+
+        .nav > ul > li:nth-child(6) {
+            -webkit-transition: opacity .5s .6s, -webkit-transform .5s .6s;
+            transition: opacity .5s .6s, transform .5s .6s;
+        }
+
+        .nav > ul > li:nth-child(7) {
+            -webkit-transition: opacity .5s .7s, -webkit-transform .5s .7s;
+            transition: opacity .5s .7s, transform .5s .7s;
+        }
+
+        .nav > ul > li > a {
+            display: inline-block;
+            position: relative;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.2em;
+            color: #dadada;
+            width: 100%;
+            text-decoration: none;
+
+            -webkit-transition: color .5s ease, padding .5s ease;
+            -moz-transition: color .5s ease, padding .5s ease;
+            transition: color .5s ease, padding .5s ease;
+        }
+
+        .nav > ul > li > a:hover,
+        .nav > ul > li > a:focus {
+            color: white;
+            padding-left: 15px;
+        }
+
+        .nav > ul > li > a:before {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            width: 100%;
+            -webkit-transition: width 0s ease;
+            transition: width 0s ease;
+        }
+
+        .nav > ul > li > a:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+            width: 100%;
+            background: #3bc1a0;
+            -webkit-transition: width .5s ease;
+            transition: width .5s ease;
+        }
+
+
+        .nav > ul > li > a:hover:before {
+            width: 0%;
+            background: #3bc1a0;
+            -webkit-transition: width .5s ease;
+            transition: width .5s ease;
+        }
+
+        .nav > ul > li > a:hover:after {
+            width: 0%;
+            background: transparent;
+            -webkit-transition: width 0s ease;
+            transition: width 0s ease;
+        }
+
+    </style>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300&subset=latin,cyrillic);
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 100%;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            color: #333;
+            font: 1em 'Open Sans', sans-serif;
+            background-color: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar {
+            width: .65em;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: rgba(217, 217, 217, 0.75);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(170, 170, 170, 0.6);
+            border-radius: 5px;
+            box-shadow: inset 0.05em 0.05em 0 rgba(0, 0, 0, 0.1), inset 0 -0.05em 0 rgba(0, 0, 0, 0.07);
+        }
+
+        main {
+            max-width: 1300px;
+            margin: 0 auto
+        }
+
+        article {
+            margin: 0 1em;
+            padding: 0 22px;
+            -webkit-transition: -webkit-transform .3s;
+            -moz-transition: -moz-transform .3s;
+            transition: transform .3s;
+        }
+
+        header {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        footer {
+            font-size: 14px;
+            text-align: center
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        hr {
+            margin: 22px 0;
+            height: 1px;
+            border: 0;
+            background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            background-image: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        }
+
+        h1,
+        h2 {
+            margin-bottom: 22px;
+            color: #191919;
+            font-weight: 300;
+        }
+
+        h1 {
+            font-size: 32px;
+            line-height: 32px;
+        }
+
+        h2 {
+            color: #565d66;
+            font-size: 26px;
+            line-height: 26px;
+        }
+
+        a {
+            color: #006b05;
+            text-decoration: none;
+        }
+
+        .btn {
+            -webkit-border-radius: 10em;
+            -moz-border-radius: 10em;
+            -ms-border-radius: 10em;
+            -o-border-radius: 10em;
+            border-radius: 10em;
+            border: 0;
+            color: #fff !important;
+            margin: 6px;
+            white-space: normal !important;
+            word-wrap: break-word;
+            display: inline-block;
+            line-height: 1.25;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            font-weight: 400;
+            -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+            -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+        }
+
+        .btn {
+            -webkit-transition: box-shadow .2s ease-out;
+            -moz-transition: box-shadow .2s ease-out;
+            -ms-transition: box-shadow .2s ease-out;
+            transition: box-shadow .2s ease-out;
+        }
+
+        .btn:hover {
+            -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+            -moz-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+            box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+        }
+
+        .btn-primary {
+            border: 2px solid #2BBBAD;
+            color: #00695c !important;
+            background-color: transparent;
+        }
+
+        .btn-secondary {
+            border: 2px solid #00C851;
+            color: #007E33 !important;
+            background-color: transparent;
+        }
+    </style>
+
+
+    <style>
+        .header {
+            top: 00px;
+            height: 10vh;
+            width: 100%;
+            background: #16a085;
+            border: 2px solid #16a085;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .container_header {
+            width: 100%;
+            max-width: 1024px;
+            padding: 15px;
+            margin: 0 auto;
+
+            -webkit-transition: color .25s ease-in-out;
+            -moz-transition: color .25s ease-in-out;
+            transition: color .25s ease-in-out;
+        }
+        .logo_header {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 170%;
+            color: #f3fffd;
+            float: left;
+        }
+        nav_header {
+            float: right;
+        }
+        nav_header ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        nav_header li {
+            margin-left: 1em;
+            display: inline-block; /*один из способов разместить элементы в строку*/
+        }
+        nav_header a {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 150%;
+            color:#f3fffd;
+            text-decoration: none;
+            line-height: 38px;
+        }
+
+
+    </style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная</title>
+    <link rel="shortcut icon" href="../css/images/favicon.ico" th:href="@{../css/images/favicon.ico}"/>
+    <link rel="stylesheet" href="/templates/css/nav/stylenav.css">
+    <link rel="stylesheet" href="/templates/css/nav/leftnav.css" type="">
+    <link rel="import" href="header.html">
+
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+</head>
+<body>
+<header class="header">
+  <div class="container_header">
+       <a href="/menu/main" class="logo_header">Главная</a>
+        <nav_header>
+                <ul>
+                   <li><a href="">О нас</a></li>
+                   <li><a href="">Контакты</a></li>
+                </ul>
+        </nav_header>
+    </div>
+</header>
+
+<input type="checkbox" id="nav-toggle" hidden>
+
+<nav class="nav">
+
+    <label for="nav-toggle" class="nav-toggle" onclick></label>
+
+    <h2 class="logo">
+        <a href="/menu/main">Food4U</a>
+    </h2>
+    <ul>
+        <li><a href="/menu/main">Главная</a>
+        <li><a href="/menu/dishes">Меню</a>
+        <li><a href="/ingredients">Ингредиенты</a>
+    </ul>
+</nav>
+
+<main role="main">
+    <article>
+        <header>
+            <h1 class="header__title">Food4U</h1>
+            <h2>Сервис готовых блюд</h2>
+        </header>
+        <section>
+            <p style="text-align: center;">
+                <a href="/menu/dishes" class="btn btn-primary">Меню</a>
+                <a href="/ingredients" class="btn btn-secondary">Ингредиенты</a>
+            <p><img src="/templates/css/images/ananas.png" alt=""></p>
+        </section>
+        <hr>
+        <footer>
+            <strong>Food4U</strong> разработал <a>Никита Рябцев</a>. Исходный код
+            лицензирован.
+            <a href="http://opensource.org/licenses/mit-license.php">Лицензия</a>. Содержимое сайта защищено
+        </footer>
+    </article>
+</main>
+</body>
+</html>

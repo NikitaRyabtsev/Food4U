@@ -101,4 +101,14 @@ public class DishesController {
         }
         return "redirect:/menu/dishes";
     }
+
+    @GetMapping("/main")
+    public String isAva(Model model) {
+        try {
+            model.addAttribute("dishes", dishDao.isDishesWithIngredientsAvailable());
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return "viewhtml/main";
+    }
 }
