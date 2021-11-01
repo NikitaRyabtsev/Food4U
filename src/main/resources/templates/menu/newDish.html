@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="UTF-8">
-        <title>Добавление</title>
+        <title>Добавление блюда с ингредиентами</title>
     </head>
     <body>
         <h3>Добавить новое блюдо</h3>
-        <form th:action="@{/menu/new}" th:method="POST" th:object="${dish}">
+        <form th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}">
             <label for="name">Введите название</label>
             <input type="text" th:field="*{name}" id="name">
             <br/>
@@ -27,5 +27,8 @@
             <br/>
             <input type="submit" value="Создать">
         </form>
+        <a href="/menu/newIngredientInDish">
+            <button type="button">Добавить новый ингредиент</button>>
+        </a>
     </body>
 </html>

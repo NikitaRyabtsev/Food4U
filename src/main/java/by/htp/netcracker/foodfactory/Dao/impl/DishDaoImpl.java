@@ -3,79 +3,110 @@ package by.htp.netcracker.foodfactory.Dao.impl;
 import by.htp.netcracker.foodfactory.Dao.DaoException;
 import by.htp.netcracker.foodfactory.Dao.DishDao;
 import by.htp.netcracker.foodfactory.Model.Dish;
-
+import by.htp.netcracker.foodfactory.Model.Ingredient;
+import by.htp.netcracker.foodfactory.TYPE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class DishDaoImpl implements DishDao {
-
+    IngredientDaoImpl ingredientDao = new IngredientDaoImpl();
     public static int DISH_COUNT;
     private final List<Dish> dishes;
+    private final Map<Dish, List<Ingredient>> dishMap;
 
     {
         dishes = new ArrayList<>();
-        dishes.add(new Dish(++DISH_COUNT, "Корась", "Рыбный продукт", 100, 150, 200, true));
-        dishes.add(new Dish(++DISH_COUNT, "Филе", "Мясной продукт", 130, 350, 200, true));
-        dishes.add(new Dish(++DISH_COUNT, "Бутерброд", "Закуска", 20, 70, 300, true));
-        dishes.add(new Dish(++DISH_COUNT, "Икра", "Рыбный продукт", 1000, 10, 250, false));
-        dishes.add(new Dish(++DISH_COUNT, "Карп", "Рыбный продукт", 130, 60, 100, true));
-        dishes.add(new Dish(++DISH_COUNT, "Окунь", "Рыбный продукт", 100, 150, 250, false));
-
+        dishes.add(new Dish(++DISH_COUNT, "Жаркое", String.valueOf(TYPE.SEAFOOD), 100, 150, 200, true));
+        dishes.add(new Dish(++DISH_COUNT, "Борщ", String.valueOf(TYPE.MEAT), 130, 350, 200, true));
+        dishes.add(new Dish(++DISH_COUNT, "Бутерброд", String.valueOf(TYPE.SNACK), 20, 70, 300, true));
+        dishes.add(new Dish(++DISH_COUNT, "Блинчики", String.valueOf(TYPE.SEAFOOD), 1000, 10, 250, false));
+        dishes.add(new Dish(++DISH_COUNT, "Торт", String.valueOf(TYPE.SEAFOOD), 130, 60, 100, true));
+        dishes.add(new Dish(++DISH_COUNT, "Компот", String.valueOf(TYPE.SEAFOOD), 100, 150, 250, false));
     }
 
-    public List<Dish> showDishes() throws DaoException {
-        return dishes;
+    {
+        dishMap = new ConcurrentHashMap<>();
+
+        dishMap.put(dishes.get(0), ingredientDao.getIngredients());
+        dishMap.put(dishes.get(1), ingredientDao.getIngredients());
+        dishMap.put(dishes.get(3), ingredientDao.getIngredients());
+        dishMap.put(dishes.get(4), ingredientDao.getIngredients());
+        dishMap.put(dishes.get(5), ingredientDao.getIngredients());
+    }
+
+
+    @Override
+    public Map<Dish, List<Ingredient>> showDishWithIngredients() throws DaoException {
+        return dishMap;
     }
 
     @Override
-    public void addDish(Dish dish) throws DaoException {
+    public void addDishWithIngredients(Dish dish) throws DaoException {
         dish.setId(DISH_COUNT++);
-        dishes.add(dish);
+        dishMap.put(dish, ingredientDao.getIngredients());
     }
 
     @Override
-    public Dish showDishById(int id) throws DaoException {
-        for (Dish dish : dishes) {
-            if (dish.getId() == id) {
-                return dish;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Dish> isDishAvailable() throws DaoException {
-
+    public void addIngredientsInDish(Ingredient ingredient) throws DaoException {
         for (int i = 0; i < dishes.size(); i++) {
-            if (dishes.get(i).isAvailable() == true) {
-                return dishes;
+            dishMap.put(dishes.get(i), init(ingredient));
+        }
+    }
+
+    @Override
+    public Map.Entry<Dish, List<Ingredient>> showDishWithIngredientsById(int id) throws DaoException {
+        for (Map.Entry<Dish, List<Ingredient>> key : dishMap.entrySet()) {
+            if (key.getKey().getId() == id) {
+                return key;
             }
         }
         return null;
     }
 
     @Override
-    public void updateDish(Dish dish) throws DaoException {
-        for(int i = 0 ; i< dishes.size(); i ++){
-            if(dishes.get(i).getId() == dish.getId()){
-                dishes.set(i,dish);
-                return;
-            }
-        }
-    }
-
-    @Override
-    public void deleteDish(int id) throws DaoException {
+    public void deleteDishWithIngredients(int id) throws DaoException {
         if (id == 0) {
             throw new NullPointerException("DishID is not specified");
         }
-        for (int i = 0; i < dishes.size(); i++) {
-            if (dishes.get(i).getId() == id) {
-                dishes.remove(i);
+        for (Dish dish : dishMap.keySet()) {
+            if (dish.getId() == id) {
+                dishMap.remove(dish);
             }
         }
-
-
     }
+
+    @Override
+    public Map<Dish, List<Ingredient>> isDishesWithIngredientsAvailable() throws DaoException {
+        for (Dish dish : dishMap.keySet()) {
+            if (dish.isAvailable() == true) {
+                return dishMap;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateDishWithIngredients(Dish dish) throws DaoException {
+        for (Dish dishes : dishMap.keySet()) {
+            if (dishes.getId() == dish.getId()) {
+                dishMap.remove(dish);
+                dishMap.put(dish,ingredientDao.getIngredients());
+            }
+        }
+    }
+
+
+    public List<Ingredient> init(Ingredient ingredient) {
+        List<Ingredient> ingredientList = ingredientDao.getIngredients();
+
+        ingredient.setId(IngredientDaoImpl.INGREDIENT_COUNT++);
+        ingredientList.add(ingredient);
+        return ingredientList;
+    }
+
 }

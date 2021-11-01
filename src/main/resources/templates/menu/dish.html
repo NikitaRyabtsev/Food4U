@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Блюдо</title>
+    </head>
+    <body>
+        <h3>Подробная информация о блюде:</h3>
+        <div th:each="dish:${dishes}">
+           <h4><a th:text="${dish.key.name} + ':'"></a></h4>
+            <table>
+                <tr th:each="dishValue : ${dish.value}">
+                    <td th:text="${dishValue.name}"></td>
+                    <td th:text="${dishValue.calories}"></td>
+                    <td th:text="${dishValue.weight}"></td>
+                    <td th:text="${dishValue.proteins}"></td>
+                    <td th:text="${dishValue.fats}"></td>
+                    <td th:text="${dishValue.carbohydrates}"></td>
+                </tr>
+            </table>
+        </div>
+        <a th:href="@{/menu/{id}/edit(id = ${dishes.key.getId()})}">
+            <button type="button">Редактировать</button>
+        </a>
+        <a href=/menu/newIngredient>
+            <button type="button">Добавить ингредиент</button>
+        </a>
+        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.key.getId()}) }">
+            <input type="submit" value="Удалить блюдо">
+        </form>
+    </body>
+</html>
