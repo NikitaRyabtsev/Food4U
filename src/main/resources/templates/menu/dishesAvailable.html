@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>В наличии</title>
+</head>
+<body>
+    <h3>В наличии:</h3>
+    <div th:each="dish:${dishes}" >
+        <div th:block th:if="${dish.isAvailable} == true">
+            <a th:text="${dish.name} +' , '+  ${dish.type} + ' , ' + ${dish.price}"></a>
+        </div>
+    </div>
+</body>
+</html>

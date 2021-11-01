@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Меню</title>
+    </head>
+    <body>
+        <h3>Меню</h3>
+        <div th:each="dish:${dishes}" >
+            <a th:href ="@{menu/{id}(id=${dish.getId()})}" th:text="${dish.name}"></a>
+        </div>
+        <div>
+            <a th:href="@{menu/isAvailable}">Просмотреть блюда в наличии</a>
+        </div>
+        <a href="menu/new">
+            <button type="button">Добавить новое блюдо</button>
+        </a>
+        <a href="/ingredients">
+            <button type="button">Просмотреть ингредиенты</button>
+        </a>
+
+    </body>
+</html>
