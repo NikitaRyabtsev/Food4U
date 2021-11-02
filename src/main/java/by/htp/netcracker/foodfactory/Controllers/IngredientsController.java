@@ -75,7 +75,8 @@ public class IngredientsController {
             e.printStackTrace();
         }
         return "redirect:/ingredients";
-
     }
+
+
 
 }

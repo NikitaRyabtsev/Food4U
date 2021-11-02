@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Dish {
 
+
     private int id;
     private String name;
     private String type;

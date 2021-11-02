@@ -1,23 +1,120 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
+        <link rel="icon" th:href="@{/images/favicon.ico}">
+        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+        <link rel="stylesheet" th:href="@{/popup/style.css}">
+        <link rel="stylesheet" th:href="@{/css/block.css}">
         <meta charset="UTF-8">
-        <title>Меню</title>
+        <title>Блюда</title>
+
     </head>
-    <body>
+    <body role="main" style="text-align: center">
+        <header class="header_header">
+            <div class="container_header">
+                <a href="/menu/main" class="logo_header">
+                    <img src="/images/Food4Upng.png" height="120" width="120">
+                </a>
+                <nav_header>
+                </nav_header>
+            </div>
+        </header>
+
+        <input type="checkbox" id="nav-toggle" hidden>
+
+        <nav class="nav">
+
+            <label for="nav-toggle" class="nav-toggle" onclick></label>
+
+            <h2 class="logo">
+                <a href="/menu/main">Food4U</a>
+            </h2>
+            <ul>
+                <li>
+                    <a href="/menu/main">Главная</a>
+                <li>
+                    <a href="/menu/dishes">Меню</a>
+                <li>
+                    <a href="/ingredients">Ингредиенты</a>
+            </ul>
+        </nav>
         <h3>Меню</h3>
-        <div th:each="dish:${dishes}" >
-            <a th:href ="@{menu/{id}(id=${dish.getId()})}" th:text="${dish.name}"></a>
+        <div th:each="dish:${dishes}">
+            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
+               th:text=" ${dish.key.id} + ', ' + ${dish.key.name} "></a>
         </div>
-        <div>
-            <a th:href="@{menu/isAvailable}">Просмотреть блюда в наличии</a>
-        </div>
-        <a href="menu/new">
+        <a href="/menu/newDish">
             <button type="button">Добавить новое блюдо</button>
         </a>
-        <a href="/ingredients">
-            <button type="button">Просмотреть ингредиенты</button>
-        </a>
+        <div>
+            <a th:href="@{/menu/isAvailable}">
+                <button type="button">Просмотреть блюда в наличии</button>
+            </a>
+        </div>
+        <div>
+            <a th:href="@{/ingredients}">
+                <button type="button">Просмотреть ингредиенты</button>
+            </a>
+        </div>
+        </div>
 
+        <div class="container_block">
+            <div class="row_block">
+                    <section class="market">
+                        <div class="market__body">
+                            <div class="market__info">
+                                <button class="market__btn">Make order</button>
+                            </div>
+                        </div>
+                    </section>
+            </div>
+        </div>
+<!--        <section class="market">-->
+<!--            <div class="market__body">-->
+<!--                <div class="market__info">-->
+<!--                    <h1 class="market__title">The best shop ever</h1>-->
+<!--                    <p class="market__descr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos placeat-->
+<!--                        tenetur, corrupti impedit est soluta. Sunt vitae pariatur quibusdam maxime, rem iure? Natus-->
+<!--                        iure-->
+<!--                        ipsam hic tempora, unde rerum labore!-->
+<!--                    </p>-->
+<!--                    <button class="market__btn">Make order</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+        <div class="scroll-fix">
+        <div class="market-modal-page" style="overflow-y: auto;">
+            <div class="market-modal-page__body">
+                <div class="market-modal-page__top">
+                    <p class="market-modal-page__title">Make order</p>
+                    <img class="market-modal-page__icon-close" th:href="@{/css/images/icon-close.svg}"
+                         alt="close">
+                </div>
+                <div th:each="dish:${dishes}" style="text-align: center;">
+                    <h4><a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}" th:text="${dish.key.name} + ':'" ></a></h4>
+                    <table style="text-align: center;">
+                        <tr th:each="dishValue : ${dish.value}">
+                            <td th:text="${dishValue.name}"></td>
+                            <td th:text="${dishValue.calories}"></td>
+                            <td th:text="${dishValue.weight}"></td>
+                            <td th:text="${dishValue.proteins}"></td>
+                            <td th:text="${dishValue.fats}"></td>
+                            <td th:text="${dishValue.carbohydrates}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script>
+            document.querySelector('.market__btn').onclick = function () {
+                document.querySelector('.market-modal-page').classList.toggle('_active');
+            }
+            document.querySelector('.market-modal-page__icon-close').onclick = function () {
+                document.querySelector('.market-modal-page').classList.toggle('_active');
+            }
+        </script>
     </body>
 </html>

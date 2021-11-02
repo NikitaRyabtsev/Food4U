@@ -8,11 +8,9 @@ public interface IngredientDao {
 
     List<Ingredient> showIngredients() throws DaoException;
 
-    void addIngredientInDish(Ingredient ingredient) throws DaoException;
-
-    void deleteIngredientFromDish(int id) throws DaoException;
-
     Ingredient showIngredientById(int id) throws DaoException;
+
+
 
     //Админ
     void deleteIngredient(int id) throws DaoException;

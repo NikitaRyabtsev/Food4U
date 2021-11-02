@@ -7,8 +7,9 @@
 <body>
     <h3>В наличии:</h3>
     <div th:each="dish:${dishes}" >
-        <div th:block th:if="${dish.isAvailable} == true">
-            <a th:text="${dish.name} +' , '+  ${dish.type} + ' , ' + ${dish.price}"></a>
+        <div th:block th:if="${dish.key.isAvailable} == true">
+            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
+               th:text="${dish.key.name} +' , '+  ${dish.key.type} + ' , ' + ${dish.key.price}"></a>
         </div>
     </div>
 </body>
