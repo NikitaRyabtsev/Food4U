@@ -6,6 +6,10 @@
     width: 20%;
     float:left;
 }
+.col-1-1{
+    width: 10%;
+    float: left;
+}
 .container_block :after, .row:after {
     content: "";
     display: table;

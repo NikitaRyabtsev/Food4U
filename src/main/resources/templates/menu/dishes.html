@@ -7,19 +7,14 @@
         <link rel="stylesheet" th:href="@{/css/header.css}">
         <link rel="stylesheet" th:href="@{/popup/style.css}">
         <link rel="stylesheet" th:href="@{/css/block.css}">
+        <link th:href="@{/images/icon-close.svg}">
         <meta charset="UTF-8">
         <title>Блюда</title>
 
     </head>
     <body role="main" style="text-align: center">
         <header class="header_header">
-            <div class="container_header">
-                <a href="/menu/main" class="logo_header">
-                    <img src="/images/Food4Upng.png" height="120" width="120">
-                </a>
-                <nav_header>
-                </nav_header>
-            </div>
+            <div th:insert="/viewhtml/header :: header"></div>
         </header>
 
         <input type="checkbox" id="nav-toggle" hidden>
@@ -62,51 +57,124 @@
 
         <div class="container_block">
             <div class="row_block">
-                    <section class="market">
-                        <div class="market__body">
-                            <div class="market__info">
-                                <button class="market__btn">Make order</button>
-                            </div>
+                <section class="market">
+                    <div class="market__body">
+                        <div class="market__info">
+                            <button class="market__btn">Make order</button>
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            1
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            11
+                            <br/>
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            <br/>
+                            1
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            <br/>v
+                            11
+                            <br/>
+                            11
+                            <br/>
+                            1v
+                            1
+                            <br/>
+                            1
+                            <br/>
+                            <br/>
+                            1
+                            <br/>
+                            1<br/>v
+                            1
+                            <br/>
+                            <br/>vvvvv
+                            <br/>
+                            <br/>v
+
+
+                            1
+                            1
+                            1
+
+                            1
+
+                            1
+                            1
+                            1
+                            1
+                            1
+
+                            1
                         </div>
-                    </section>
+                    </div>
+                </section>
             </div>
         </div>
-<!--        <section class="market">-->
-<!--            <div class="market__body">-->
-<!--                <div class="market__info">-->
-<!--                    <h1 class="market__title">The best shop ever</h1>-->
-<!--                    <p class="market__descr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos placeat-->
-<!--                        tenetur, corrupti impedit est soluta. Sunt vitae pariatur quibusdam maxime, rem iure? Natus-->
-<!--                        iure-->
-<!--                        ipsam hic tempora, unde rerum labore!-->
-<!--                    </p>-->
-<!--                    <button class="market__btn">Make order</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
+        <!--        <section class="market">-->
+        <!--            <div class="market__body">-->
+        <!--                <div class="market__info">-->
+        <!--                    <h1 class="market__title">The best shop ever</h1>-->
+        <!--                    <p class="market__descr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos placeat-->
+        <!--                        tenetur, corrupti impedit est soluta. Sunt vitae pariatur quibusdam maxime, rem iure? Natus-->
+        <!--                        iure-->
+        <!--                        ipsam hic tempora, unde rerum labore!-->
+        <!--                    </p>-->
+        <!--                    <button class="market__btn">Make order</button>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </section>-->
         <div class="scroll-fix">
-        <div class="market-modal-page" style="overflow-y: auto;">
-            <div class="market-modal-page__body">
-                <div class="market-modal-page__top">
-                    <p class="market-modal-page__title">Make order</p>
-                    <img class="market-modal-page__icon-close" th:href="@{/css/images/icon-close.svg}"
-                         alt="close">
-                </div>
-                <div th:each="dish:${dishes}" style="text-align: center;">
-                    <h4><a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}" th:text="${dish.key.name} + ':'" ></a></h4>
-                    <table style="text-align: center;">
-                        <tr th:each="dishValue : ${dish.value}">
-                            <td th:text="${dishValue.name}"></td>
-                            <td th:text="${dishValue.calories}"></td>
-                            <td th:text="${dishValue.weight}"></td>
-                            <td th:text="${dishValue.proteins}"></td>
-                            <td th:text="${dishValue.fats}"></td>
-                            <td th:text="${dishValue.carbohydrates}"></td>
-                        </tr>
-                    </table>
+            <div class="market-modal-page" style="overflow-y: auto;">
+                <div class="market-modal-page__body">
+                    <div class="market-modal-page__top">
+                        <p class="market-modal-page__title">Make order</p>
+                        <img class="market-modal-page__icon-close" th:href="@{/css/images/icon-close.svg}"
+                             alt="close">
+                    </div>
+                    <div th:each="dish:${dishes}" style="text-align: center;">
+                        <h4>
+                            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
+                               th:text="${dish.key.name} + ':'"></a>
+                        </h4>
+                        <table style="text-align: center;">
+                            <tr th:each="dishValue : ${dish.value}">
+                                <td th:text="${dishValue.name}"></td>
+                                <td th:text="${dishValue.calories}"></td>
+                                <td th:text="${dishValue.weight}"></td>
+                                <td th:text="${dishValue.proteins}"></td>
+                                <td th:text="${dishValue.fats}"></td>
+                                <td th:text="${dishValue.carbohydrates}"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
         <script>
             document.querySelector('.market__btn').onclick = function () {
