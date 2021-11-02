@@ -1,0 +1,48 @@
+.header_header {
+
+    top: 00px;
+    height: 10vh;
+    width: 100%;
+    background: #16a085;
+    border: 2px solid #16a085;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container_header {
+    width: 100%;
+    max-width: 1024px;
+    padding: 15px;
+    margin: 0 auto;
+
+    -webkit-transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    transition: color .25s ease-in-out;
+}
+.logo_header {
+    color: #f3fffd;
+    float: left;
+}
+nav_header {
+    float: right;
+}
+nav_header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav_header li {
+    margin-left: 1em;
+    display: inline-block; /*один из способов разместить элементы в строку*/
+}
+nav_header a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 150%;
+    color:#f3fffd;
+    text-decoration: none;
+    line-height: 38px;
+}
+
+

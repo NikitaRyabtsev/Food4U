@@ -58,7 +58,7 @@ public class DishesController {
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        return "menu/dish";
+        return "menu/dishes";
     }
 
     @PostMapping("/{id}/delete")

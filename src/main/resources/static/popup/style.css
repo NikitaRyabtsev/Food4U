@@ -1,14 +1,4 @@
 
-.header {
-    height: 20vh;
-    width: 100%;
-    border: 2px solid #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
 .market-modal-page {
     position: fixed;
     left: 0;
@@ -27,14 +17,19 @@
     opacity: 1;
     visibility: visible;
 }
-
+.scroll-fix {
+    position: absolute;
+    width: calc(100vw - 100%);
+}
 .market-modal-page__body {
     display: flex;
-
     flex-direction: column;
-    width: 40%;
+    overflow: auto;
+    height: 60%;
+    width: 60%;
     padding: 30px 50px;
     background-color: #fff;
+    border-radius: 50px;
 }
 
 .market-modal-page__top {
@@ -53,7 +48,7 @@
 }
 
 .market-modal-page__form {
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;

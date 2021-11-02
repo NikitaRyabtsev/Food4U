@@ -1,6 +1,6 @@
 package by.htp.netcracker.foodfactory;
 
-public enum TYPE {
+public enum Type {
 
     BAKERY,
     DESERT,

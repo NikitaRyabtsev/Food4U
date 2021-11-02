@@ -66,7 +66,6 @@ public class IngredientDaoImpl implements IngredientDao {
         for(int i = 0 ; i< ingredients.size(); i ++){
             if(ingredients.get(i).getId() == ingredient.getId()){
                 ingredients.set(i,ingredient);
-                return;
             }
         }
     }

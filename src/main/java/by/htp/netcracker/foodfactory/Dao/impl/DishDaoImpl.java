@@ -4,10 +4,9 @@ import by.htp.netcracker.foodfactory.Dao.DaoException;
 import by.htp.netcracker.foodfactory.Dao.DishDao;
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Ingredient;
-import by.htp.netcracker.foodfactory.TYPE;
+import by.htp.netcracker.foodfactory.Type;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,12 +20,12 @@ public class DishDaoImpl implements DishDao {
 
     {
         dishes = new ArrayList<>();
-        dishes.add(new Dish(++DISH_COUNT, "Жаркое", String.valueOf(TYPE.SEAFOOD), 100, 150, 200, true));
-        dishes.add(new Dish(++DISH_COUNT, "Борщ", String.valueOf(TYPE.MEAT), 130, 350, 200, true));
-        dishes.add(new Dish(++DISH_COUNT, "Бутерброд", String.valueOf(TYPE.SNACK), 20, 70, 300, true));
-        dishes.add(new Dish(++DISH_COUNT, "Блинчики", String.valueOf(TYPE.SEAFOOD), 1000, 10, 250, false));
-        dishes.add(new Dish(++DISH_COUNT, "Торт", String.valueOf(TYPE.SEAFOOD), 130, 60, 100, true));
-        dishes.add(new Dish(++DISH_COUNT, "Компот", String.valueOf(TYPE.SEAFOOD), 100, 150, 250, false));
+        dishes.add(new Dish(++DISH_COUNT, "Жаркое", Type.SEAFOOD.toString(), 100, 150, 200, true));
+        dishes.add(new Dish(++DISH_COUNT, "Борщ", Type.DRINK.toString(), 130, 350, 200, true));
+        dishes.add(new Dish(++DISH_COUNT, "Бутерброд", Type.SNACK.toString(), 20, 70, 300, true));
+        dishes.add(new Dish(++DISH_COUNT, "Блинчики", Type.SEAFOOD.toString(), 1000, 10, 250, false));
+        dishes.add(new Dish(++DISH_COUNT, "Торт", Type.SEAFOOD.toString(), 130, 60, 100, true));
+        dishes.add(new Dish(++DISH_COUNT, "Компот",Type.SEAFOOD.toString(), 100, 150, 250, false));
     }
 
     {
