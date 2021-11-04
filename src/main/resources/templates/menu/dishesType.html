@@ -10,7 +10,7 @@
         <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
         <link th:href="@{/images/icon-close.svg}">
         <meta charset="UTF-8">
-        <title>В наличии</title>
+        <title>Блюда</title>
     </head>
     <body>
         <header>
@@ -31,15 +31,16 @@
                     <a href="/ingredients">Ингредиенты</a>
             </ul>
         </nav>
-        <h3>В наличии:</h3>
         <div th:each="dish:${dishes}">
-            <div th:block th:if="${dish.key.isAvailable} == true">
-                <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
-                   th:text="${dish.key.name} +' , '+  ${dish.key.type} + ' , ' + ${dish.key.price}"></a>
-            </div>
+            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
+               th:text=" ${dish.key.id} + ', ' + ${dish.key.name} "></a>
         </div>
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
+        <select name="TYPE">
+            <option th:each="dishes : ${T(by.htp.netcracker.foodfactory.Type).values()}"
+                    th:value="${dishes}" th:text="${dishes}"></option>
+        </select>
+        <div th : if="@{dishes.type == T(by.htp.netcracker.foodfactory.Type).SEAFOOD}">
+            ALOHA
+        </div>
     </body>
 </html>

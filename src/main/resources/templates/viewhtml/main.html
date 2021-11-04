@@ -31,9 +31,9 @@
         <a href="/menu/main">Food4U</a>
     </h2>
     <ul>
-        <li><a href="/viewhtml/main">Главная</a>
+        <li><a href="/menu/main">Главная</a>
         <li><a href="/menu/dishes">Меню</a>
-        <li><a href="/ingredients/ingredients">Ингредиенты</a>
+        <li><a href="/ingredients">Ингредиенты</a>
     </ul>
 </nav>
 <article class="article-main">
@@ -43,15 +43,13 @@
     </header>
     <section>
         <p style="text-align: center;">
-            <a href="/menu/dishes" class="btn btn-primary">Меню</a>
-            <a href="/ingredients" class="btn btn-secondary">Ингредиенты</a>
+            <a href="/user/authorization/a/b" class="btn btn-secondary">Регистрация</a>
+            <a href="/user/registration" class="btn btn-secondary">Авторизация</a>
         </p>
     </section>
-    <hr>
+
     <footer>
-        <strong>Food4U</strong> разработал <a>Никита Рябцев</a>. Исходный код
-        лицензирован.
-        <a href="http://opensource.org/licenses/mit-license.php">Лицензия</a>. Содержимое сайта защищено
+        <div th:insert="/viewhtml/footer :: footer"></div>
     </footer>
 </article>
 </body>

@@ -21,4 +21,5 @@ public interface DishDao {
     Map<Dish, List<Ingredient>> isDishesWithIngredientsAvailable() throws DaoException;
 
     void updateDishWithIngredients(Dish dish) throws DaoException;
+
 }

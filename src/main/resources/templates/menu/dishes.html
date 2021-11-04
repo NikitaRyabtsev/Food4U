@@ -7,6 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/header.css}">
         <link rel="stylesheet" th:href="@{/popup/style.css}">
         <link rel="stylesheet" th:href="@{/css/block.css}">
+        <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
         <link th:href="@{/images/icon-close.svg}">
         <meta charset="UTF-8">
         <title>Блюда</title>
@@ -36,9 +37,10 @@
             </ul>
         </nav>
         <h3>Меню</h3>
+
         <div th:each="dish:${dishes}">
             <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
-               th:text=" ${dish.key.id} + ', ' + ${dish.key.name} "></a>
+               th:text="${dish.key.name} "></a>
         </div>
         <a href="/menu/newDish">
             <button type="button">Добавить новое блюдо</button>
@@ -61,76 +63,6 @@
                     <div class="market__body">
                         <div class="market__info">
                             <button class="market__btn">Make order</button>
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            1
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            11
-                            <br/>
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            <br/>
-                            1
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            <br/>v
-                            11
-                            <br/>
-                            11
-                            <br/>
-                            1v
-                            1
-                            <br/>
-                            1
-                            <br/>
-                            <br/>
-                            1
-                            <br/>
-                            1<br/>v
-                            1
-                            <br/>
-                            <br/>vvvvv
-                            <br/>
-                            <br/>v
-
-
-                            1
-                            1
-                            1
-
-                            1
-
-                            1
-                            1
-                            1
-                            1
-                            1
-
-                            1
                         </div>
                     </div>
                 </section>
@@ -154,7 +86,7 @@
                 <div class="market-modal-page__body">
                     <div class="market-modal-page__top">
                         <p class="market-modal-page__title">Make order</p>
-                        <img class="market-modal-page__icon-close" th:href="@{/css/images/icon-close.svg}"
+                        <img class="market-modal-page__icon-close" img src="/images/icon-close.svg"
                              alt="close">
                     </div>
                     <div th:each="dish:${dishes}" style="text-align: center;">
@@ -176,6 +108,9 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div th:insert="/viewhtml/footer :: footer"></div>
+        </footer>
         <script>
             document.querySelector('.market__btn').onclick = function () {
                 document.querySelector('.market-modal-page').classList.toggle('_active');
@@ -184,5 +119,6 @@
                 document.querySelector('.market-modal-page').classList.toggle('_active');
             }
         </script>
+
     </body>
 </html>

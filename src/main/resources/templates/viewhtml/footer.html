@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="">
 <head>
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<footer th:fragment="footer">
+    <hr>
+    <strong>Food4U</strong> разработал <a>Никита Рябцев</a>. Исходный код
+    лицензирован.
+    <a href="http://opensource.org/licenses/mit-license.php">Лицензия</a>. Содержимое сайта защищено
+</footer>
 </body>
 </html>
