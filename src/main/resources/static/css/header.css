@@ -1,32 +1,45 @@
 .header_header {
-
-    top: 00px;
-    height: 10vh;
+    margin: 0px;
+    position: sticky;
+    top: 0px;
+    height: auto;
     width: 100%;
     background: #16a085;
     border: 2px solid #16a085;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    z-index: 3;
+}
 
+.header_header ul{
+    text-align: right;
+    width: 70%;
+    display: inline-block;
+}
+
+.header_header ul li{
+    margin-right: 5%;
 }
 
 .container_header {
-    width: 100%;
-    max-width: 1024px;
-    padding: 15px;
-    margin: 0 auto;
-
+    padding: 0;
     -webkit-transition: color .25s ease-in-out;
     -moz-transition: color .25s ease-in-out;
     transition: color .25s ease-in-out;
 }
-.logo_header {
-    color: #f3fffd;
-    float: left;
+
+.logo_header{
+    margin-left: 11%;
+    vertical-align: middle;
+    display: inline-block;
 }
-nav_header {
-    float: right;
+
+.img {
+    height: 80px;
+    max-width: 120px;
+}
+
+.nav_header {
+    vertical-align: auto;
+    display: inline-block;
 }
 nav_header ul {
     margin: 0;

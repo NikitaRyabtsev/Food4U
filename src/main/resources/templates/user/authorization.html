@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Авторизация</title>
+    <link rel="stylesheet" th:href="@{/css/registration.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
 </head>
 <body>
+<header class="header_header">
+    <div th:insert="/viewhtml/header :: header"></div>
+</header>
+<form action="/action_page.php">
+    <main role="main">
+        <article>
+            <div class="container">
+                <h1>Авторизация</h1>
+                <p>Пожалуйста заполните форму для авторизации</p>
+                <hr>
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                <hr>
+                <div style="position: relative">
+                    <button type="submit" class="registerbtn">Войти</button>
+                </div>
+            </div>
+
+            <div class="container signin">
+                <p>Вы еще не зарегистрированы? <a href="/user/registration">Регистрация</a>.</p>
+            </div>
+        </article>
+    </main>
+</form>
 
 </body>
 </html>

@@ -37,6 +37,11 @@ public class UserController {
         return "redirect:/user/authorization";
     }
 
+    @GetMapping("/authorization/{login}/{password}")
+    public String authorization(@PathVariable("login") String login ,@PathVariable("password") String password , Model model){
+        return "/user/authorization";
+    }
+
     @PostMapping("authorization/{login}/{password}")
     public String logOn(@PathVariable("login") String login ,@PathVariable("password") String password){
         try {
@@ -66,6 +71,4 @@ public class UserController {
         }
         return "user/profile";
     }
-
-
 }

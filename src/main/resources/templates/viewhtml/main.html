@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/authorization.css">
+    <link rel="stylesheet" href="/static/css/block.css">
+    <link rel="stylesheet" href="/static/css/registration.css">
+    <link rel="stylesheet" href="/static/nav/leftnav.css">
+    <link rel="stylesheet" href="/static/nav/stylenav.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon"  th:href="@{/images/favicon.ico}">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link th:href="@{/images/icon-close.svg}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-    <link rel="stylesheet" th:href="@/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
 
     <title> Главная</title>
 </head>
+
 <body>
-<header class="header_header">
-  <div class="container_header">
-       <a href="/menu/main" class="logo_header"><img src="/images/Food4Upng.png" height="120" width="120"></a>
-        <nav_header>
-        </nav_header>
-    </div>
+<header>
+   <div th:insert="/viewhtml/header :: header"></div>
 </header>
-
 <input type="checkbox" id="nav-toggle" hidden>
-
 <nav class="nav">
-
     <label for="nav-toggle" class="nav-toggle" onclick></label>
-
     <h2 class="logo">
         <a href="/menu/main">Food4U</a>
     </h2>
     <ul>
-        <li><a href="/menu/main">Главная</a>
+        <li><a href="/viewhtml/main">Главная</a>
         <li><a href="/menu/dishes">Меню</a>
-        <li><a href="/ingredients">Ингредиенты</a>
+        <li><a href="/ingredients/ingredients">Ингредиенты</a>
     </ul>
 </nav>
-
-<main role="main">
-    <article>
-        <header>
-            <h1 class="header__title">Food4U</h1>
-            <h2>Сервис готовых блюд</h2>
-        </header>
-        <section>
-            <p style="text-align: center;">
-                <a href="/menu/dishes" class="btn btn-primary">Меню</a>
-                <a href="/ingredients" class="btn btn-secondary">Ингредиенты</a>
-            </p>
-
-        </section>
-        <hr>
-        <footer>
-            <strong>Food4U</strong> разработал <a>Никита Рябцев</a>. Исходный код
-            лицензирован.
-            <a href="http://opensource.org/licenses/mit-license.php">Лицензия</a>. Содержимое сайта защищено
-        </footer>
-    </article>
-</main>
+<article class="article-main">
+    <header>
+        <h1 class="header__title">Food4U</h1>
+        <h2>Сервис готовых блюд</h2>
+    </header>
+    <section>
+        <p style="text-align: center;">
+            <a href="/menu/dishes" class="btn btn-primary">Меню</a>
+            <a href="/ingredients" class="btn btn-secondary">Ингредиенты</a>
+        </p>
+    </section>
+    <hr>
+    <footer>
+        <strong>Food4U</strong> разработал <a>Никита Рябцев</a>. Исходный код
+        лицензирован.
+        <a href="http://opensource.org/licenses/mit-license.php">Лицензия</a>. Содержимое сайта защищено
+    </footer>
+</article>
 </body>
+
 </html>
