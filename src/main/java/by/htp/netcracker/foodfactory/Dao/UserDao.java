@@ -20,4 +20,6 @@ public interface UserDao {
 
     void blockUser(int id) throws DaoException;
 
+
+
 }

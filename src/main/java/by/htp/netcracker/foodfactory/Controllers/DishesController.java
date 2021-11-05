@@ -26,6 +26,16 @@ public class DishesController {
         return "menu/dishes";
     }
 
+    @GetMapping("/dishesType")
+    public String showDishesWithIngredientsByType(Model model){
+        try{
+            model.addAttribute("dishes" , dishDao.showDishWithIngredients());
+        }catch (DaoException e){
+            e.printStackTrace();
+        }
+        return "menu/dishesType";
+    }
+
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) throws DaoException {
         model.addAttribute("dish", new Dish());

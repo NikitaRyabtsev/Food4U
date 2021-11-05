@@ -37,15 +37,15 @@ public class UserController {
         return "redirect:/user/authorization";
     }
 
-    @GetMapping("/authorization/{login}/{password}")
-    public String authorization(@PathVariable("login") String login ,@PathVariable("password") String password , Model model){
+    @GetMapping("/authorization")
+    public String authorization(Model model){
         return "/user/authorization";
     }
 
-    @PostMapping("authorization/{login}/{password}")
-    public String logOn(@PathVariable("login") String login ,@PathVariable("password") String password){
+    @PostMapping("authorization")
+    public String logOn(@ModelAttribute("user")User user){
         try {
-            userDao.authorization(login, password);
+            userDao.authorization(user.getLogin(), user.getPassword());
         }catch(DaoException e){
             e.printStackTrace();
         }
