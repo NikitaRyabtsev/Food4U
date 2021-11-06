@@ -1,37 +1,46 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name="Dish")
 public class Dish {
 
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
     private String name;
+    @Column
     private String type;
+    @Column
     private double price;
-    private double calories;
-    private double weight;
-    private boolean isAvailable;
 
-    public Dish(int id, String name, String type, double price, double calories, double weight, boolean isAvailable) {
+    @ManyToMany
+    @JoinTable(name="dish_has_ingredient",
+                joinColumns = @JoinColumn(name="dish_id"),
+                inverseJoinColumns = @JoinColumn(name="ingredient_id"))
+    private List<Ingredient> ingredients;
+
+    public Dish(){
+
+    }
+    public Dish(Integer id, String name, String type, double price, List<Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
-        this.calories = calories;
-        this.weight = weight;
-        this.isAvailable = isAvailable;
+        this.ingredients = ingredients;
     }
 
-    public Dish() {
-
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -59,28 +68,12 @@ public class Dish {
         this.price = price;
     }
 
-    public double getCalories() {
-        return calories;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setCalories(double calories) {
-        this.calories = calories;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     @Override
@@ -88,18 +81,16 @@ public class Dish {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        return id == dish.id &&
-                Double.compare(dish.price, price) == 0 &&
-                Double.compare(dish.calories, calories) == 0 &&
-                Double.compare(dish.weight, weight) == 0 &&
-                isAvailable == dish.isAvailable &&
+        return Double.compare(dish.price, price) == 0 &&
+                Objects.equals(id, dish.id) &&
                 Objects.equals(name, dish.name) &&
-                Objects.equals(type, dish.type);
+                Objects.equals(type, dish.type) &&
+                Objects.equals(ingredients, dish.ingredients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, price, calories, weight, isAvailable);
+        return Objects.hash(id, name, type, price, ingredients);
     }
 
     @Override
@@ -109,9 +100,7 @@ public class Dish {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", price=" + price +
-                ", calories=" + calories +
-                ", weight=" + weight +
-                ", isAvailable=" + isAvailable +
+                ", ingredients=" + ingredients +
                 '}';
     }
 }

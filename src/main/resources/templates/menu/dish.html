@@ -28,28 +28,17 @@
                 <li><a href="/ingredients">Ингредиенты</a>
             </ul>
         </nav>
-        <div th:insert="/viewhtml/header :: header"></div>
         <h3>Подробная информация о блюде:</h3>
-        <div th:each="dish:${dishes}">
-           <h4><a th:text="${dish.key.name} + ':'"></a></h4>
-            <table>
-                <tr th:each="dishValue : ${dish.value}">
-                    <td th:text="${dishValue.name}"></td>
-                    <td th:text="${dishValue.calories}"></td>
-                    <td th:text="${dishValue.weight}"></td>
-                    <td th:text="${dishValue.proteins}"></td>
-                    <td th:text="${dishValue.fats}"></td>
-                    <td th:text="${dishValue.carbohydrates}"></td>
-                </tr>
-            </table>
+        <div th:each="dish:${dishes.getIngredients()}">
+           <h4><a th:text="${dish.name} + ' , ' + ${dish.calories}"></a></h4>
         </div>
-        <a th:href="@{/menu/{id}/edit(id = ${dishes.key.getId()})}">
+        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
             <button type="button">Редактировать</button>
         </a>
         <a href=/menu/newIngredient>
             <button type="button">Добавить ингредиент</button>
         </a>
-        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.key.getId()}) }">
+        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()}) }">
             <input type="submit" value="Удалить блюдо">
         </form>
         <footer>

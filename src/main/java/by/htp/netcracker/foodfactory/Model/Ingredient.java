@@ -1,18 +1,35 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name="Ingredient")
 public class Ingredient {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
     private String name;
+    @Column
     private double calories;
+    @Column
     private double weight;
+    @Column
     private double proteins;
+    @Column
     private double fats;
+    @Column
     private double carbohydrates;
+    @ManyToMany
+    @JoinTable(name="dish_has_ingredient",
+            joinColumns = @JoinColumn(name="ingredient_id"),
+            inverseJoinColumns = @JoinColumn(name="dish_id"))
+    private List<Dish> dishes;
 
-    public Ingredient(int id, String name, double calories, double weight, double proteins, double fats, double carbohydrates) {
+    public Ingredient(Integer id, String name, double calories, double weight, double proteins, double fats, double carbohydrates, List<Dish> dishes) {
         this.id = id;
         this.name = name;
         this.calories = calories;
@@ -20,17 +37,18 @@ public class Ingredient {
         this.proteins = proteins;
         this.fats = fats;
         this.carbohydrates = carbohydrates;
+        this.dishes = dishes;
     }
 
     public Ingredient() {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -82,23 +100,32 @@ public class Ingredient {
         this.carbohydrates = carbohydrates;
     }
 
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return id == that.id &&
-                Double.compare(that.calories, calories) == 0 &&
+        return Double.compare(that.calories, calories) == 0 &&
                 Double.compare(that.weight, weight) == 0 &&
                 Double.compare(that.proteins, proteins) == 0 &&
                 Double.compare(that.fats, fats) == 0 &&
                 Double.compare(that.carbohydrates, carbohydrates) == 0 &&
-                Objects.equals(name, that.name);
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(dishes, that.dishes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, calories, weight, proteins, fats, carbohydrates);
+        return Objects.hash(id, name, calories, weight, proteins, fats, carbohydrates, dishes);
     }
 
     @Override
@@ -111,6 +138,7 @@ public class Ingredient {
                 ", proteins=" + proteins +
                 ", fats=" + fats +
                 ", carbohydrates=" + carbohydrates +
+                ", dishes=" + dishes +
                 '}';
     }
 }

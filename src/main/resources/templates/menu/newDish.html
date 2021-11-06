@@ -38,23 +38,15 @@
                 <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Type).values()}"
                         th:value="${dish}" th:text="${dish}"></option>
             </select>
+            <br/>
             <label for="price">Введите цену</label>
             <input type="number" th:field="*{price}" id="price">
             <br/>
-            <label for="calories">Введите калории</label>
-            <input type="number" th:field="*{calories}" id="calories">
-            <br/>
-            <label for="isAvailable">Есть ли он в наличии</label>
-            <input type="checkbox" th:checked="*{isAvailable}" value="true" id="isAvailable">
-            <br/>
-            <label for="weight">Введите вес</label>
-            <input type="number" th:field="*{weight}" id="weight">
-            <br/>
             <input type="submit" value="Создать">
         </form>
-        <a href="/menu/newIngredientInDish">
-            <button type="button">Добавить новый ингредиент</button>>
-        </a>
+        <!--        <a href="/menu/newIngredientInDish">-->
+        <!--            <button type="button">Добавить новый ингредиент</button>>-->
+        <!--        </a>-->
         <footer>
             <div th:insert="/viewhtml/footer :: footer"></div>
         </footer>

@@ -39,16 +39,16 @@
         <h3>Меню</h3>
 
         <div th:each="dish:${dishes}">
-            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
-               th:text="${dish.key.name} "></a>
+            <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
+               th:text="${dish.name} "></a>
         </div>
         <a href="/menu/newDish">
             <button type="button">Добавить новое блюдо</button>
         </a>
         <div>
-            <a th:href="@{/menu/isAvailable}">
-                <button type="button">Просмотреть блюда в наличии</button>
-            </a>
+<!--            <a th:href="@{/menu/isAvailable}">-->
+<!--                <button type="button">Просмотреть блюда в наличии</button>-->
+<!--            </a>-->
         </div>
         <div>
             <a th:href="@{/ingredients}">
@@ -91,19 +91,9 @@
                     </div>
                     <div th:each="dish:${dishes}" style="text-align: center;">
                         <h4>
-                            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
-                               th:text="${dish.key.name} + ':'"></a>
+                            <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
+                               th:text="${dish.name} + ':'"></a>
                         </h4>
-                        <table style="text-align: center;">
-                            <tr th:each="dishValue : ${dish.value}">
-                                <td th:text="${dishValue.name}"></td>
-                                <td th:text="${dishValue.calories}"></td>
-                                <td th:text="${dishValue.weight}"></td>
-                                <td th:text="${dishValue.proteins}"></td>
-                                <td th:text="${dishValue.fats}"></td>
-                                <td th:text="${dishValue.carbohydrates}"></td>
-                            </tr>
-                        </table>
                     </div>
                 </div>
             </div>
