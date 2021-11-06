@@ -10,5 +10,9 @@ public interface DishRepository extends JpaRepository<Dish,Integer> {
     @Override
     List<Dish> findAll();
 
+    Dish getById(Integer id);
 
+    void deleteById(Integer id);
+
+    List<Dish> getDishByType(String type);
 }

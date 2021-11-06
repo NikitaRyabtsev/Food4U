@@ -29,11 +29,6 @@ public class DishesController {
         return "menu/dishes";
     }
 
-    @GetMapping("/dishesType")
-    public String showDishesWithIngredientsByType(Model model) {
-        return "menu/dishesType";
-    }
-
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) {
         model.addAttribute("dish", new Dish());
@@ -83,4 +78,11 @@ public class DishesController {
     public String toMainPage() {
         return "viewhtml/main";
     }
+
+    @GetMapping("dishes/{type}")
+    public String showDishByType(Model model, @PathVariable("type") String type){
+        model.addAttribute("dishes",dishRepository.getDishByType(type));
+        return "menu/dishesType";
+    }
+
 }

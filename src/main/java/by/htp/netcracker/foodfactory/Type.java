@@ -4,7 +4,6 @@ public enum Type {
 
     BAKERY,
     DESERT,
-    SNACK,
     SALAD,
     SEAFOOD,
     DRINK,
@@ -13,4 +12,7 @@ public enum Type {
     MEAT,
     SOUP,
     FAST_FOOD,
+
+
+
 }

@@ -23,6 +23,7 @@
                 <a href="/menu/main">Food4U</a>
             </h2>
             <ul>
+
                 <li>
                     <a href="/menu/main">Главная</a>
                 <li>
@@ -32,11 +33,11 @@
             </ul>
         </nav>
         <div th:each="dish:${dishes}">
-            <a th:href="@{/menu/{id}/dish(id=${dish.key.getId()})}"
-               th:text=" ${dish.key.id} + ', ' + ${dish.key.name} "></a>
+            <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
+               th:text=" ${dish.id} + ', ' + ${dish.name} "></a>
         </div>
         <select name="TYPE">
-            <option th:each="dishes : ${T(by.htp.netcracker.foodfactory.Type).values()}"
+            <option th:each="dishes:${T(by.htp.netcracker.foodfactory.Type).values()}"
                     th:value="${dishes}" th:text="${dishes}"></option>
         </select>
         <div th : if="@{dishes.type == T(by.htp.netcracker.foodfactory.Type).SEAFOOD}">

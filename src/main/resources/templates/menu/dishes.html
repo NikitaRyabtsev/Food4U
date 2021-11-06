@@ -26,29 +26,76 @@
 
             <h2 class="logo">
                 <a href="/menu/main">Food4U</a>
+            <br/>
+                <a>Быстро , вкусно!!!</a>
             </h2>
             <ul>
                 <li>
-                    <a href="/menu/main">Главная</a>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).MEAT})}">
+                        Мясное
+                    </a>
+                </li>
                 <li>
-                    <a href="/menu/dishes">Меню</a>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).GARNISH})}">
+                        Гарниры
+                    </a>
+                </li>
                 <li>
-                    <a href="/ingredients">Ингредиенты</a>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SEAFOOD})}">
+                        Морепродукты
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SOUP})}">
+                        Супы
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SALAD})}">
+                        Салаты
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).BAKERY})}">
+                        Выпечка
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).DESERT})}">
+                        Десерты
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).DRINK})}">
+                        Напитки
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SAUCE})}">
+                        Соусы
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).FAST_FOOD})}">
+                        Фастфуд
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <h3>Меню</h3>
 
         <div th:each="dish:${dishes}">
             <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
-               th:text="${dish.name} "></a>
+               th:text="${dish.name}"></a>
         </div>
         <a href="/menu/newDish">
             <button type="button">Добавить новое блюдо</button>
         </a>
         <div>
-<!--            <a th:href="@{/menu/isAvailable}">-->
-<!--                <button type="button">Просмотреть блюда в наличии</button>-->
-<!--            </a>-->
+            <!--            <a th:href="@{/menu/isAvailable}">-->
+            <!--                <button type="button">Просмотреть блюда в наличии</button>-->
+            <!--            </a>-->
         </div>
         <div>
             <a th:href="@{/ingredients}">
