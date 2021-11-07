@@ -16,37 +16,22 @@
     <header>
         <div th:insert="/viewhtml/header :: header"></div>
     </header>
-    <input type="checkbox" id="nav-toggle" hidden>
-    <nav class="nav">
-        <label for="nav-toggle" class="nav-toggle" onclick></label>
-        <h2 class="logo">
-            <a href="/menu/main">Food4U</a>
-        </h2>
-        <ul>
-            <li><a href="/menu/main">Главная</a>
-            <li><a href="/menu/dishes">Меню</a>
-            <li><a href="/ingredients">Ингредиенты</a>
-        </ul>
+    <nav>
+        <div th:insert="/viewhtml/nav :: nav"></div>
     </nav>
    <h3>Редактирование блюда</h3>
-    <form th:action="@{/menu/{id}/edit/(id=${dish.key.getId()})}" th:method="POST" th:object="${dish}">
+    <form th:action="@{/menu/{id}/edit/(id=${dish.getId()})}" th:method="POST" th:object="${dish}">
         <label for="name">Введите название</label>
-        <input type="text" th:field="*{key.name}" id="name">
+        <input type="text" th:field="*{name}" id="name">
         <br/>
         <label for="type">Введите тип</label>
-        <input type="text" th:field="*{key.type}" id="type">
+        <select th:field="*{type}"name="TYPE" id="type">
+            <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                    th:value="${dish}" th:text="${dish.displayValue}"></option>
+        </select>
         <br/>
         <label for="price">Введите цену</label>
-        <input type="number" th:field="*{key.price}" id="price">
-        <br/>
-        <label for="name">Введите калории</label>
-        <input type="number" th:field="*{key.calories}" id="calories">
-        <br/>
-        <label for="isAvailable">Есть ли он в наличии</label>
-        <input type="checkbox" th:checked="*{key.isAvailable}" value="true" id="isAvailable">
-        <br/>
-        <label for="weight">Введите вес</label>
-        <input type="number" th:field="*{key.weight}" id="weight">
+        <input type="number" th:field="*{price}" id="price">
         <br/>
         <input type="submit" value="Изменить">
     </form>

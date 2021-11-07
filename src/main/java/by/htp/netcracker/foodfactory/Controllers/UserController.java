@@ -1,10 +1,7 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-
-import by.htp.netcracker.foodfactory.Dao.DaoException;
-import by.htp.netcracker.foodfactory.Dao.UserDao;
-import by.htp.netcracker.foodfactory.Dao.impl.UserDaoImpl;
 import by.htp.netcracker.foodfactory.Model.User;
+import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,62 +10,45 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    UserDao userDao = new UserDaoImpl();
+    UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping
     public String showUsers(Model model) {
-        try {
-            model.addAttribute("users", userDao.getAllUsers());
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("users", userRepository.findAll());
         return "user/users";
     }
 
     @GetMapping("/registration")
-    public String addUser(Model model)throws DaoException{
-        model.addAttribute("user" , new User());
+    public String addUser(Model model){
+        model.addAttribute("user", new User());
         return "user/registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("user")User user) throws DaoException {
-        userDao.registration(user);
-        return "redirect:/user/authorization";
+    public String registration(@ModelAttribute("user") User user)  {
+        userRepository.save(user);
+        return "redirect:/menu/dishes";
     }
 
-    @GetMapping("/authorization")
-    public String authorization(Model model){
-        return "/user/authorization";
-    }
-
-    @PostMapping("authorization")
-    public String logOn(@ModelAttribute("user")User user){
-        try {
-            userDao.authorization(user.getLogin(), user.getPassword());
-        }catch(DaoException e){
-            e.printStackTrace();
-        }
-        return "user/authorizaiton";
+    @GetMapping("/{id}")
+    public String toUserProfile(@PathVariable("id") Integer id , Model model){
+        model.addAttribute("user",userRepository.getById(id));
+        return "user/profile";
     }
 
     @GetMapping("edit/{id}")
-    public String editProfile(@PathVariable("id")int id,Model model) {
-        try {
-            model.addAttribute("id", userDao.toEditProfile(id));
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        return "user/profile";
+    public String editProfile(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("user", userRepository.getById(id));
+        return "user/editProfile";
     }
 
     @PostMapping("edit/{id}")
-    public String updateProfile(@ModelAttribute("user") User user){
-        try {
-            userDao.editUserProfile(user);
-        }catch (DaoException e){
-            e.printStackTrace();
-        }
-        return "user/profile";
+    public String updateProfile(@ModelAttribute("user") User user) {
+        userRepository.save(user);
+        return "redirect:/user";
     }
 }

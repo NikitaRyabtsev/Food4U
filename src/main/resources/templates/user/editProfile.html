@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/popup/style.css}">
+    <link rel="stylesheet" th:href="@{/css/block.css}">
+    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+    <link th:href="@{/images/icon-close.svg}">
+    <link rel="stylesheet" th:href="@{/css/registration.css}">
+    <meta charset="UTF-8">
+    <title>Редактирование профиля</title>
+</head>
+<body>
+<header class="header_header">
+    <div th:insert="/viewhtml/header :: header"></div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+<main role="main">
+    <article>
+        <div class="container">
+            <hr>
+            <form th:action="@{/user/edit/{id}/(id=${user.getId()})}" th:method="POST" th:object="${user}">
+                <label for="email"><b>E-mail</b></label>
+                <input type="email" placeholder="E-mail" th:field="*{email}" id="email" required>
+                <br/>
+                <label for="psw"><b>Пароль</b></label>
+                <input type="text" placeholder="Пароль" th:field="*{password}" id="psw" required>
+
+                <label for="login"><b>Логин</b></label>
+                <input type="text" placeholder="Логин" id="login" th:field="*{login}" required>
+
+                <label for="name"><b>Имя</b></label>
+                <input type="text" placeholder="Имя" id="name" th:field="*{name}" required>
+
+                <label for="secondName"><b>Фамилия</b></label>
+                <input type="text" placeholder="Фамилия" id="secondName" th:field="*{surname}" required>
+
+                <label for="sex"><b>Пол</b></label>
+                <input type="text" placeholder="Пол" id="sex" th:field="*{sex}" required>
+
+                <label for="status"><b></b></label>
+                <select th:field="*{block}" id="status" style="display: none">
+                    <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Status).UNBLOCK}"
+                            th:value="${user}" th:text="${user.displayValue}"></option>
+                </select>
+
+                <label for="role"><b></b></label>
+                <select th:field="*{role}" id="role" style="display: none" >
+                    <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Role).USER}"
+                            th:value="${user}" th:text="${user.displayValue}"></option>
+                </select>
+                <input type="submit" class="registerbtn" style="position: relative" value="Изменить">
+            </form>
+        </div>
+    </article>
+</main>
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
+</body>
+</html>

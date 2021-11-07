@@ -1,10 +1,11 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-import by.htp.netcracker.foodfactory.Dao.DaoException;
-import by.htp.netcracker.foodfactory.Dao.DishDao;
-import by.htp.netcracker.foodfactory.Dao.impl.DishDaoImpl;
+
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Ingredient;
+
+import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
+import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -14,111 +15,80 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/menu")
 public class DishesController {
 
-    DishDao dishDao = new DishDaoImpl();
+    private DishRepository dishRepository;
+    private IngredientRepository ingredientRepository;
+
+    public DishesController(DishRepository dishRepository, IngredientRepository ingredientRepository) {
+        this.dishRepository = dishRepository;
+        this.ingredientRepository = ingredientRepository;
+    }
+    @GetMapping("/main")
+    public String toMainPage() {
+        return "viewhtml/main";
+    }
+
 
     @GetMapping("/dishes")
     public String showDishesWithIngredients(Model model) {
-        try {
-            model.addAttribute("dishes", dishDao.showDishWithIngredients());
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("dishes", dishRepository.findAll());
         return "menu/dishes";
     }
 
-    @GetMapping("/dishesType")
-    public String showDishesWithIngredientsByType(Model model){
-        try{
-            model.addAttribute("dishes" , dishDao.showDishWithIngredients());
-        }catch (DaoException e){
-            e.printStackTrace();
-        }
-        return "menu/dishesType";
-    }
-
     @GetMapping("/newDish")
-    public String createDishWithIngredients(Model model) throws DaoException {
+    public String createDishWithIngredients(Model model) {
         model.addAttribute("dish", new Dish());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "menu/newDish";
     }
 
     @PostMapping("/newDish")
-    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish) throws DaoException {
-        dishDao.addDishWithIngredients(dish);
+    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish) {
+        dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
 
-
-    @GetMapping("/newIngredient")
-    public String createIngredientInDish(Model model) throws DaoException {
-        model.addAttribute("ingredient", new Ingredient());
+    @GetMapping("/newIngredient/{dishId}/{ingredientId}")
+    public String createIngredientInDish(Model model,@PathVariable("dishId") Integer dishId,
+                                            @PathVariable("ingredientId") Integer ingredientId) {
+        model.addAttribute("dish", dishRepository.addIngerdientInDish(dishId,ingredientId));
         return "ingredients/newIngredientInDish";
     }
 
-    @PostMapping("/newIngredient")
-    public String addIngredientInDish(@ModelAttribute("ingredient") Ingredient ingredient) throws DaoException {
-        dishDao.addIngredientsInDish(ingredient);
+    @PostMapping("/newIngredient/{dishId}/{ingredientId}")
+    public String addIngredientInDish(@ModelAttribute("dish") Dish dish){
+        dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
 
     @GetMapping("/{id}/dish")
-    public String getDishWithIngredientById(@PathVariable("id") int id, Model model) {
-        try {
-            model.addAttribute("dishes", dishDao.showDishWithIngredientsById(id));
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        return "menu/dishes";
+    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("dishes", dishRepository.getById(id));
+        return "menu/dish";
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteDish(@PathVariable("id") int id) {
-        try {
-            dishDao.deleteDishWithIngredients(id);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+    public String deleteDish(@PathVariable("id") Integer id) {
+        dishRepository.deleteById(id);
         return "redirect:/menu/dishes";
-    }
-
-    @GetMapping("/isAvailable")
-    public String isAvailable(Model model) {
-        try {
-            model.addAttribute("dishes", dishDao.isDishesWithIngredientsAvailable());
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        return "menu/dishesAvailable";
     }
 
     @GetMapping("/{id}/edit")
-    public String editDish(Model model, @PathVariable("id") int id) {
-        try {
-            model.addAttribute("dish", dishDao.showDishWithIngredientsById(id));
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+    public String editDish(Model model, @PathVariable("id") Integer id) {
+
+        model.addAttribute("dish", dishRepository.getById(id));
+        model.addAttribute("ingredient" , dishRepository.findAll());
         return "menu/dishEdit";
-
     }
-
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("dish") Dish dish) {
-        try {
-            dishDao.updateDishWithIngredients(dish);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+        dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
 
-    @GetMapping("/main")
-    public String isAva(Model model) {
-        try {
-            model.addAttribute("dishes", dishDao.isDishesWithIngredientsAvailable());
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        return "viewhtml/main";
+
+    @GetMapping("dishes/{type}")
+    public String showDishByType(Model model, @PathVariable("type") String type){
+        model.addAttribute("dishes",dishRepository.getDishByType(type));
+        return "menu/dishesType";
     }
 }

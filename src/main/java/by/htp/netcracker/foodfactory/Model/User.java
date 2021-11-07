@@ -1,24 +1,34 @@
 package by.htp.netcracker.foodfactory.Model;
 
-import org.springframework.context.annotation.Bean;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name="User")
 public class User {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column
     private String role;
+    @Column
     private String name;
+    @Column
     private String login;
+    @Column
     private String password;
+    @Column
     private String email;
+    @Column
     private String surname;
+    @Column
     private String sex;
-    private LocalDate dateOfBirth;
+    @Column
     private String block;
 
-    public User(int id, String role, String name, String login, String password, String email, String surname, String sex, LocalDate dateOfBirth, String block) {
+    public User(Integer id, String role, String name, String login, String password, String email, String surname, String sex, String block) {
         this.id = id;
         this.role = role;
         this.name = name;
@@ -27,7 +37,6 @@ public class User {
         this.email = email;
         this.surname = surname;
         this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
         this.block = block;
     }
 
@@ -35,11 +44,11 @@ public class User {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -99,14 +108,6 @@ public class User {
         this.sex = sex;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getBlock() {
         return block;
     }
@@ -128,13 +129,12 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(sex, user.sex) &&
-                Objects.equals(dateOfBirth, user.dateOfBirth) &&
                 Objects.equals(block, user.block);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, role, name, login, password, email, surname, sex, dateOfBirth, block);
+        return Objects.hash(id, role, name, login, password, email, surname, sex, block);
     }
 
     @Override
@@ -148,7 +148,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", surname='" + surname + '\'' +
                 ", sex='" + sex + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
                 ", block='" + block + '\'' +
                 '}';
     }
