@@ -22,6 +22,11 @@ public class DishesController {
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
     }
+    @GetMapping("/main")
+    public String toMainPage() {
+        return "viewhtml/main";
+    }
+
 
     @GetMapping("/dishes")
     public String showDishesWithIngredients(Model model) {
@@ -42,11 +47,17 @@ public class DishesController {
         return "redirect:/menu/dishes";
     }
 
-
-    @GetMapping("/newIngredient")
-    public String createIngredientInDish(Model model) {
-        model.addAttribute("ingredient", new Ingredient());
+    @GetMapping("/newIngredient/{dishId}/{ingredientId}")
+    public String createIngredientInDish(Model model,@PathVariable("dishId") Integer dishId,
+                                            @PathVariable("ingredientId") Integer ingredientId) {
+        model.addAttribute("dish", dishRepository.addIngerdientInDish(dishId,ingredientId));
         return "ingredients/newIngredientInDish";
+    }
+
+    @PostMapping("/newIngredient/{dishId}/{ingredientId}")
+    public String addIngredientInDish(@ModelAttribute("dish") Dish dish){
+        dishRepository.save(dish);
+        return "redirect:/menu/dishes";
     }
 
     @GetMapping("/{id}/dish")
@@ -74,15 +85,10 @@ public class DishesController {
         return "redirect:/menu/dishes";
     }
 
-    @GetMapping("/main")
-    public String toMainPage() {
-        return "viewhtml/main";
-    }
 
     @GetMapping("dishes/{type}")
     public String showDishByType(Model model, @PathVariable("type") String type){
         model.addAttribute("dishes",dishRepository.getDishByType(type));
         return "menu/dishesType";
     }
-
 }

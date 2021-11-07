@@ -17,6 +17,9 @@
 <header class="header_header">
     <div th:insert="/viewhtml/header :: header"></div>
 </header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
 <form action="/action_page.php">
     <main role="main">
         <article>
@@ -25,10 +28,10 @@
                 <p>Пожалуйста заполните форму для авторизации</p>
                 <hr>
                 <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" required>
+                <input type="text" placeholder="Enter Email" id="email" required>
 
                 <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <input type="password" placeholder="Enter Password" id="psw" required>
                 <hr>
                 <div style="position: relative">
                     <button type="submit" class="registerbtn">Войти</button>

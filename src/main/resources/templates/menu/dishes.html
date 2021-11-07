@@ -17,71 +17,8 @@
         <header class="header_header">
             <div th:insert="/viewhtml/header :: header"></div>
         </header>
-
-        <input type="checkbox" id="nav-toggle" hidden>
-
-        <nav class="nav">
-
-            <label for="nav-toggle" class="nav-toggle" onclick></label>
-
-            <h2 class="logo">
-                <a href="/menu/main">Food4U</a>
-            <br/>
-                <a>Быстро , вкусно!!!</a>
-            </h2>
-            <ul>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).MEAT})}">
-                        Мясное
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).GARNISH})}">
-                        Гарниры
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SEAFOOD})}">
-                        Морепродукты
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SOUP})}">
-                        Супы
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SALAD})}">
-                        Салаты
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).BAKERY})}">
-                        Выпечка
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).DESERT})}">
-                        Десерты
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).DRINK})}">
-                        Напитки
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).SAUCE})}">
-                        Соусы
-                    </a>
-                </li>
-                <li>
-                    <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Type).FAST_FOOD})}">
-                        Фастфуд
-                    </a>
-                </li>
-
-            </ul>
+        <nav>
+            <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
         <h3>Меню</h3>
 

@@ -36,7 +36,7 @@ public class IngredientsController {
     }
 
     @GetMapping("/{id}")
-    public String getIngredientById(@PathVariable("id") int id, Model model){
+    public String getIngredientById(@PathVariable("id") Integer id, Model model){
         model.addAttribute("ingredient", ingredientRepository.getById(id));
         return "ingredients/ingredientById";
     }
