@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,16 +17,36 @@ public class Order {
     private LocalDateTime dateAndTimeOfOrder;
     @Column
     private String status;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "User_id")
     private User user;
 
+    @ManyToMany
+    @JoinTable(name="order_has_dish",
+            joinColumns = @JoinColumn(name="Order_id"),
+            inverseJoinColumns = @JoinColumn(name="dish_id"))
+    private List<Dish> dishes;
+
+
+    public Order(){
+
+    }
     public Order(Integer id, int numberOfOrder, LocalDateTime dateAndTimeOfOrder, String status, User user) {
         this.id = id;
         this.numberOfOrder = numberOfOrder;
         this.dateAndTimeOfOrder = dateAndTimeOfOrder;
         this.status = status;
         this.user = user;
+    }
+
+    public Order(Integer id, int numberOfOrder, LocalDateTime dateAndTimeOfOrder, String status, User user, List<Dish> dishes) {
+        this.id = id;
+        this.numberOfOrder = numberOfOrder;
+        this.dateAndTimeOfOrder = dateAndTimeOfOrder;
+        this.status = status;
+        this.user = user;
+        this.dishes = dishes;
     }
 
     public Integer getId() {
@@ -68,6 +89,14 @@ public class Order {
         this.user = user;
     }
 
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,12 +106,13 @@ public class Order {
                 Objects.equals(id, order.id) &&
                 Objects.equals(dateAndTimeOfOrder, order.dateAndTimeOfOrder) &&
                 Objects.equals(status, order.status) &&
-                Objects.equals(user, order.user);
+                Objects.equals(user, order.user) &&
+                Objects.equals(dishes, order.dishes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfOrder, dateAndTimeOfOrder, status, user);
+        return Objects.hash(id, numberOfOrder, dateAndTimeOfOrder, status, user, dishes);
     }
 
     @Override
@@ -93,6 +123,7 @@ public class Order {
                 ", dateAndTimeOfOrder=" + dateAndTimeOfOrder +
                 ", status='" + status + '\'' +
                 ", user=" + user +
+                ", dishes=" + dishes +
                 '}';
     }
 }
