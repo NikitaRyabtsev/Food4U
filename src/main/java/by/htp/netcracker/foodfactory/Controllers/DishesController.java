@@ -47,18 +47,6 @@ public class DishesController {
         return "redirect:/menu/dishes";
     }
 
-    @GetMapping("/newIngredient/{dishId}/{ingredientId}")
-    public String createIngredientInDish(Model model,@PathVariable("dishId") Integer dishId,
-                                            @PathVariable("ingredientId") Integer ingredientId) {
-        model.addAttribute("dish", dishRepository.addIngerdientInDish(dishId,ingredientId));
-        return "ingredients/newIngredientInDish";
-    }
-
-    @PostMapping("/newIngredient/{dishId}/{ingredientId}")
-    public String addIngredientInDish(@ModelAttribute("dish") Dish dish){
-        dishRepository.save(dish);
-        return "redirect:/menu/dishes";
-    }
 
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
@@ -74,9 +62,8 @@ public class DishesController {
 
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
-
         model.addAttribute("dish", dishRepository.getById(id));
-        model.addAttribute("ingredient" , dishRepository.findAll());
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
     @PostMapping("/{id}/edit")

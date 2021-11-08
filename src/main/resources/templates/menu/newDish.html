@@ -22,10 +22,16 @@
             <input type="text" th:field="*{name}" id="name">
             <br/>
             <label>Введите тип</label>
-            <select th:field="*{type}" name="TYPE">
-                <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Type).values()}"
+            <select th:field="*{type}"name="type" id="type">
+                <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
                         th:value="${dish}" th:text="${dish.displayValue}"></option>
             </select>
+            <div>
+                <select id="selectDishes" name="selectDishes" th:field="*{ingredients}" multiple="multiple">
+                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.name}"/>
+                </select>
+            </div>
+
             <br/>
             <label for="price">Введите цену</label>
             <input type="number" th:field="*{price}" id="price">

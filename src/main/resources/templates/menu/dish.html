@@ -26,15 +26,21 @@
         <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
             <button type="button">Редактировать</button>
         </a>
-<!--        <a th:href="@{/menu/newIngredient/{dishId}/{ingredientId}(dishId=${dishes.getId()},-->
-<!--                     ingredientId=${dishes.getIngredients().getId()})}" th:object="${dish}">-->
-<!--            <-->
-<!--        </a>-->
+
         <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
             <input type="submit" value="Удалить блюдо">
         </form>
         <footer>
             <div th:insert="/viewhtml/footer :: footer"></div>
         </footer>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var dish = /*[[${dishes.name}]]*/ "";
+            console.log(dish);
+            var dishes = [# th:text="${dishes.name}"/];
+            console.log(dishes);
+            /*]]>*/
+
+        </script>
     </body>
 </html>

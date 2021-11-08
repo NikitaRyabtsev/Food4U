@@ -29,12 +29,20 @@
             <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
                     th:value="${dish}" th:text="${dish.displayValue}"></option>
         </select>
+        <div>
+            <select th:field="*{ingredients}" multiple="multiple">
+                <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.name}">
+                </option>
+            </select>
+        </div>
+
         <br/>
         <label for="price">Введите цену</label>
         <input type="number" th:field="*{price}" id="price">
         <br/>
         <input type="submit" value="Изменить">
     </form>
+
     <footer>
         <div th:insert="/viewhtml/footer :: footer"></div>
     </footer>

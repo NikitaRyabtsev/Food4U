@@ -85,6 +85,14 @@
         <footer>
             <div th:insert="/viewhtml/footer :: footer"></div>
         </footer>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var a =[# th:each="dish : ${dishes}"]
+             [(${dish.name})]
+                [/]
+            console.log(a);
+            /*]]>*/
+        </script>
         <script>
             document.querySelector('.market__btn').onclick = function () {
                 document.querySelector('.market-modal-page').classList.toggle('_active');
