@@ -7,6 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/header.css}">
         <link rel="stylesheet" th:href="@{/popup/style.css}">
         <link rel="stylesheet" th:href="@{/css/block.css}">
+        <link rel="stylesheet" th:href="@{/css/products.css}">
         <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
         <link th:href="@{/images/icon-close.svg}">
         <meta charset="UTF-8">
@@ -21,11 +22,23 @@
             <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
         <h3>Меню</h3>
+        <section class="products">
+            <div class="products__body">
+                <div class="product" th:each="dish:${dishes}">
+                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
+                       th:text="${dish.name}"></a>
+                    <img class="product__img" th:src="${dish.src}">
+                    <div th:each="ingredient:${ingredients}">
+                        <a th:text="{ingredient.name}"></a>
+                    </div>
+                    <p class="product__price" th:text="${dish.price}"></p>
+                    <button class="product__btn">Добавить в корзину</button>
+                </div>
+            </div>
+        </section>
 
-        <div th:each="dish:${dishes}">
-            <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
-               th:text="${dish.name}"></a>
-        </div>
+
+
         <a href="/menu/newDish">
             <button type="button">Добавить новое блюдо</button>
         </a>
@@ -86,12 +99,8 @@
             <div th:insert="/viewhtml/footer :: footer"></div>
         </footer>
         <script th:inline="javascript">
-            /*<![CDATA[*/
-            var a =[# th:each="dish : ${dishes}"]
-             [(${dish.name})]
-                [/]
-            console.log(a);
-            /*]]>*/
+
+
         </script>
         <script>
             document.querySelector('.market__btn').onclick = function () {

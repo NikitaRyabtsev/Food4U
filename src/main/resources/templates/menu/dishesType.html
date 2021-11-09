@@ -13,7 +13,7 @@
         <title>Блюда</title>
     </head>
     <body>
-        <header>
+        <header class="header_header">
             <div th:insert="/viewhtml/header :: header"></div>
         </header>
         <nav>
@@ -23,9 +23,5 @@
             <a th:href="@{/menu/{id}/dish(id=${dish.getId()})}"
                th:text=" ${dish.id} + ', ' + ${dish.name} "></a>
         </div>
-        <select name="TYPE">
-            <option th:each="dishes:${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                    th:value="${dishes}" th:text="${dishes}"></option>
-        </select>
     </body>
 </html>

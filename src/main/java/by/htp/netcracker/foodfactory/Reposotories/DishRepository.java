@@ -18,4 +18,5 @@ public interface DishRepository extends JpaRepository<Dish,Integer> {
     Dish getById(Integer id);
 
     List<Dish> getDishByType(String type);
+
 }

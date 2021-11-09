@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "Orderinfo")
 public class Order {
 
     @Id
@@ -64,6 +64,7 @@ public class Order {
     public void setNumberOfOrder(int numberOfOrder) {
         this.numberOfOrder = numberOfOrder;
     }
+
 
     public LocalDateTime getDateAndTimeOfOrder() {
         return dateAndTimeOfOrder;

@@ -1,8 +1,6 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-
 import by.htp.netcracker.foodfactory.Model.Dish;
-import by.htp.netcracker.foodfactory.Model.Ingredient;
 
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
@@ -25,6 +23,11 @@ public class DishesController {
     @GetMapping("/main")
     public String toMainPage() {
         return "viewhtml/main";
+    }
+
+    @GetMapping("/test")
+    public String toTestPage() {
+        return "viewhtml/test";
     }
 
 

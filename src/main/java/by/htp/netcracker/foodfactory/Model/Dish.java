@@ -1,5 +1,7 @@
 package by.htp.netcracker.foodfactory.Model;
 
+
+import java.sql.Blob;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +20,9 @@ public class Dish {
     private String type;
     @Column
     private double price;
-
+    @Lob
+    @Column
+    private String src;
     @ManyToMany
     @JoinTable(name="dish_has_ingredient",
                 joinColumns = @JoinColumn(name="dish_id"),
@@ -51,6 +55,21 @@ public class Dish {
         this.orders = orders;
     }
 
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public Integer getId() {
         return id;

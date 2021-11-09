@@ -47,7 +47,7 @@
 
                     <label for="status"><b></b></label>
                     <select th:field="*{block}" id="status" style="display: none">
-                        <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Status).UNBLOCK}"
+                        <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.UserStatus).UNBLOCK}"
                                 th:value="${user}" th:text="${user.displayValue}"></option>
                     </select>
 

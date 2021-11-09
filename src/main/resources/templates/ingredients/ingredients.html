@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/popup/style.css}">
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+    <link th:href="@{/images/icon-close.svg}">
+
     <meta charset="UTF-8">
     <title>Ингредиенты</title>
 </head>
-<body>
-<header>
+<body body role="main" style="text-align: center">
+<header class="header_header">
     <div th:insert="/viewhtml/header :: header"></div>
 </header>
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<h3>Ингредиенты</h3>
-<div th:each="ingredient:${ingredients}">
-    <a th:href="@{ingredients/{id}(id=${ingredient.getId()})}" th:text="${ingredient.name}"></a>
-</div>
-<a href="/ingredients/new">
-    <button type="button">Добавить новый ингредиент</button>
-</a>
+<main role="main">
+    <article>
+        <h3>Ингредиенты</h3>
+
+        <div th:each="ingredient:${ingredients}">
+            <a th:href="@{ingredients/{id}(id=${ingredient.getId()})}" th:text="${ingredient.name}"></a>
+        </div>
+        <a href="/ingredients/new">
+            <button type="button">Добавить новый ингредиент</button>
+        </a>
+    </article>
+</main>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>

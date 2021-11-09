@@ -1,6 +1,5 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Order;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
