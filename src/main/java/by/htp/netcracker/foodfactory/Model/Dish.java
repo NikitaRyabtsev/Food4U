@@ -25,6 +25,12 @@ public class Dish {
                 inverseJoinColumns = @JoinColumn(name="ingredient_id"))
     private List<Ingredient> ingredients;
 
+    @ManyToMany
+    @JoinTable(name="order_has_dish",
+                joinColumns = @JoinColumn(name="dish_id"),
+                inverseJoinColumns = @JoinColumn(name="Order_id"))
+    private List<Order> orders;
+
     public Dish(){
 
     }
@@ -35,6 +41,16 @@ public class Dish {
         this.price = price;
         this.ingredients = ingredients;
     }
+
+    public Dish(Integer id, String name, String type, double price, List<Ingredient> ingredients, List<Order> orders) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.ingredients = ingredients;
+        this.orders = orders;
+    }
+
 
     public Integer getId() {
         return id;
@@ -76,6 +92,7 @@ public class Dish {
         this.ingredients = ingredients;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,12 +102,13 @@ public class Dish {
                 Objects.equals(id, dish.id) &&
                 Objects.equals(name, dish.name) &&
                 Objects.equals(type, dish.type) &&
-                Objects.equals(ingredients, dish.ingredients);
+                Objects.equals(ingredients, dish.ingredients) &&
+                Objects.equals(orders, dish.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, price, ingredients);
+        return Objects.hash(id, name, type, price, ingredients, orders);
     }
 
     @Override
@@ -101,6 +119,7 @@ public class Dish {
                 ", type='" + type + '\'' +
                 ", price=" + price +
                 ", ingredients=" + ingredients +
+                ", orders=" + orders +
                 '}';
     }
 }
