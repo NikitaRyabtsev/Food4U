@@ -28,8 +28,8 @@ public class User {
     private String sex;
     @Column
     private String block;
-    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
+//    private List<Order> orders;
 
 
     public User(Integer id, String role, String name, String login, String password, String email, String surname, String sex, String block) {

@@ -1,7 +1,6 @@
 package by.htp.netcracker.foodfactory.Model;
 
 
-import java.sql.Blob;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.Objects;
 @Entity
 @Table(name="Dish")
 public class Dish {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +26,12 @@ public class Dish {
                 joinColumns = @JoinColumn(name="dish_id"),
                 inverseJoinColumns = @JoinColumn(name="ingredient_id"))
     private List<Ingredient> ingredients;
-
-    @ManyToMany
-    @JoinTable(name="order_has_dish",
-                joinColumns = @JoinColumn(name="dish_id"),
-                inverseJoinColumns = @JoinColumn(name="Order_id"))
-    private List<Order> orders;
+//
+//    @ManyToMany
+//    @JoinTable(name="order_has_dish",
+//                joinColumns = @JoinColumn(name="dish_id"),
+//                inverseJoinColumns = @JoinColumn(name="Order_id"))
+//    private List<OrderInfo> orders;
 
     public Dish(){
 
@@ -46,15 +44,6 @@ public class Dish {
         this.ingredients = ingredients;
     }
 
-    public Dish(Integer id, String name, String type, double price, List<Ingredient> ingredients, List<Order> orders) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.price = price;
-        this.ingredients = ingredients;
-        this.orders = orders;
-    }
-
     public String getSrc() {
         return src;
     }
@@ -63,13 +52,7 @@ public class Dish {
         this.src = src;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 
     public Integer getId() {
         return id;
@@ -121,13 +104,13 @@ public class Dish {
                 Objects.equals(id, dish.id) &&
                 Objects.equals(name, dish.name) &&
                 Objects.equals(type, dish.type) &&
-                Objects.equals(ingredients, dish.ingredients) &&
-                Objects.equals(orders, dish.orders);
+                Objects.equals(ingredients, dish.ingredients);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, price, ingredients, orders);
+        return Objects.hash(id, name, type, price, ingredients);
     }
 
     @Override
@@ -138,7 +121,6 @@ public class Dish {
                 ", type='" + type + '\'' +
                 ", price=" + price +
                 ", ingredients=" + ingredients +
-                ", orders=" + orders +
                 '}';
     }
 }

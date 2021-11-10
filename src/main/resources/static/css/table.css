@@ -1,0 +1,33 @@
+.table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 75%;
+    /*убираем пустые промежутки между ячейками*/
+    border: 1px solid grey;
+    /*устанавливаем для таблицы внешнюю границу серого цвета толщиной 1px*/
+}
+
+.th {
+    width: 20%;
+    border: 1px solid grey;
+}
+
+.td {
+    border: 1px solid grey;
+}
+
+th, td {
+    border: 1px solid grey;
+    padding: 10px 15px;
+}
+
+td:first-child {
+    width: 30%;
+}
+
+.caption {
+    caption-side: bottom;
+    text-align: right;
+    padding: 10px 0;
+    font-size: 14px;
+}

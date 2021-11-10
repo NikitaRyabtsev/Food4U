@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/menu")
 public class DishesController {
@@ -25,14 +27,10 @@ public class DishesController {
         return "viewhtml/main";
     }
 
-    @GetMapping("/test")
-    public String toTestPage() {
-        return "viewhtml/test";
-    }
-
-
     @GetMapping("/dishes")
-    public String showDishesWithIngredients(Model model) {
+    public String showDishesWithIngredients(Model model , HttpServletRequest request) {
+        System.out.println("Username" + request.getSession().getAttribute("username"));
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         model.addAttribute("dishes", dishRepository.findAll());
         return "menu/dishes";
     }
@@ -50,7 +48,6 @@ public class DishesController {
         return "redirect:/menu/dishes";
     }
 
-
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("dishes", dishRepository.getById(id));
@@ -66,7 +63,6 @@ public class DishesController {
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("dish", dishRepository.getById(id));
-        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
     @PostMapping("/{id}/edit")
@@ -74,7 +70,6 @@ public class DishesController {
         dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
-
 
     @GetMapping("dishes/{type}")
     public String showDishByType(Model model, @PathVariable("type") String type){

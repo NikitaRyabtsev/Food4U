@@ -20,9 +20,9 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<div th:each="order:${orders}">
+<div th:each="order:${ordersInfo}">
     <a th:href="@{/order/{id}/order(id=${order.getId()})}"
-       th:text="${order.numberOfOrder} + ' , ' + ${order.status}"></a>
+       th:text="${order.id} + ' , ' + ${order.status}"></a>
 </div>
 
 <footer>

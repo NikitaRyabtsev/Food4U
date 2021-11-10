@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/ingredients")
 public class IngredientsController {
@@ -30,7 +32,7 @@ public class IngredientsController {
     }
 
     @PostMapping("/new")
-    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient){
+    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient ,  HttpServletRequest request){
         ingredientRepository.save(ingredient);
         return "redirect:/ingredients";
     }
