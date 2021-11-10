@@ -28,8 +28,8 @@ public class User {
     private String sex;
     @Column
     private String block;
-//    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
-//    private List<Order> orders;
+    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
+    private List<Orders> orders;
 
 
     public User(Integer id, String role, String name, String login, String password, String email, String surname, String sex, String block) {
@@ -46,6 +46,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
     }
 
     public Integer getId() {

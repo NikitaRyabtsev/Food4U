@@ -1,16 +1,19 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Booking")
-public class Booking {
+@Table(name = "Orders")
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +22,20 @@ public class Booking {
     private String status;
     @Column(name="numberOfBooking")
     private String numberOfBooking;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    public Booking(){
+    public Orders(){
 
     }
 
-    public Booking(Integer id, String status) {
+    public Orders(Integer id, String status) {
         this.id = id;
         this.status = status;
     }
 
-    public Booking(Integer id, String status, String numberOfBooking) {
+    public Orders(Integer id, String status, String numberOfBooking) {
         this.id = id;
         this.status = status;
         this.numberOfBooking = numberOfBooking;
@@ -60,11 +66,19 @@ public class Booking {
         this.status = status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
+        Orders booking = (Orders) o;
         return Objects.equals(id, booking.id) &&
                 Objects.equals(status, booking.status) &&
                 Objects.equals(numberOfBooking, booking.numberOfBooking);

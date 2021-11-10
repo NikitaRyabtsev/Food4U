@@ -18,6 +18,7 @@ public class Dish {
     private String type;
     @Column
     private double price;
+
     @Lob
     @Column
     private String src;

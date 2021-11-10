@@ -1,7 +1,7 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
 
-import by.htp.netcracker.foodfactory.Reposotories.BookingRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/order")
-public class BookingController {
+public class OrdersController {
 
 //    private DishRepository dishRepository;
-    private BookingRepository orderRepository;
+    private OrdersRepository orderRepository;
 //    private IngredientRepository ingredientRepository;
 
-    public BookingController(BookingRepository orderRepository) {
+    public OrdersController(OrdersRepository orderRepository) {
 //        this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
 //        this.ingredientRepository = ingredientRepository;
