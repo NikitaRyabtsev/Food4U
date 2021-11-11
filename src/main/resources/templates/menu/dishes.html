@@ -12,7 +12,6 @@
         <link th:href="@{/images/icon-close.svg}">
         <meta charset="UTF-8">
         <title>Блюда</title>
-
     </head>
     <body role="main" style="text-align: center">
         <header class="header_header">
@@ -22,27 +21,31 @@
             <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
         <h3>Меню</h3>
-        <section class="products">
-            <div class="products__body">
-                <div class="product" th:each="dish:${dishes}">
-                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                       <img class="product__img" th:src="${dish.src}"></a>
-                    <p th:text="${dish.name}"></p>
-                    <div class="product__info">
-                        <p class="product__text">Стоимость:</p>
-                        <p class="product__price" th:text="${dish.price}"></p>
+        <div>
+            <section class="products">
+                <div class="products__body">
+                    <div class="product" th:each="dish:${dishes}">
+                        <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                            <img class="product__img" th:src="${dish.src}">
+                        </a>
+                        <p th:text="${dish.name}"></p>
+                        <div class="product__info">
+                            <p class="product__text">Стоимость:</p>
+                            <p class="product__price" th:text="${dish.price}"></p>
+                        </div>
+                        <button class="product__btn">Добавить в корзину</button>
                     </div>
-                    <button class="product__btn">Добавить в корзину</button>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
+
 
         <a href="/menu/newDish">
             <button type="button" class="btn btn-secondary">Добавить новое блюдо</button>
         </a>
         <div>
             <a th:href="@{/ingredients}">
-                <button type="button" class="btn btn-secondary" >Просмотреть ингредиенты</button>
+                <button type="button" class="btn btn-secondary">Просмотреть ингредиенты</button>
             </a>
         </div>
         </div>

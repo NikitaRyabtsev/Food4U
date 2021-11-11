@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/popup/style.css}">
+    <link rel="stylesheet" th:href="@{/css/block.css}">
+    <link rel="stylesheet" th:href="@{/css/products.css}">
+    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+    <link th:href="@{/images/icon-close.svg}">
     <meta charset="UTF-8">
     <title>Заказ</title>
 </head>
-<body>
-
+<body role="main" style="text-align: center">
+<header class="header_header">
+    <div class="container">
+        <div th:insert="/viewhtml/header :: header"></div>
+    </div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+<section class="products">
+    <div class="products__body">
+        <div class="product"  th:each="order:${order}">
+            <div th:each="dish:${order.getDishes()}">
+                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                    <img class="product__img" th:src="${dish.src}">
+                </a>
+                <p th:text="${dish.name}"></p>
+                <div class="product__info">
+                    <p class="product__text">Стоимость:</p>
+                    <p class="product__price" th:text="${dish.price}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

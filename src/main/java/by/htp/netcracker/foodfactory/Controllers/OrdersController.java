@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,29 +39,30 @@ public class OrdersController {
     public String newOrder(Model model) {
         model.addAttribute("order", new Orders());
         model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("ingredients",dishRepository.findAll());
         return "order/newOrder";
     }
 
     @PostMapping("/newOrder")
     public String addDishInOrder(@ModelAttribute("order") Orders orders) {
         orderRepository.save(orders);
-        return "redirect:menu/dishes";
+        return "redirect:/order/newOrder";
     }
-//
-//    @GetMapping("/{id}/order")
-//    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
-//        model.addAttribute("dishes", orderRepository.getById(id));
-//        model.addAttribute("dishes", dishRepository.findAll());
-//        model.addAttribute("ingredients", ingredientRepository.findAll());
-//        return "order/order";
-//    }
-//
-//    @PostMapping("/{id}/order")
-//    public String deleteDish(@PathVariable("id") Integer id) {
-//        orderRepository.deleteById(id);
-//        return "redirect:/menu/dishes";
-//    }
-//
+
+    @GetMapping("/{id}/order")
+    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("order", orderRepository.getById(id));
+        model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
+        return "order/order";
+    }
+
+    @PostMapping("/{id}/order")
+    public String deleteDish(@PathVariable("id") Integer id) {
+        orderRepository.deleteById(id);
+        return "redirect:/menu/dishes";
+    }
+
 //    @GetMapping("/{id}/edit")
 //    public String editDish(Model model, @PathVariable("id") Integer id) {
 //        model.addAttribute("order", orderRepository.getById(id));

@@ -18,11 +18,13 @@ public class User {
     private String role;
     @Column
     private String name;
-    @Min(value=8)
-    @Max(value=16)
+    @Min(8)
+    @Max(16)
     @Column
     private String login;
     @Column
+    @Min(8)
+    @Max(16)
     private String password;
     @Column
     private String email;
