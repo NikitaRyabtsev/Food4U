@@ -1,6 +1,8 @@
 package by.htp.netcracker.foodfactory.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +18,8 @@ public class User {
     private String role;
     @Column
     private String name;
+    @Min(value=8)
+    @Max(value=16)
     @Column
     private String login;
     @Column

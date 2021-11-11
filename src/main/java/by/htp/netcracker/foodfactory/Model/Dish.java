@@ -27,12 +27,12 @@ public class Dish {
                 joinColumns = @JoinColumn(name="dish_id"),
                 inverseJoinColumns = @JoinColumn(name="ingredient_id"))
     private List<Ingredient> ingredients;
-//
-//    @ManyToMany
-//    @JoinTable(name="order_has_dish",
-//                joinColumns = @JoinColumn(name="dish_id"),
-//                inverseJoinColumns = @JoinColumn(name="Order_id"))
-//    private List<OrderInfo> orders;
+
+    @ManyToMany
+    @JoinTable(name="order_has_dish",
+                joinColumns = @JoinColumn(name="dish_id"),
+                inverseJoinColumns = @JoinColumn(name="order_id"))
+    private List<Orders> orders;
 
     public Dish(){
 
@@ -53,7 +53,13 @@ public class Dish {
         this.src = src;
     }
 
+    public List<Orders> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
 
     public Integer getId() {
         return id;
@@ -121,7 +127,9 @@ public class Dish {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", price=" + price +
+                ", src='" + src + '\'' +
                 ", ingredients=" + ingredients +
+                ", orders=" + orders +
                 '}';
     }
 }

@@ -20,11 +20,13 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<div th:each="order:${ordersInfo}">
+<div th:each="order:${orders}">
     <a th:href="@{/order/{id}/order(id=${order.getId()})}"
        th:text="${order.id} + ' , ' + ${order.status}"></a>
 </div>
-
+<a href="/menu/dishes">
+    <input type="button" class="btn btn-secondary" value="Добавить заказ">
+</a>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
