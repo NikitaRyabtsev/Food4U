@@ -21,4 +21,5 @@ public interface IngredientRepository extends JpaRepository<Ingredient,Integer> 
 
     @Override
     void deleteById(Integer integer);
+
 }

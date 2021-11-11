@@ -2,41 +2,48 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <link rel="icon" th:href="@{/images/favicon.ico}">
+        <link rel="stylesheet" th:href="@{/css/select.css}">
         <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
         <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
         <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/popup/style.css}">
         <meta charset="UTF-8">
         <title>Добавление блюда с ингредиентами</title>
     </head>
-    <body>
-        <header>
+    <body role="main" style="text-align: center">
+        <header class="header_header">
             <div th:insert="/viewhtml/header :: header"></div>
         </header>
         <nav>
             <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
+
         <h3>Добавить новое блюдо</h3>
         <form th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}">
             <label for="name">Введите название</label>
-            <input type="text" th:field="*{name}" id="name">
+            <br/>
+            <input type="text" th:field="*{name}" id="name" class="add__btn" required>
             <br/>
             <label>Введите тип</label>
-            <select th:field="*{type}"name="type" id="type">
+            <br/>
+            <select th:field="*{type}" name="type" id="type" class="select">
+                <option value="0">Выберите тип</option>
                 <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
                         th:value="${dish}" th:text="${dish.displayValue}"></option>
             </select>
+            <br/>
             <div>
-                <select id="selectDishes" name="selectDishes" th:field="*{ingredients}" multiple="multiple">
-                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}" th:text="${ingredient.name}"/>
+                <select id="selectDishes" class="multi-select" name="selectDishes" th:field="*{ingredients}"
+                        multiple="multiple">
+                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                            th:text="${ingredient.name}"></option>
                 </select>
             </div>
-
-            <br/>
+            <br>
             <label for="price">Введите цену</label>
-            <input type="number" th:field="*{price}" id="price">
+            <br>
+            <input type="number" th:field="*{price}" id="price" class="add__btn" required>
             <br/>
-            <input type="submit" value="Создать">
+            <input type="submit" value="Создать" class="btn btn-secondary">
         </form>
         <!--        <a href="/menu/newIngredientInDish">-->
         <!--            <button type="button">Добавить новый ингредиент</button>>-->

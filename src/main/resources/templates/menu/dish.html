@@ -6,23 +6,61 @@
         <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
         <link rel="stylesheet" th:href="@{/css/header.css}">
         <link rel="stylesheet" th:href="@{/popup/style.css}">
-        <link rel="stylesheet" th:href="@{/css/block.css}">
         <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+        <link rel="stylesheet" th:href="@{/css/dish.css}">
         <link th:href="@{/images/icon-close.svg}">
+
         <meta charset="UTF-8">
         <title>Блюдо</title>
     </head>
     <body>
-        <header>
+        <header class="header_header">
             <div th:insert="/viewhtml/header :: header"></div>
         </header>
         <nav>
             <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
-        <h3>Подробная информация о блюде:</h3>
-        <div th:each="dish:${dishes.getIngredients()}">
-           <h4><a th:text="${dish.name} + ' , ' + ${dish.calories}"></a></h4>
-        </div>
+<!--        <h3 class="main-title">Подробная информация о блюде:</h3>-->
+<!--        <div class="dish" th:each="dish:${dishes}">-->
+<!--            <div class="dish__banner">-->
+<!--                <img class="dish__img" th:src="${dish.src}">-->
+<!--            </div>-->
+
+<!--            <div class="dish__info">-->
+<!--                <div class="product__ingredients">-->
+<!--                    <h2 class="dish__title"  th:text="${dish.name}"></h2>-->
+<!--                    <p th:each="ingredient:${dish.getIngredients()}"-->
+<!--                       th:text="${ingredient.name}">-->
+<!--                    <p/>-->
+<!--                </div>-->
+<!--                <div class="dish__footer">-->
+<!--                    <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>-->
+<!--                    <button class="dish__btn">Добавить в корзину</button>-->
+<!--                </div>-->
+
+            </div>
+            <div class="dish" th:each="dish:${dishes}">
+                <div class="dish__banner">
+                    <img class="dish__img"th:src="${dish.src}">
+                </div>
+                <div class="dish__info">
+                    <div class="dish__text">
+                        <h2 class="dish__title" th:text="${dish.name}"></h2>
+                        <p>Здесь должна быть инфа про каллории:</p>
+                        <div class="dish__ingredients">
+                            <p>Здесь должен быть вес</p>
+                            <p>Ингредиенты</p>
+                            <p th:each="ingredient:${dish.getIngredients()}"
+                               th:text="${ingredient.name}"></p>
+                        </div>
+                        <div class="dish__footer">
+                            <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
+                            <button class="dish__btn">Добавить в корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--        </div>-->
         <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
             <button type="button">Редактировать</button>
         </a>
@@ -30,6 +68,14 @@
         <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
             <input type="submit" value="Удалить блюдо">
         </form>
+
+<!--        <div class="shopping-cart">
+            <p class="shopping-cart__info">Товаров в корзине:</p>
+            <p class="shopping-cart__count">0</p>
+            <button class="shopping-cart__btn">Очистить корзину</button>
+        </div>-->
+
+
         <footer>
             <div th:insert="/viewhtml/footer :: footer"></div>
         </footer>
@@ -42,5 +88,6 @@
             /*]]>*/
 
         </script>
+
     </body>
 </html>
