@@ -4,6 +4,7 @@ import by.htp.netcracker.foodfactory.Model.Dish;
 
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -17,10 +18,13 @@ public class DishesController {
 
     private DishRepository dishRepository;
     private IngredientRepository ingredientRepository;
+    private OrdersRepository ordersRepository;
 
-    public DishesController(DishRepository dishRepository, IngredientRepository ingredientRepository) {
+    public DishesController(DishRepository dishRepository,
+                            IngredientRepository ingredientRepository, OrdersRepository ordersRepository) {
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
+        this.ordersRepository = ordersRepository;
     }
     @GetMapping("/main")
     public String toMainPage() {
@@ -28,10 +32,10 @@ public class DishesController {
     }
 
     @GetMapping("/dishes")
-    public String showDishesWithIngredients(Model model , HttpServletRequest request) {
-        System.out.println("Username" + request.getSession().getAttribute("username"));
+    public String showDishesWithIngredients(Model model) {
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("orders" , ordersRepository.findAll());
         return "menu/dishes";
     }
 

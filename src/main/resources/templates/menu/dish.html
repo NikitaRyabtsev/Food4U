@@ -20,24 +20,6 @@
         <nav>
             <div th:insert="/viewhtml/nav :: nav"></div>
         </nav>
-<!--        <h3 class="main-title">Подробная информация о блюде:</h3>-->
-<!--        <div class="dish" th:each="dish:${dishes}">-->
-<!--            <div class="dish__banner">-->
-<!--                <img class="dish__img" th:src="${dish.src}">-->
-<!--            </div>-->
-
-<!--            <div class="dish__info">-->
-<!--                <div class="product__ingredients">-->
-<!--                    <h2 class="dish__title"  th:text="${dish.name}"></h2>-->
-<!--                    <p th:each="ingredient:${dish.getIngredients()}"-->
-<!--                       th:text="${ingredient.name}">-->
-<!--                    <p/>-->
-<!--                </div>-->
-<!--                <div class="dish__footer">-->
-<!--                    <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>-->
-<!--                    <button class="dish__btn">Добавить в корзину</button>-->
-<!--                </div>-->
-
             </div>
             <div class="dish" th:each="dish:${dishes}">
                 <div class="dish__banner">
@@ -55,12 +37,11 @@
                         </div>
                         <div class="dish__footer">
                             <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
-                            <button class="dish__btn">Добавить в корзину</button>
+                                <button class="dish__btn">Добавить в корзину</button>
                         </div>
                     </div>
                 </div>
             </div>
-<!--        </div>-->
         <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
             <button type="button">Редактировать</button>
         </a>
