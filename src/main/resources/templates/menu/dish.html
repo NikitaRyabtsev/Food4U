@@ -1,54 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <link rel="icon" th:href="@{/images/favicon.ico}">
-        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/popup/style.css}">
-        <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-        <link rel="stylesheet" th:href="@{/css/dish.css}">
-        <link th:href="@{/images/icon-close.svg}">
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/popup/style.css}">
+    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+    <link rel="stylesheet" th:href="@{/css/dish.css}">
+    <link th:href="@{/images/icon-close.svg}">
 
-        <meta charset="UTF-8">
-        <title>Блюдо</title>
-    </head>
-    <body>
-        <header class="header_header">
-            <div th:insert="/viewhtml/header :: header"></div>
-        </header>
-        <nav>
-            <div th:insert="/viewhtml/nav :: nav"></div>
-        </nav>
+    <meta charset="UTF-8">
+    <title>Блюдо</title>
+</head>
+<body>
+<header class="header_header">
+    <div class="container">
+        <div th:insert="/viewhtml/header :: header"></div>
+    </div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+</div>
+<section class="dish__wrapper">
+    <div class="container">
+        <div class="dish" th:each="dish:${dishes}">
+            <div class="dish__banner">
+                <img class="dish__img" th:src="${dish.src}">
             </div>
-            <div class="dish" th:each="dish:${dishes}">
-                <div class="dish__banner">
-                    <img class="dish__img"th:src="${dish.src}">
-                </div>
-                <div class="dish__info">
-                    <div class="dish__text">
-                        <h2 class="dish__title" th:text="${dish.name}"></h2>
-                        <p>Здесь должна быть инфа про каллории:</p>
-                        <div class="dish__ingredients">
-                            <p>Здесь должен быть вес</p>
-                            <p>Ингредиенты</p>
-                            <p th:each="ingredient:${dish.getIngredients()}"
-                               th:text="${ingredient.name}"></p>
-                        </div>
-                        <div class="dish__footer">
-                            <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
-                                <button class="dish__btn">Добавить в корзину</button>
-                        </div>
+            <div class="dish__info">
+                <div class="dish__text">
+                    <h2 class="dish__title" th:text="${dish.name}"></h2>
+                    <p>Здесь должна быть инфа про каллории:</p>
+                    <div class="dish__ingredients">
+                        <p>Здесь должен быть вес</p>
+                        <p>Ингредиенты</p>
+                        <p th:each="ingredient:${dish.getIngredients()}"
+                           th:text="${ingredient.name}"></p>
+                    </div>
+                    <div class="dish__footer">
+                        <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
+                        <button class="dish__btn">Добавить в корзину</button>
                     </div>
                 </div>
             </div>
-        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
-            <button type="button">Редактировать</button>
-        </a>
+        </div>
+    </div>
+    </div>
+</section>
+</div>
 
-        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
-            <input type="submit" value="Удалить блюдо">
-        </form>
+
+<a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
+    <button type="button">Редактировать</button>
+</a>
+
+<form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
+    <input type="submit" value="Удалить блюдо">
+</form>
 
 <!--        <div class="shopping-cart">
             <p class="shopping-cart__info">Товаров в корзине:</p>
@@ -57,18 +67,9 @@
         </div>-->
 
 
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            var dish = /*[[${dishes.name}]]*/ "";
-            console.log(dish);
-            var dishes = [# th:text="${dishes.name}"/];
-            console.log(dishes);
-            /*]]>*/
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
 
-        </script>
-
-    </body>
+</body>
 </html>

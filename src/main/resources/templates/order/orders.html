@@ -24,7 +24,7 @@
     <a th:href="@{/order/{id}/order(id=${order.getId()})}"
        th:text="${order.id} + ' , ' + ${order.status}"></a>
 </div>
-<a href="/menu/dishes">
+<a href="/order/newOrder">
     <input type="button" class="btn btn-secondary" value="Добавить заказ">
 </a>
 <footer>
