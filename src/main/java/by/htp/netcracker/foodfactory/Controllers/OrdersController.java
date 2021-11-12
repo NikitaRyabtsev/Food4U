@@ -1,10 +1,12 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
 
+import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import by.htp.netcracker.foodfactory.Service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,14 @@ public class OrdersController {
     private DishRepository dishRepository;
     private OrdersRepository orderRepository;
     private IngredientRepository ingredientRepository;
+    private OrderService orderService;
 
-    public OrdersController(OrdersRepository orderRepository , DishRepository dishRepository ,IngredientRepository ingredientRepository ) {
+    public OrdersController(OrdersRepository orderRepository , DishRepository dishRepository ,
+                            OrderService orderService, IngredientRepository ingredientRepository ) {
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
+        this.orderService = orderService;
     }
 
     @GetMapping("/orders")
@@ -57,10 +62,16 @@ public class OrdersController {
         return "order/order";
     }
 
-    @PostMapping("/{id}/order")
+    @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id") Integer id) {
         orderRepository.deleteById(id);
-        return "redirect:/menu/dishes";
+        return "redirect:/order/orders";
+    }
+
+    @PostMapping("/{dish}/deleteDishFromOrder")
+    public String deleteDishFromOrder(@ModelAttribute("dish") Dish dish){
+        orderService.deleteDishFromOrder(dish);
+        return "redirect:/order/orders";
     }
 
 //    @GetMapping("/{id}/edit")
