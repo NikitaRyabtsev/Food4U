@@ -31,7 +31,7 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<h3>Новый заказ</h3>
+<h3>Меню</h3>
 <form th:action="@{/order/newOrder}" th:method="POST" th:object="${order}">
     <input type="hidden" th:field="*{numberOfBooking}" id="name" class="add__btn" required>
     <input type="hidden" th:field="*{user.id}" id="id" class="add__btn" required>

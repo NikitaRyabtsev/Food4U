@@ -65,6 +65,7 @@ public class DishesController {
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("dish", dishRepository.getById(id));
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
     @PostMapping("/{id}/edit")

@@ -35,13 +35,12 @@
                         th:value="${dish}" th:text="${dish.displayValue}"></option>
             </select>
             <br/>
-<!--            <div>-->
-<!--                <select id="selectDishes" class="multi-select" name="selectDishes" th:field="*{ingredients}" multiple="multiple">-->
-<!--                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"-->
-<!--                            th:text="${ingredient.name}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-
+            <div>
+                <select id="selectIngredients" class="multi-select" name="selectDishes" th:field="*{ingredients}" multiple="multiple">
+                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                            th:text="${ingredient.name}"></option>
+                </select>
+            </div>
             <br/>
             <label for="price">Введите цену</label>
             <br/>
