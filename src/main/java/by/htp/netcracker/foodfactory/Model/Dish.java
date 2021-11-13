@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,10 @@ public class Dish {
     private String type;
     @Column
     private double price;
-
+    @Column
+    private double weight;
+    @Column
+    private double calories;
     @Lob
     @Column
     private String src;
@@ -43,6 +47,22 @@ public class Dish {
         this.type = type;
         this.price = price;
         this.ingredients = ingredients;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
     }
 
     public String getSrc() {

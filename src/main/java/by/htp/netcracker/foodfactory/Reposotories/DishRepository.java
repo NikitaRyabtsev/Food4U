@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Reposotories;
 
 import by.htp.netcracker.foodfactory.Model.Dish;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.stereotype.Repository;
@@ -18,11 +19,15 @@ public interface DishRepository extends JpaRepository<Dish,Integer> {
 
     Dish save(Dish dish);
 
+    @Query(value = "SELECT dish.id ,SUM(ingredient.weight) AS weight ,SUM(ingredient.calories) AS calories,dish.name , src,type, price FROM dish " +
+            " JOIN dish_has_ingredient ON dish.id = dish_id " +
+            " JOIN ingredient ON ingredient_id = ingredient.id " , nativeQuery = true)
     Dish getById(Integer id);
 
     void deleteDishById(Integer id);
 
     List<Dish> getDishByType(String type);
+
 
 
 }

@@ -30,13 +30,13 @@
             </div>
             <div class="dish__info">
                 <div class="dish__text">
-                    <h2 class="dish__title" th:text="${dish.name}"></h2>
-                    <p>Здесь должна быть инфа про каллории:</p>
+                    <h2 class="dish__title" th:text="${dish.name}">Калории:</h2>
+                    <p th:text="${'Калории ' + dish.calories}"></p>
                     <div class="dish__ingredients">
-                        <p>Здесь должен быть вес</p>
-                        <p>Ингредиенты</p>
+                        <p th:text="${'Вес: ' + dish.weight}"></p>
+                        <p style="display: inline">Ингредиенты:</p>
                         <p th:each="ingredient:${dish.getIngredients()}"
-                           th:text="${ingredient.name}"></p>
+                           th:text="${' , ' + ingredient.name}" style="display: inline"></p>
                     </div>
                     <div class="dish__footer">
                         <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
