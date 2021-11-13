@@ -9,7 +9,6 @@
     <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
     <link rel="stylesheet" th:href="@{/css/dish.css}">
     <link th:href="@{/images/icon-close.svg}">
-
     <meta charset="UTF-8">
     <title>Блюдо</title>
 </head>
@@ -50,8 +49,6 @@
     </div>
 </section>
 </div>
-
-
 <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
     <button type="button">Редактировать</button>
 </a>
@@ -59,17 +56,5 @@
 <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
     <input type="submit" value="Удалить блюдо">
 </form>
-
-<!--        <div class="shopping-cart">
-            <p class="shopping-cart__info">Товаров в корзине:</p>
-            <p class="shopping-cart__count">0</p>
-            <button class="shopping-cart__btn">Очистить корзину</button>
-        </div>-->
-
-
-<footer>
-    <div th:insert="/viewhtml/footer :: footer"></div>
-</footer>
-
 </body>
 </html>

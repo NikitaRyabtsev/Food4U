@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,9 @@ public class Orders {
     private Integer id;
     @Column(name="status")
     private String status;
+    @NotNull
     @Column(name="numberOfBooking")
-    private String numberOfBooking;
+    private double numberOfBooking;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
@@ -43,7 +45,7 @@ public class Orders {
         this.status = status;
     }
 
-    public Orders(Integer id, String status, String numberOfBooking) {
+    public Orders(Integer id, String status, int numberOfBooking) {
         this.id = id;
         this.status = status;
         this.numberOfBooking = numberOfBooking;
@@ -53,18 +55,17 @@ public class Orders {
         return id;
     }
 
-    public String getNumberOfBooking() {
+    public double getNumberOfBooking() {
         return numberOfBooking;
     }
 
-    public void setNumberOfBooking(String numberOfBooking) {
+    public void setNumberOfBooking(double numberOfBooking) {
         this.numberOfBooking = numberOfBooking;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public String getStatus() {
         return status;
