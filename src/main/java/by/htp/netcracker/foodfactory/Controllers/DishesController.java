@@ -68,6 +68,7 @@ public class DishesController {
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
+
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("dish") Dish dish) {
         dishRepository.save(dish);

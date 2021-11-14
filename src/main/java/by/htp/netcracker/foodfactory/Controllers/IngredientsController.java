@@ -1,11 +1,11 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-
 import by.htp.netcracker.foodfactory.Model.Ingredient;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,7 +32,7 @@ public class IngredientsController {
     }
 
     @PostMapping("/new")
-    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient ,  HttpServletRequest request){
+    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient , HttpServletRequest request){
         ingredientRepository.save(ingredient);
         return "redirect:/ingredients";
     }

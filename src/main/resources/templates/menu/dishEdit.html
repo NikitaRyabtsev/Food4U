@@ -36,7 +36,8 @@
             </select>
             <br/>
             <div>
-                <select id="selectIngredients" class="multi-select" name="selectDishes" th:field="*{ingredients}" multiple="multiple">
+                <select id="selectIngredients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
+                        multiple="multiple">
                     <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
                             th:text="${ingredient.name}"></option>
                 </select>

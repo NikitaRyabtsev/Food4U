@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!-- Ignite UI for jQuery Required Combined CSS Files -->
+    <link href="http://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
+          rel="stylesheet"/>
+    <link href="http://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css" rel="stylesheet"/>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+
+</head>
+<body>
+<style>
+    .combo-label {
+        margin-bottom: .5em;
+    }
+</style>
+<h3>Select Infragistics products by using:</h3>
+<br/>
+<div class=".ui-widget-overlay"></div>
+<h4 class="combo-label">- Single Selection, opens drop down on focus</h4>
+<div id="singleSelectCombo"></div>
+
+<h4 class="combo-label">- Multiple Selection</h4>
+<div id="multiSelectCombo"></div>
+
+<h4 class="combo-label">- Multiple Selection with Checkboxes</h4>
+<div id="checkboxSelectCombo"></div>
+
+<script>
+    var test;
+    $.ajax({
+        url: "http://localhost:8080/rest/ingredients",
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            // Do what ever with the response here
+            console.log(response);
+            // or save it for later.
+            test = response;
+        }
+    });
+
+    $(function () {
+
+        $("#singleSelectCombo").igCombo({
+            width: 300,
+            dataSource: "http://localhost:8080/rest/ingredients",
+            textKey: "Name",
+            valueKey: "Name",
+            dropDownOnFocus: true,
+            dropDownOrientation: "bottom"
+        });
+
+        $("#multiSelectCombo").igCombo({
+            width: 300,
+            dataSource: "http://localhost:8080/rest/ingredients/",
+            textKey: "Name",
+            valueKey: "Name",
+            multiSelection: {
+                enabled: true
+            },
+            dropDownOrientation: "bottom"
+        });
+
+        $("#checkboxSelectCombo").igCombo({
+            width: 300,
+            dataSource:"http://localhost:8080/rest/ingredients/",
+            textKey: "Name",
+            valueKey: "Name",
+            multiSelection: {
+                enabled: true,
+                showCheckboxes: true
+            },
+            dropDownOrientation: "bottom"
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

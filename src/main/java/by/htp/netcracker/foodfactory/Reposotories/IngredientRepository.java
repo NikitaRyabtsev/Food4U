@@ -20,6 +20,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient,Integer> 
     Ingredient save(Ingredient ingredient);
 
     @Override
-    void deleteById(Integer integer);
+    void deleteById(Integer id);
+
 
 }
