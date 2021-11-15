@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/authorization.css">
@@ -77,6 +77,19 @@
         <li>
             <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Helper.Type).FAST_FOOD})}">
                 Фастфуд
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Helper.Type).FAST_FOOD})}">
+                Фастфуд
+            </a>
+        </li>
+        <li>
+            <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты
+            </a>
+        </li>
+        <li>
+            <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда
             </a>
         </li>
 

@@ -31,10 +31,10 @@
                     <input type="email" placeholder="E-mail" th:field="*{email}" id="email" required>
                      <br/>
                     <label for="psw"><b>Пароль</b></label>
-                    <input type="password" placeholder="Пароль" th:field="*{password}" minlength="8"  maxlength="16" id="psw" required>
+                    <input type="password" placeholder="Пароль(от 8 до 16 символов)" th:field="*{password}" minlength="8"  maxlength="16" id="psw" required>
 
                     <label for="login"><b>Логин</b></label>
-                    <input type="text" placeholder="Логин" id="login" th:field="*{login}" minlength="8" maxlength="16"required>
+                    <input type="text" placeholder="Логин(от 8 до 16 символов)" id="login" th:field="*{username}" minlength="8" maxlength="16"required>
 
                     <label for="name"><b>Имя</b></label>
                     <input type="text" placeholder="Имя" id="name" th:field="*{name}" required>
@@ -43,7 +43,7 @@
                     <input type="text" placeholder="Фамилия" id="secondName" th:field="*{surname}" required>
 
                     <label for="sex"><b>Пол</b></label>
-                    <select th:field="*{block}" id="sex">
+                    <select th:field="*{block}" id="sex" class="ыу">
                         <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Sex).values()}"
                                 th:value="${user}" th:text="${user.displayValue}"></option>
                     </select>

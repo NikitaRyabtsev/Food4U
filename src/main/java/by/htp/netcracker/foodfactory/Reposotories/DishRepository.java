@@ -15,10 +15,19 @@ public interface DishRepository extends JpaRepository<Dish,Integer> {
     @Override
     List<Dish> findAll();
 
-    Dish save(Dish dish);
+    @Override
+    <S extends Dish> S save(S entity);
 
-    Dish getById(Integer id);
+    @Query(value = "SELECT dish.id ,SUM(ingredient.weight) AS weight ,SUM(ingredient.calories) AS calories,dish.name , src,type, price FROM dish " +
+            "LEFT JOIN dish_has_ingredient ON dish.id = dish_id " +
+            "LEFT JOIN ingredient ON ingredient_id = ingredient.id" +
+            " WHERE dish.id = :dish.id " , nativeQuery = true)
+    Dish getById(@Param("dish.id")Integer id);
+
+    void deleteDishById(Integer id);
 
     List<Dish> getDishByType(String type);
+
+
 
 }

@@ -1,12 +1,15 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name="Ingredient")
-public class Ingredient {
+public class Ingredient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,7 @@ public class Ingredient {
     private double fats;
     @Column
     private double carbohydrates;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="dish_has_ingredient",
             joinColumns = @JoinColumn(name="ingredient_id"),

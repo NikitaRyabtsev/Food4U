@@ -1,9 +1,8 @@
 package by.htp.netcracker.foodfactory.Model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +41,7 @@ public class User {
         this.id = id;
         this.role = role;
         this.name = name;
-        this.login = login;
+        this.username = login;
         this.password = password;
         this.email = email;
         this.surname = surname;
@@ -52,6 +51,17 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String role, String name, String login, String password, String email, String surname, String sex, String block) {
+        this.role = role;
+        this.name = name;
+        this.username = login;
+        this.password = password;
+        this.email = email;
+        this.surname = surname;
+        this.sex = sex;
+        this.block = block;
     }
 
     public List<Orders> getOrders() {
@@ -86,12 +96,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String login) {
+        this.username = login;
     }
 
     public String getPassword() {
@@ -134,6 +144,12 @@ public class User {
         this.block = block;
     }
 
+    public List<String> getRolesList(){
+        if(!role.isEmpty()){
+            return Arrays.asList(role.split(","));
+        }
+        return new ArrayList<>();
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,7 +158,7 @@ public class User {
         return id == user.id &&
                 Objects.equals(role, user.role) &&
                 Objects.equals(name, user.name) &&
-                Objects.equals(login, user.login) &&
+                Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(surname, user.surname) &&
@@ -152,7 +168,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, role, name, login, password, email, surname, sex, block);
+        return Objects.hash(id, role, name, username, password, email, surname, sex, block);
     }
 
     @Override
@@ -161,7 +177,7 @@ public class User {
                 "id=" + id +
                 ", role='" + role + '\'' +
                 ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
+                ", login='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", surname='" + surname + '\'' +

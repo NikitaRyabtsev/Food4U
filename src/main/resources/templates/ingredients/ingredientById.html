@@ -44,7 +44,7 @@
     <button type="button" class="btn btn-secondary">Редактировать</button>
 </a>
 <form th:method="POST" th:action="@{/ingredients/{id}/delete(id = ${ingredient.getId()})}">
-    <input type="button" class="btn btn-secondary" value="Удалить ингредиент">
+    <input type="submit" class="btn btn-secondary" value="Удалить ингредиент">
 </form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

@@ -5,12 +5,11 @@ import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/menu")
@@ -25,10 +24,6 @@ public class DishesController {
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
         this.ordersRepository = ordersRepository;
-    }
-    @GetMapping("/main")
-    public String toMainPage() {
-        return "viewhtml/main";
     }
 
     @GetMapping("/dishes")
@@ -55,6 +50,7 @@ public class DishesController {
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("dishes", dishRepository.getById(id));
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dish";
     }
 
@@ -67,8 +63,10 @@ public class DishesController {
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("dish", dishRepository.getById(id));
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
+
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("dish") Dish dish) {
         dishRepository.save(dish);
@@ -81,3 +79,4 @@ public class DishesController {
         return "menu/dishesType";
     }
 }
+

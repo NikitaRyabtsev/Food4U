@@ -32,7 +32,7 @@
             </select>
             <br/>
             <div>
-                <select id="selectDishes" class="multi-select" name="selectDishes" th:field="*{ingredients}"
+                <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
                         multiple="multiple">
                     <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
                             th:text="${ingredient.name}"></option>
@@ -42,6 +42,13 @@
             <label for="price">Введите цену</label>
             <br>
             <input type="number" th:field="*{price}" id="price" class="add__btn" required>
+            <br/>
+            <input type="text" th:field="*{weight}" id ="weight" class="add__btn">
+            <br/>
+            <input type="text" th:field="*{calories}" id ="calories" class="add__btn">
+            <br/>
+            <label for="src">Введите путь к картинке</label>
+            <input type="text" th:field="*{src}" id ="src" class="add__btn">
             <br/>
             <input type="submit" value="Создать" class="btn btn-secondary">
         </form>
