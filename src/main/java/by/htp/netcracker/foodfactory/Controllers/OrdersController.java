@@ -1,4 +1,6 @@
 package by.htp.netcracker.foodfactory.Controllers;
+
+
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
@@ -20,89 +22,73 @@ import java.security.Principal;
 @RequestMapping("/order")
 public class OrdersController {
 
-    private final DishRepository dishRepository;
-    private final OrdersRepository orderRepository;
-    private final IngredientRepository ingredientRepository;
-    private final OrderService orderService;
+    private DishRepository dishRepository;
+    private OrdersRepository orderRepository;
+    private IngredientRepository ingredientRepository;
+    private OrderService orderService;
 
+    public OrdersController(OrdersRepository orderRepository , DishRepository dishRepository ,
+                            OrderService orderService, IngredientRepository ingredientRepository ) {
+        this.dishRepository = dishRepository;
+        this.orderRepository = orderRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.orderService = orderService;
+    }
 
-    public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository,OrderService orderService) {
-            this.dishRepository = dishRepository;
-            this.orderRepository = orderRepository;
-            this.ingredientRepository = ingredientRepository;
-            this.orderService = orderService;
+    @GetMapping("/orders")
+    public String showOrders(Model model) {
+        model.addAttribute("orders", orderRepository.findAll());
+        model.addAttribute("dishes",dishRepository.findAll());
+        model.addAttribute("ingredients",ingredientRepository.findAll());
+        return "order/orders";
+    }
 
-        }
+    @GetMapping("/newOrder")
+    public String newOrder(Model model) {
+        model.addAttribute("order", new Orders());
+        model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("ingredients",dishRepository.findAll());
+        return "order/newOrder";
+    }
 
-        @GetMapping("/orders")
-        public String showOrders (Model model){
-            model.addAttribute("orders", orderRepository.findAll());
-            model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("ingredients", ingredientRepository.findAll());
-            return "order/orders";
-        }
+    @PostMapping("/newOrder")
+    public String addDishInOrder(@ModelAttribute("order") Orders orders) {
+        orderRepository.save(orders);
+        return "redirect:/order/newOrder";
+    }
 
-        @GetMapping("/newOrder")
-        public String newOrder (Model model){
-            model.addAttribute("order", new Orders());
-            model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("ingredients", dishRepository.findAll());
-            return "order/newOrder";
-        }
+    @GetMapping("/{id}/order")
+    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("order", orderRepository.getById(id));
+        model.addAttribute("dishes", dishRepository.findAll());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
+        return "order/order";
+    }
 
-        @PostMapping("/newOrder")
-        public String addOrder (@ModelAttribute("order") Orders orders){
-            orderRepository.save(orders);
-            return "redirect:/order/newOrder";
-        }
+    @PostMapping("/{id}/delete")
+    public String deleteDish(@PathVariable("id") Integer id) {
+        orderRepository.deleteById(id);
+        return "redirect:/order/orders";
+    }
 
-        @GetMapping("/{id}/order")
-        public String getDishWithIngredientById (@PathVariable("id") Integer id, Model model){
-            model.addAttribute("order", orderRepository.getById(id));
-            model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("ingredients", ingredientRepository.findAll());
-            return "order/order";
-        }
+    @PostMapping("/{dish}/deleteDishFromOrder")
+    public String deleteDishFromOrder(@ModelAttribute("dish") Dish dish){
+        orderService.deleteDishFromOrder(dish);
+        return "redirect:/order/orders";
+    }
 
-        @PostMapping("/{id}/delete")
-        public String deleteOrder (@PathVariable("id") Integer id){
-            orderRepository.deleteById(id);
-            return "redirect:/order/orders";
-        }
-
-        @Transactional
-        @PostMapping("/delete/{idDish}")
-        public String deleteDishFromOrder (@PathVariable("idDish") Integer id){
-            orderRepository.deleteDishFromOrderById(id);
-            return "redirect:/order/orders";
-        }
-
-        @PostMapping("/newDish")
-        public String addDishInOrder (@ModelAttribute("dish") Dish dish){
-            dishRepository.save(dish);
-            return "redirect:/order";
-        }
-
-        @GetMapping("/{id}/edit")
-        public String editOrder (Model model, @PathVariable("id") Integer id){
-            model.addAttribute("order", orderRepository.getById(id));
-            model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("ingredients", ingredientRepository.findAll());
-            return "menu/dishEdit";
-        }
-
-        @PostMapping("/{id}/edit")
-        public String updateOrder (@ModelAttribute("order") Orders order){
-            orderRepository.save(order);
-            return "redirect:/menu/dishes";
-        }
-
-        @GetMapping("/userOrders")
-        public String findUserOrder(Model model , Principal principal){
-            model.addAttribute("order",model.addAttribute(orderService.findOrderByUserName(principal.getName())));
-            return "/order/ordersHistory";
-        }
-
+//    @GetMapping("/{id}/edit")
+//    public String editDish(Model model, @PathVariable("id") Integer id) {
+//        model.addAttribute("order", orderRepository.getById(id));
+//        model.addAttribute("dishes", dishRepository.findAll());
+//        model.addAttribute("ingredients", ingredientRepository.findAll());
+//        return "menu/dishEdit";
+//    }
+//
+//    @PostMapping("/{id}/edit")
+//    public String updateDish(@ModelAttribute("order") Order order) {
+//        orderRepository.save(order);
+//        return "redirect:/menu/dishes";
+//    }
 
 }

@@ -22,30 +22,25 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<form th:action="@{/order/{id}/edit/(id=${order.getId()})}" th:method="POST" th:object="${order}">
-    <section class="products">
-        <div class="products__body" th:each="order:${order}">
-            <div class="product" th:each="dish:${order.getDishes()}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                    <img class="product__img" th:src="${dish.src}">
-                </a>
-                <p th:text="${dish.name}"></p>
-                <div class="product__info">
-                    <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dish.price}"></p>
-                </div>
-                <form th:method="POST" th:action="@{/order/delete/{idDish}(idDish = ${dish.getId()})} ">
-                    <input type="submit" class="btn btn-secondary" value="Удалить блюдо">
-                </form>
+<section class="products">
+    <div class="products__body" th:each="order:${order}">
+        <div class="product" th:each="dish:${order.getDishes()}">
+            <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                <img class="product__img" th:src="${dish.src}">
+            </a>
+            <p th:text="${dish.name}"></p>
+            <div class="product__info">
+                <p class="product__text">Стоимость:</p>
+                <p class="product__price" th:text="${dish.price}"></p>
             </div>
+            <form th:method="POST" th:action="@{/order/{dish}/deleteDishFromOrder(dish = ${dish.getId()})} ">
+                <input type="submit" value="Удалить блюдо">
+            </form>
         </div>
-    </section>
-</form>
-<form th:method="POST" th:action="@{/order/{id}/delete(id = ${order.getId()})} ">
+    </div>
+</section>
+<form th:method="POST" th:action="@{/order/{dish}/delete(id = ${order.getId()})} ">
     <input type="submit" value="Удалить Заказ">
 </form>
-<footer>
-    <div th:insert="/viewhtml/footer :: footer"></div>
-</footer>
 </body>
 </html>
