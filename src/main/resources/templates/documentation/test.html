@@ -54,8 +54,8 @@
         $("#singleSelectCombo").igCombo({
             width: 300,
             dataSource: "https://localhost:8082/rest/ingredients",
-            textKey: "Name",
-            valueKey: "Name",
+            textKey: "name",
+            valueKey: "name",
             dropDownOnFocus: true,
             dropDownOrientation: "bottom"
         });
@@ -63,7 +63,7 @@
         $("#multiSelectCombo").igCombo({
             width: 300,
             dataSource: "https://localhost:8082/rest/ingredients/",
-            textKey: "Name",
+            textKey: "name",
             valueKey: "Name",
             multiSelection: {
                 enabled: true

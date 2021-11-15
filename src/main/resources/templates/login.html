@@ -29,13 +29,13 @@
                         <h1>Авторизация</h1>
                         <p>Пожалуйста заполните форму для авторизации</p>
                         <hr>
-                        <div th:if="{param.error}">
-                            Не верный логин или пароль.
-                        </div>
-                        <div th:if="${param.logout}">
-                            Вы вышли из своего аккаунта.
-                        </div>
-                        <label for="username"><b>Логин</b></label>
+<!--                        <div th:if="{param.error}">-->
+<!--                            Не верный логин или пароль.-->
+<!--                        </div>-->
+<!--                        <div th:if="${param.logout}">-->
+<!--                            Вы вышли из своего аккаунта.-->
+<!--                        </div>-->
+<!--                        <label for="username"><b>Логин</b></label>-->
                         <input type="text" placeholder="Введите логин" id="username" name="username" required>
 
                         <label for="password"><b>Password</b></label>

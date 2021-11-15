@@ -1,4 +1,4 @@
-package by.htp.netcracker.foodfactory.Controllers;
+package by.htp.netcracker.foodfactory.RestControllers;
 
 
 import by.htp.netcracker.foodfactory.Model.Orders;

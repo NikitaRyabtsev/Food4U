@@ -17,9 +17,9 @@ public class User {
     private String role;
     @Column
     private String name;
-    @Column
+    @Column(nullable = false)
     private String username;
-    @Column
+    @Column(nullable = false)
     private String password;
     @Column
     private String email;

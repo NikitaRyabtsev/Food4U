@@ -50,9 +50,9 @@ public class DishesController {
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("dishes", dishRepository.getById(id));
+        model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dish";
     }
-
 
     @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id") Integer id) {

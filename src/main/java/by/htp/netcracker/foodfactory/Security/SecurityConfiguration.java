@@ -43,26 +43,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/rest/**").permitAll()
                 .antMatchers("/main").permitAll()
+                .antMatchers("/menu/dish").permitAll()
                 .antMatchers("/order/newOrder").permitAll()
                 .antMatchers("/order/addOrder").authenticated()
                 .antMatchers("/order/orders").authenticated()
                 .antMatchers("/order/orders").hasAnyRole("ADMIN","USER")
                 .antMatchers("/ingredients/**").authenticated()
                 .antMatchers("/ingredients/**").hasAnyRole("ADMIN")
-                .antMatchers("/menu/**").authenticated()
-                .antMatchers("/menu/**").hasAnyRole("ADMIN","USER")
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
                 .and()
-                .formLogin();
-//                .loginPage("/login");
-//                .and()
-//                .logout()
-//                .logoutUrl("")
-//                .logoutSuccessUrl("/order/newOrder");
-
+                .formLogin()
+//                .loginPage("/login")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/main");
 
     }
 

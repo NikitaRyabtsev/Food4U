@@ -25,7 +25,9 @@
                     <li></li>
                     <li></li>
 
-                    <li><a href="/order/orders" class="btn btn-primary">Заказы</a></li>
+                    <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')">
+                        <a th:href="@{~/order/userOrders}" class="btn btn-primary">Заказы</a>
+                    </li>
                     </li>
                     <li><a href="/user" class="btn btn-primary">Профиль </a></li>
                     <li>
