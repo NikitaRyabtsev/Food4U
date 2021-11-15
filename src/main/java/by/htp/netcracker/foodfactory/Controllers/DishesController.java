@@ -5,6 +5,7 @@ import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -23,10 +24,6 @@ public class DishesController {
         this.dishRepository = dishRepository;
         this.ingredientRepository = ingredientRepository;
         this.ordersRepository = ordersRepository;
-    }
-    @GetMapping("/main")
-    public String toMainPage() {
-        return "viewhtml/main";
     }
 
     @GetMapping("/dishes")
@@ -55,6 +52,7 @@ public class DishesController {
         model.addAttribute("dishes", dishRepository.getById(id));
         return "menu/dish";
     }
+
 
     @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id") Integer id) {

@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-
     <!-- Ignite UI for jQuery Required Combined CSS Files -->
-    <link href="http://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
           rel="stylesheet"/>
-    <link href="http://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css" rel="stylesheet"/>
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css" rel="stylesheet"/>
 
-    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
     <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
-    <script src="http://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
-    <script src="http://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
 
 </head>
 <body>
@@ -39,7 +38,7 @@
 <script>
     var test;
     $.ajax({
-        url: "http://localhost:8080/rest/ingredients",
+        url: "https://localhost:8082/rest/ingredients",
         type: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -54,7 +53,7 @@
 
         $("#singleSelectCombo").igCombo({
             width: 300,
-            dataSource: "http://localhost:8080/rest/ingredients",
+            dataSource: "https://localhost:8082/rest/ingredients",
             textKey: "Name",
             valueKey: "Name",
             dropDownOnFocus: true,
@@ -63,7 +62,7 @@
 
         $("#multiSelectCombo").igCombo({
             width: 300,
-            dataSource: "http://localhost:8080/rest/ingredients/",
+            dataSource: "https://localhost:8082/rest/ingredients/",
             textKey: "Name",
             valueKey: "Name",
             multiSelection: {
@@ -74,7 +73,7 @@
 
         $("#checkboxSelectCombo").igCombo({
             width: 300,
-            dataSource:"http://localhost:8080/rest/ingredients/",
+            dataSource:"https://localhost:8082/rest/ingredients/",
             textKey: "Name",
             valueKey: "Name",
             multiSelection: {

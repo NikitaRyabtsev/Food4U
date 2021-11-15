@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Controllers;
 
 import by.htp.netcracker.foodfactory.Model.Ingredient;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class IngredientsController {
         model.addAttribute("ingredients", ingredientRepository.findAll());
         return "ingredients/ingredients";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/new")
     public String newIngredient(Model model){
         model.addAttribute("ingredient",new Ingredient());
@@ -49,12 +50,13 @@ public class IngredientsController {
         return "ingredients/ingredientEdit";
 
     }
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("ingredient") Ingredient ingredient){
         ingredientRepository.save(ingredient);
         return "redirect:/ingredients";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id")Integer id){
         ingredientRepository.deleteById(id);

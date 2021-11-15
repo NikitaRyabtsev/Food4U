@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
@@ -24,7 +24,7 @@
 </div>
 <section class="dish__wrapper">
     <div class="container">
-        <div class="dish" th:each="dish:${dishes}">
+        <div class="dish" th:each="dish:${dishes}" >
             <div class="dish__banner">
                 <img class="dish__img" th:src="${dish.src}">
             </div>
@@ -49,11 +49,10 @@
     </div>
 </section>
 </div>
-<a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
+<a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
     <button type="button">Редактировать</button>
 </a>
-
-<form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
+<form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} " sec:authorize="hasAnyRole('ROLE_ADMIN')">
     <input type="submit" value="Удалить блюдо">
 </form>
 </body>

@@ -4,7 +4,6 @@ import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
-import by.htp.netcracker.foodfactory.Service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +21,14 @@ public class OrdersController {
     private DishRepository dishRepository;
     private OrdersRepository orderRepository;
     private IngredientRepository ingredientRepository;
-    private OrderService orderService;
+
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
                             IngredientRepository ingredientRepository) {
             this.dishRepository = dishRepository;
             this.orderRepository = orderRepository;
             this.ingredientRepository = ingredientRepository;
-            this.orderService = orderService;
+
         }
 
         @GetMapping("/orders")
