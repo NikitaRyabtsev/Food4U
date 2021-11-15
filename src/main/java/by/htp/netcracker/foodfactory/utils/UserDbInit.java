@@ -27,7 +27,7 @@
 //        // Crete users
 //        User user = new User("USER", "Никита", "user12345", passwordEncoder.encode("user12345"), "123nikita123@mail.ru",
 //                "Рябцев", " Мужчина", "UNBLOCK");
-//        User admin = new User("USER", "Артём", "admin12345", passwordEncoder.encode("admin12345"), "123admin123@mail.ru",
+//        User admin = new User("ADMIN", "Артём", "admin12345", passwordEncoder.encode("admin12345"), "123admin123@mail.ru",
 //                "Рябцев", " Мужчина", "UNBLOCK");
 //
 //        List<User> users = Arrays.asList(user, admin);

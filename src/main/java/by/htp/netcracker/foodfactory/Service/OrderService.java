@@ -6,6 +6,9 @@ import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OrderService {
     private final UserRepository userRepository;
@@ -16,8 +19,15 @@ public class OrderService {
         this.ordersRepository = ordersRepository;
     }
 
+    public List<Orders> findOrdersByUserName(String username){
+        User user = userRepository.getUserByUsername(username);
+        List<Orders> orders = ordersRepository.findOrdersByUserOrderById(user);
+        return orders;
+    }
     public Orders findOrderByUserName(String username){
         User user = userRepository.getUserByUsername(username);
-        return ordersRepository.findOrdersByUser(user);
+        Orders order = ordersRepository.findOrdersByUser(user);
+
+        return order;
     }
 }

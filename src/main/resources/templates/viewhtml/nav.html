@@ -80,11 +80,6 @@
             </a>
         </li>
         <li>
-            <a th:href="@{/menu/dishes/{type}(type=${T(by.htp.netcracker.foodfactory.Helper.Type).FAST_FOOD})}">
-                Фастфуд
-            </a>
-        </li>
-        <li>
             <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты
             </a>
         </li>
@@ -92,7 +87,6 @@
             <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда
             </a>
         </li>
-
     </ul>
 </nav>
 </body>

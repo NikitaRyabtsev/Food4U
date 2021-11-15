@@ -36,8 +36,8 @@ public class OrdersController {
         }
 
         @GetMapping("/orders")
-        public String showOrders (Model model){
-            model.addAttribute("orders", orderRepository.findAll());
+        public String showOrders (Model model , Principal principal){
+            model.addAttribute("orders",orderService.findOrdersByUserName(principal.getName()));
             model.addAttribute("dishes", dishRepository.findAll());
             model.addAttribute("ingredients", ingredientRepository.findAll());
             return "order/orders";
@@ -98,10 +98,12 @@ public class OrdersController {
             return "redirect:/menu/dishes";
         }
 
-        @GetMapping("/userOrders")
+        @GetMapping("/userOrder")
         public String findUserOrder(Model model , Principal principal){
-            model.addAttribute("order",model.addAttribute(orderService.findOrderByUserName(principal.getName())));
-            return "/order/ordersHistory";
+            model.addAttribute("dishes", dishRepository.findAll());
+            model.addAttribute("ingredients", ingredientRepository.findAll());
+            model.addAttribute("order",orderService.findOrderByUserName(principal.getName()));
+            return "/order/order";
         }
 
 

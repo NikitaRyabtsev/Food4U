@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -34,9 +36,9 @@ public class UserController {
         return "redirect:/menu/dishes";
     }
 
-    @GetMapping("/{id}")
-    public String toUserProfile(@PathVariable("id") Integer id , Model model){
-        model.addAttribute("user",userRepository.getById(id));
+    @GetMapping("/profile")
+    public String toUserProfile(Model model , Principal principal){
+        model.addAttribute("user",userRepository.getUserByUsername(principal.getName()));
         return "user/profile";
     }
 
@@ -49,7 +51,7 @@ public class UserController {
     @PostMapping("edit/{id}")
     public String updateProfile(@ModelAttribute("user") User user) {
         userRepository.save(user);
-        return "redirect:/user";
+        return "redirect:/user/profile";
     }
 
 }

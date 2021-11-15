@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
@@ -44,6 +44,9 @@
 <form th:method="POST" th:action="@{/order/{id}/delete(id = ${order.getId()})} ">
     <input type="submit" value="Удалить Заказ">
 </form>
+<div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+    <a th:href="@{~/order/orders}" class="btn btn-primary">История заказов</a>
+</div>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>

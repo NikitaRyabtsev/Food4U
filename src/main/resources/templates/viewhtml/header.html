@@ -14,7 +14,7 @@
     <header class="header_header">
         <div class="container_header">
             <nav_header>
-                <a href="/menu/main" class="logo_header">
+                <a href="/main" class="logo_header">
                     <img src="/images/Food4Upng.png" class="img">
                 </a>
                 <ul>
@@ -24,12 +24,11 @@
                     </a></li>
                     <li></li>
                     <li></li>
-
-                    <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')">
-                        <a th:href="@{~/order/userOrders}" class="btn btn-primary">Заказы</a>
                     </li>
+                    <li><a th:href="@{~/user/profile}" class="btn btn-primary">Профиль </a></li>
+                    <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                        <a th:href="@{~/order/userOrder}" class="btn btn-primary">Корзина</a>
                     </li>
-                    <li><a href="/user" class="btn btn-primary">Профиль </a></li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
                             <button sec:authorize="isAuthenticated()" class="btn btn-primary"
