@@ -1,63 +1,107 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <link rel="icon" th:href="@{/images/favicon.ico}">
-        <link rel="stylesheet" th:href="@{/css/select.css}">
-        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <meta charset="UTF-8">
-        <title>Добавление блюда с ингредиентами</title>
-    </head>
-    <body role="main" style="text-align: center">
-        <header class="header_header">
-            <div th:insert="/viewhtml/header :: header"></div>
-        </header>
-        <nav>
-            <div th:insert="/viewhtml/nav :: nav"></div>
-        </nav>
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/select.css}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <!-- Ignite UI for jQuery Required Combined CSS Files -->
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
+          rel="stylesheet"/>
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css"
+          rel="stylesheet"/>
 
-        <h3>Добавить новое блюдо</h3>
-        <form th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}">
-            <label for="name">Введите название</label>
-            <br/>
-            <input type="text" th:field="*{name}" id="name" class="add__btn" required>
-            <br/>
-            <label>Введите тип</label>
-            <br/>
-            <select th:field="*{type}" name="type" id="type" class="select">
-                <option value="0">Выберите тип</option>
-                <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                        th:value="${dish}" th:text="${dish.displayValue}"></option>
-            </select>
-            <br/>
-            <div>
-                <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
-                        multiple="multiple">
-                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                            th:text="${ingredient.name}"></option>
-                </select>
-            </div>
-            <br>
-            <label for="price">Введите цену</label>
-            <br>
-            <input type="number" th:field="*{price}" id="price" class="add__btn" required>
-            <br/>
-            <input type="text" th:field="*{weight}" id ="weight" class="add__btn">
-            <br/>
-            <input type="text" th:field="*{calories}" id ="calories" class="add__btn">
-            <br/>
-            <label for="src">Введите путь к картинке</label>
-            <input type="text" th:field="*{src}" id ="src" class="add__btn">
-            <br/>
-            <input type="submit" value="Создать" class="btn btn-secondary">
-        </form>
-        <!--        <a href="/menu/newIngredientInDish">-->
-        <!--            <button type="button">Добавить новый ингредиент</button>>-->
-        <!--        </a>-->
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
-    </body>
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Добавление блюда с ингредиентами</title>
+</head>
+<body role="main" style="text-align: center">
+<header class="header_header">
+    <div th:insert="/viewhtml/header :: header"></div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+
+<h3>Добавить новое блюдо</h3>
+<form th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
+    <label for="name">Введите название</label>
+    <br/>
+    <input type="text" th:field="*{name}" id="name" class="add__btn" required>
+    <br/>
+    <label>Введите тип</label>
+    <br/>
+    <select th:field="*{type}" name="type" id="type" class="select">
+        <option value="0">Выберите тип</option>
+        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                th:value="${dish}" th:text="${dish.displayValue}"></option>
+    </select>
+    <br/>
+    <div>
+        <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
+                multiple="multiple">
+            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                    th:text="${ingredient.name}"></option>
+        </select>
+    </div>
+<!--    <h4 class="combo-label">Выберите ингредиенты</h4>-->
+<!--    <input type="text" id="multiSelectCombo" th:field="*{ingredients}">-->
+<!--    <br>-->
+    <label for="price">Введите цену</label>
+    <br>
+    <input type="number" th:field="*{price}" id="price" class="add__btn" required>
+    <br/>
+    <input type="text" th:field="*{weight}" id="weight" class="add__btn">
+    <br/>
+    <input type="text" th:field="*{calories}" id="calories" class="add__btn">
+    <br/>
+    <label for="src">Введите путь к картинке</label>
+    <br/>
+    <input type="text" th:field="*{src}" id="src" class="add__btn">
+    <br/>
+    <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
+</form>
+<!--        <a href="/menu/newIngredientInDish">-->
+<!--            <button type="button">Добавить новый ингредиент</button>>-->
+<!--        </a>-->
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
+
+<script>
+    $(function () {
+
+        $("#multiSelectCombo").igCombo({
+            width: 300,
+            dataSource: "https://localhost:8082/rest/ingredients/",
+            textKey: "name",
+            valueKey: "name",
+            multiSelection: {
+                enabled: true
+            },
+            dropDownOrientation: "bottom"
+        });
+    });
+    // $("#multiSelectCombo").igCombo("selectedItems");
+    document.querySelector("#multiSelectCombo").addEventListener("click", function () {
+        event.target.value();
+    })
+    // $("btn btn-secondary").addEventListener("click",function(){
+    //    console.log("sumbit form" + $("multiSelectCombo")[0].value());
+    //    $("#ingredients").value($("#multiSelectCombo").igCombo("selectedItems")[1].data);
+    //     $("#newDish").submit();
+    // })
+
+
+</script>
+</body>
 
 </html>

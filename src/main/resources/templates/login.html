@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
@@ -20,32 +20,34 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<form>
     <main role="main">
         <article>
             <form name="f" th:action="@{/login}" th:method="POST">
-                <fieldset>
-                    <div class="container">
-                        <h1>Авторизация</h1>
-                        <p>Пожалуйста заполните форму для авторизации</p>
-                        <hr>
-<!--                        <div th:if="{param.error}">-->
-<!--                            Не верный логин или пароль.-->
-<!--                        </div>-->
-<!--                        <div th:if="${param.logout}">-->
-<!--                            Вы вышли из своего аккаунта.-->
-<!--                        </div>-->
-<!--                        <label for="username"><b>Логин</b></label>-->
-                        <input type="text" placeholder="Введите логин" id="username" name="username" required>
+                <div class="container">
+                    <h1>Авторизация</h1>
+                    <p>Пожалуйста заполните форму для авторизации</p>
+                    <hr>
+<!--                    <div th:if="{param.error}">-->
+<!--                        Не верный логин или пароль.-->
+<!--                    </div>-->
+<!--                    <div th:if="${param.logout}">-->
+<!--                        Вы вышли из своего аккаунта.-->
+<!--                    </div>-->
+                    <label for="username"><b>Логин</b></label>
+                    <input type="text" placeholder="Введите логин" id="username" name="username" required>
 
-                        <label for="password"><b>Password</b></label>
-                        <input type="password" placeholder="Введите пароль" id="password" name="password" required>
-                        <hr>
-                        <div style="position: relative">
-                            <button type="submit" class="registerbtn">Войти</button>
-                        </div>
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Введите пароль" id="password" name="password" required>
+                    <hr>
+                    <div >
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                        <label for="remember-me">Remember me</label>
                     </div>
-                </fieldset>
+
+                    <div style="position: relative">
+                        <input type="submit" class="registerbtn" value="Войти">
+                    </div>
+                </div>
             </form>
             <div class="container signin">
                 <p>Вы еще не зарегистрированы? <a href="/user/registration">Регистрация</a>.</p>
@@ -53,7 +55,6 @@
 
         </article>
     </main>
-</form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
