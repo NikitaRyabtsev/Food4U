@@ -23,19 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth
                 .userDetailsService(userPrincipalDetailService);
-//                        .inMemoryAuthentication()
-//                .withUser("user")
-//                .password(passwordEncoder().encode("user123"))
-//                .roles("USER")
-//                .and()
-//                .withUser("admin")
-//                .password(passwordEncoder().encode("admin123"))
-//                .authorities("API", "ROLE_ADMIN");
-//                .roles("ADMIN");
-
     }
 
     @Override
@@ -56,11 +45,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/main")
-//                .loginPage("/login")
+                .loginPage("/login")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/main");
+                .logoutSuccessUrl("/main")
+                .and()
+                .rememberMe();
+
 
     }
 

@@ -1,65 +1,101 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <link rel="icon" th:href="@{/images/favicon.ico}">
-        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/popup/style.css}">
-        <link rel="stylesheet" th:href="@{/css/block.css}">
-        <link rel="stylesheet" th:href="@{/css/products.css}">
-        <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-        <link th:href="@{/images/icon-close.svg}">
-        <meta charset="UTF-8">
-        <title>Блюда</title>
-    </head>
-    <body role="main" style="text-align: center">
-        <header class="header_header">
-            <div th:insert="/viewhtml/header :: header"></div>
-        </header>
-        <nav>
-            <div th:insert="/viewhtml/nav :: nav"></div>
-        </nav>
-        <h3>Меню</h3>
-        <div>
-            <section class="products">
-                <div class="products__body">
-                    <div class="product" th:each="dish:${dishes}">
-                        <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                            <img class="product__img" th:src="${dish.src}">
-                        </a>
-                        <p th:text="${dish.name}"></p>
-                        <div class="product__info">
-                            <p class="product__text">Стоимость:</p>
-                            <p class="product__price" th:text="${dish.price}"></p>
-                        </div>
-                        <button class="product__btn">Добавить в корзину</button>
-                    </div>
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/popup/style.css}">
+    <link rel="stylesheet" th:href="@{/css/block.css}">
+    <link rel="stylesheet" th:href="@{/css/products.css}">
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <link th:href="@{/images/icon-close.svg}">
+    <meta charset="UTF-8">
+    <title>Блюда</title>
+</head>
+<body role="main" style="text-align: center">
+<header class="header_header">
+    <div th:insert="/viewhtml/header :: header"></div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+<h3>Меню</h3>
+<div>
+    <section class="products">
+        <div class="products__body">
+            <div class="product" th:each="dish:${dishes}">
+                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                    <img class="product__img" th:src="${dish.src}">
+                </a>
+                <p th:text="${dish.name}"></p>
+                <div class="product__info" th:with="var=15, price = ${dish.price * var}">
+                    <p class="product__text">Стоимость:</p>
+                    <!--                    <p class="product__price" th:text="${dish.price}"></p>-->
+                    <p class="product__price" th:text="${price}"></p>
+                    </p>
                 </div>
-            </section>
+                <button class="product__btn" >Добавить в корзину</button>
+            </div>
         </div>
+    </section>
+</div>
+<div>
+    <select id="mode" style="display: none">
+        <option value="1">курс валюты на сегодня</option>
+    </select>
+    <div id="Cur" style="">Cur_ID валюты:
+        <input type="hidden" value="431" id="iCur">
+    </div>
+    <input type="button" id="btn" value="получить">
+    <ul id="res">
+    </ul>
+</div>
 
+<a href="/menu/newDish">
+    <button type="button" class="btn btn-secondary">Добавить новое блюдо</button>
+</a>
+<div>
+    <a th:href="@{/ingredients}">
+        <button type="button" class="btn btn-secondary">Просмотреть ингредиенты</button>
+    </a>
+</div>
+</div>
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
+<script type="text/javascript">
+    var uri = 'https://www.nbrb.by/API/';
 
-        <a href="/menu/newDish">
-            <button type="button" class="btn btn-secondary">Добавить новое блюдо</button>
-        </a>
-        <div>
-            <a th:href="@{/ingredients}">
-                <button type="button" class="btn btn-secondary">Просмотреть ингредиенты</button>
-            </a>
-        </div>
-        </div>
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
-        <script>
-            document.querySelector('.market__btn').onclick = function () {
-                document.querySelector('.market-modal-page').classList.toggle('_active');
+    $(function () {
+        $('#mode').change(function () {
+            $('#res').empty();
+            switch ($('#mode').val()) {
+                case '1':
             }
-            document.querySelector('.market-modal-page__icon-close').onclick = function () {
-                document.querySelector('.market-modal-page').classList.toggle('_active');
+            ;
+        });
+        $('#btn').click(function () {
+            $('#res').empty();
+            $('#btn').attr("disabled", "disabled");
+            switch ($('#mode').val()) {
+                case '1':
+                    ratetoday(0);
+                    break;
             }
-        </script>
+        });
+    });
+    function ratetoday(p) {
+        $.getJSON(uri + 'ExRates/Rates/' + $('#iCur').val(), {'ParamMode': p})
+            .done(function (data) {
+                $('<li>', {text: JSON.stringify(data)}).appendTo($('#res'));
+                $('#btn').removeAttr("disabled");
+            }).error(function (err) {
+            $('#btn').removeAttr("disabled");
+            alert('ошибка');
+        });
+    };
+</script>
 
-    </body>
+</body>
 </html>

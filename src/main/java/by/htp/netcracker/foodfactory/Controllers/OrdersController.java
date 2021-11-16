@@ -5,6 +5,7 @@ import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/order")
-public class OrdersController {
+public class OrdersController{
 
     private final DishRepository dishRepository;
     private final OrdersRepository orderRepository;
@@ -44,13 +45,15 @@ public class OrdersController {
         }
 
         @GetMapping("/newOrder")
-        public String newOrder (Model model){
+        public String newOrder (Model model,Principal principal){
             model.addAttribute("order", new Orders());
             model.addAttribute("dishes", dishRepository.findAll());
             model.addAttribute("ingredients", dishRepository.findAll());
+//            model.addAttribute("user",orderService.findOrderByUserName(principal.getName()));
             return "order/newOrder";
         }
 
+        @PreAuthorize("hasAnyRole('USER','ADMIN')")
         @PostMapping("/newOrder")
         public String addOrder (@ModelAttribute("order") Orders orders){
             orderRepository.save(orders);
@@ -105,6 +108,5 @@ public class OrdersController {
             model.addAttribute("order",orderService.findOrderByUserName(principal.getName()));
             return "/order/order";
         }
-
 
 }
