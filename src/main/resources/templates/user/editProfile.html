@@ -32,7 +32,7 @@
                 <input type="email" placeholder="E-mail" th:field="*{email}" id="email" required>
                 <br/>
                 <label for="psw"><b>Пароль</b></label>
-                <input type="text" placeholder="Пароль" th:field="*{password}" id="psw" minlength="8"  maxlength="16" required>
+                <input type="password" placeholder="Пароль" th:field="*{password}" id="psw" minlength="8"  maxlength="16" required>
 
                 <label for="username"><b>Логин</b></label>
                 <input type="text" placeholder="Логин" id="username" th:field="*{username}" minlength="8"  maxlength="16" required>
@@ -60,6 +60,7 @@
                     <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Role).USER}"
                             th:value="${user}" th:text="${user.displayValue}"></option>
                 </select>
+                <br/>
                 <input type="submit" class="registerbtn" style="position: relative" value="Изменить">
             </form>
         </div>

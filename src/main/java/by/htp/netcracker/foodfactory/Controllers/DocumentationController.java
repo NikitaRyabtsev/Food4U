@@ -16,10 +16,16 @@ public class DocumentationController {
         this.ingredientRepository = ingredientRepository;
     }
 
-    @GetMapping
-    public String showDocumentation(){
-        return "documentation/index";
+    @GetMapping("/client")
+    public String showClientDocumentation(){
+        return "documentation/client";
     }
+
+    @GetMapping("/developer")
+    public String showDeveloperDocumentation(){
+        return "documentation/developer";
+    }
+
 
     @GetMapping("/test")
     public String find(Model model){
