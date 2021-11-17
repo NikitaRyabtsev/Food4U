@@ -25,7 +25,7 @@ public class Ingredient implements Serializable {
     @Column
     private double fats;
     @Column
-    private double carbohydrates;
+        private double carbohydrates;
     @JsonIgnore
     @ManyToMany
     @JoinTable(name="dish_has_ingredient",

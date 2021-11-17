@@ -40,8 +40,8 @@
                                        th:text="${' , ' + ingredient.name}" style="display: inline"></p>
                                 </div>
                                 <div class="dish__footer">
-                                    <p class="dish__price" th:text="${dish.price}">Здесь цена:</p>
-                                        <button class="dish__btn">Добавить в корзину</button>
+                                    <p class="dish__price" th:text="${'Цена: ' + dish.price + ' бел.р'}"></p>
+<!--                                        <button class="dish__btn">Добавить в корзину</button>-->
                                     </div>
                                 </div>
                             </div>

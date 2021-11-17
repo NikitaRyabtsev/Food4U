@@ -15,47 +15,33 @@
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <title> Главная</title>
-    <style>
-        h1 {
-            color: white;
-            font: bold 24px/45px Helvetica, Sans-Serif;
-            position: absolute;
-            top: 100px;
-            left: 0;
-            width: 100%;
-            font-size: 250%;
 
-        }
-    </style>
+    <title> Главная</title>
 </head>
 <body>
-<header class="header_header">
+<header>
     <div th:insert="/viewhtml/header :: header"></div>
 </header>
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<section class="products">
-    <div class="products__body">
-        <div class="product" style="padding: 0%;
-    margin: 0%;">
-            <a class="product__link">
-                <div class="product__img">
-                    <img src="/images/products/superpizza.jpg" style="height: 80vh; width: 100%; -webkit-filter: brightness(90%);
-  filter: brightness(90%);">
-                    <h1>Food4U - сервис готовых блюд</h1>
-                </div>
-            </a>
-        </div>
-        <article>
-                <strong><h2>Чем </h2></strong>
-        </article>
-    </div>
-</section>
-<footer>
-    <div th:insert="/viewhtml/footer :: footer"></div>
-</footer>
+<article class="article-main">
+    <header>
+        <h1 class="header__title">Food4U</h1>
+        <h2>Сервис готовых блюд</h2>
+    </header>
+    <section>
+        <p style="text-align: center;">
+            <a href="/user" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-secondary">Пользователи</a>
+            <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты</a>
+            <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда</a>
+        </p>
+    </section>
+
+    <footer>
+        <div th:insert="/viewhtml/footer :: footer"></div>
+    </footer>
+</article>
 </body>
 
 </html>
