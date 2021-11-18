@@ -6,6 +6,7 @@ import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
+import by.htp.netcracker.foodfactory.Service.DishService;
 import by.htp.netcracker.foodfactory.Service.OrderService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
@@ -29,16 +30,19 @@ public class OrdersController{
     private final IngredientRepository ingredientRepository;
     private final UserRepository userRepository;
     private final OrderService orderService;
+    private final DishService dishService;
 
 
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository,OrderService orderService , UserRepository userRepository) {
+                            IngredientRepository ingredientRepository,OrderService orderService ,
+                            UserRepository userRepository,DishService dishService) {
             this.dishRepository = dishRepository;
             this.orderRepository = orderRepository;
             this.ingredientRepository = ingredientRepository;
             this.orderService = orderService;
             this.userRepository = userRepository;
+            this.dishService = dishService;
 
         }
 
@@ -53,7 +57,7 @@ public class OrdersController{
         @GetMapping("/newOrder")
         public String newOrder (Principal principal, Model model){
             model.addAttribute("order", new Orders());
-            model.addAttribute("dishes", dishRepository.findAll());
+            model.addAttribute("dishes", dishService.findDishesSortByType());
             model.addAttribute("ingredients", dishRepository.findAll());
             model.addAttribute("username", orderService.findOrderByUserName(principal.getName()));
             return "order/newOrder";
@@ -73,13 +77,6 @@ public class OrdersController{
             model.addAttribute("ingredients", ingredientRepository.findAll());
             return "order/order";
         }
-
-        @PostMapping("/{id}/delete")
-        public String deleteOrder (@PathVariable("id") Integer id){
-            orderRepository.deleteById(id);
-            return "redirect:/order/orders";
-        }
-
         @Transactional
         @PostMapping("/delete/{idDish}")
         public String deleteDishFromOrder (@PathVariable("idDish") Integer id){
@@ -87,24 +84,17 @@ public class OrdersController{
             return "redirect:/order/orders";
         }
 
-        @PostMapping("/newDish")
-        public String addDishInOrder (@ModelAttribute("dish") Dish dish){
-            dishRepository.save(dish);
-            return "redirect:/order";
-        }
-
-        @GetMapping("/{id}/edit")
-        public String editOrder (Model model, @PathVariable("id") Integer id){
-            model.addAttribute("order", orderRepository.getById(id));
+        @GetMapping("/editOrder")
+        public String editOrder (Model model, Principal principal){
             model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("ingredients", ingredientRepository.findAll());
-            return "menu/dishEdit";
+            model.addAttribute("order" , orderService.findOrderByUserName(principal.getName()));
+            return "order/editOrder";
         }
 
-        @PostMapping("/{id}/edit")
-        public String updateOrder (@ModelAttribute("order") Orders order){
-            orderRepository.save(order);
-            return "redirect:/menu/dishes";
+        @PostMapping("/editOrder")
+        public String updateOrder (@ModelAttribute("order") Orders order, Principal principal){
+            orderService.saveOrderByUser(principal.getName(), order);
+            return "redirect:/order/userOrder";
         }
 
         @PreAuthorize("hasAnyRole('USER','ADMIN')")

@@ -6,35 +6,25 @@
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <!-- Ignite UI for jQuery Required Combined CSS Files -->
-    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
-          rel="stylesheet"/>
-    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css"
-          rel="stylesheet"/>
-
-    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
-    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
-    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
-    <!-- Ignite UI for jQuery Required Combined CSS Files -->
-    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
-          rel="stylesheet"/>
-    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css"
-          rel="stylesheet"/>
-
-    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
-    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
-    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
-    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
-
-
     <meta charset="UTF-8">
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        .add{
+            border: 2px solid #000;
+        }
+        input{
+            margin: 10px 0px;
+        }
+        .form-new-dish{
+            border: 2px solid #000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
     <title>Добавление блюда с ингредиентами</title>
 </head>
 <body role="main" style="text-align: center">
@@ -60,13 +50,13 @@
         </option>
     </select>
     <br/>
-    <!--    <div>-->
-    <!--        <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"-->
-    <!--                multiple="multiple">-->
-    <!--            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"-->
-    <!--                    th:text="${ingredient.name}"></option>-->
-    <!--        </select>-->
-    <!--    </div>-->
+        <div>
+            <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
+                    multiple="multiple">
+                <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                        th:text="${ingredient.name}"></option>
+            </select>
+        </div>
     <h4 class="combo-label">Выберите ингредиенты</h4>
 <!--    <div>-->
 <!--        <input type="text" id="gridProducts"th:field="*{ingredients}">-->
