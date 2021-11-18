@@ -1,5 +1,7 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +32,8 @@ public class Orders {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="order_has_dish",
             joinColumns = @JoinColumn(name="order_id"),

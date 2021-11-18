@@ -37,7 +37,7 @@ public class Dish implements Serializable {
                 joinColumns = @JoinColumn(name="dish_id"),
                 inverseJoinColumns = @JoinColumn(name="ingredient_id"))
     private List<Ingredient> ingredients;
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="order_has_dish",
                 joinColumns = @JoinColumn(name="dish_id"),
@@ -146,18 +146,6 @@ public class Dish implements Serializable {
         return Objects.hash(id, name, type, price, ingredients);
     }
 
-    @Override
-    public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", src='" + src + '\'' +
-                ", ingredients=" + ingredients +
-                ", orders=" + orders +
-                '}';
-    }
 }
 
 

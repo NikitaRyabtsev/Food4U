@@ -41,9 +41,9 @@
         </div>
     </section>
 </form>
-<form th:method="POST" th:action="@{/order/{id}/delete(id = ${order.getId()})} ">
-    <input type="submit" value="Удалить Заказ">
-</form>
+<div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+    <a th:href="@{~/order/editOrder}" class="btn btn-secondary">Добавить блюдо в заказ</a>
+</div>
 <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
     <a th:href="@{~/order/orders}" class="btn btn-secondary">История заказов</a>
 </div>
