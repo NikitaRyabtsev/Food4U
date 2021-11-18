@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.exceptions.TemplateProcessingException;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -103,6 +104,9 @@ public class OrdersController{
             model.addAttribute("dishes", dishRepository.findAll());
             model.addAttribute("ingredients", ingredientRepository.findAll());
             model.addAttribute("order",orderService.findOrderByUserName(principal.getName()));
+            if(orderService.findOrderByUserName(principal.getName()) == null){
+                return "redirect:/order/newOrder";
+            }
             return "/order/order";
         }
 

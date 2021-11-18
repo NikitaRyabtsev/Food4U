@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/authorization.css}">
     <link rel="stylesheet" th:href="@{/css/registration.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
@@ -30,12 +31,11 @@
                     <label for="email"><b>E-mail</b></label>
                     <input type="email" placeholder="E-mail" th:field="*{email}" id="email" required>
                      <br/>
-                    <label for="psw"><b>Пароль</b></label>
-                    <input type="password" placeholder="Пароль(от 8 до 16 символов)" th:field="*{password}" minlength="8"  maxlength="16" id="psw" required>
-
                     <label for="login"><b>Логин</b></label>
-                    <input type="text" placeholder="Логин(от 8 до 16 символов)" id="login" th:field="*{username}" minlength="8" maxlength="16"required>
+                    <input type="text" class="input__valid" placeholder="Логин(от 8 до 16 символов)" id="login" th:field="*{username}" minlength="8" maxlength="16"required>
 
+                    <label for="psw"><b>Пароль</b></label>
+                    <input type="password" class="input__valid" placeholder="Пароль(от 8 до 16 символов)" th:field="*{password}" minlength="8"  maxlength="16" id="psw" required>
                     <label for="name"><b>Имя</b></label>
                     <input type="text" placeholder="Имя" id="name" th:field="*{name}" required>
 

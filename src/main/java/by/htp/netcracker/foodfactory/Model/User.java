@@ -3,6 +3,7 @@ package by.htp.netcracker.foodfactory.Model;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,8 +20,10 @@ public class User {
     private String role;
     @Column
     private String name;
+    @Size(min = 8,max = 16)
     @Column
     private String username;
+    @Size(min = 8,max = 16)
     @Column
     private String password;
     @Column

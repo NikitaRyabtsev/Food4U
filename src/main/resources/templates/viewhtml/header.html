@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/button.css}">
+    <script src="/js/logout.js"></script>
 </head>
 <body>
 <div th:fragment="header">
@@ -31,9 +32,8 @@
                     </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
-                            <button sec:authorize="isAuthenticated()" class="btn btn-primary"
-                                    type="submit">Выйти
-                            </button>
+                            <input type="submit" id="logout" onclick=" return confirm('Вы уверены , что хотите выйти?')" sec:authorize="isAuthenticated()"
+                                   class="btn btn-primary" value="Выйти">
                             <a th:href="@{~/login}" sec:authorize="isAnonymous()">
                                 <button class="btn btn-primary" type="button">Войти
                                 </button>
