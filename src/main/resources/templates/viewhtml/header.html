@@ -20,15 +20,14 @@
                 <ul>
                     <li><a href="/main" class="btn btn-primary">Главная</a></li>
                     <li><a href="/order/newOrder">
-                        <input type="button" class="btn btn-primary" value="Меню">
+                        <input type="button" sec:authorize="isAuthenticated()" class="btn btn-primary" value="Меню">
                     </a>
                     </li>
-                    <li></li>
-                    <li></li>
+                    <li>
+                        <a href=/menu/dishes  sec:authorize="isAnonymous()" class="btn btn-primary">Меню</a>
                     </li>
-                    <li><a th:href="@{~/user/profile}" class="btn btn-primary">Профиль </a></li>
-                    <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                        <a th:href="@{~/order/userOrder}" class="btn btn-primary">Корзина</a>
+                    <li></li>
+                    <li><a th:href="@{~/user/profile}" class="btn btn-primary">Профиль</a>
                     </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
@@ -40,6 +39,11 @@
                                 </button>
                             </a>
                         </form>
+                    </li>
+                    <li>
+                        <a th:href="@{~/order/userOrder}" class="btn btn-primary">
+                            <img src="/images/bucket.png" style="width: 30px ; height: 25px" >
+                        </a>
                     </li>
                 </ul>
             </nav_header>

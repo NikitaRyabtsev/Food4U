@@ -45,7 +45,7 @@
     <input type="submit" value="Удалить Заказ">
 </form>
 <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-    <a th:href="@{~/order/orders}" class="btn btn-primary">История заказов</a>
+    <a th:href="@{~/order/orders}" class="btn btn-secondary">История заказов</a>
 </div>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

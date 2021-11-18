@@ -25,11 +25,15 @@
         <div class="container">
             <hr>
             <div th:each="user:${user}">
-                <h4><a th:text="${user.name}"></a></h4>
+                <h4><a th:text="${'Имя :' + user.name}"></a></h4>
+                <h4><a th:text="${'Фамилия :' + user.surname}"></a></h4>
+                <h4><a th:text="${'E-mail :' + user.email}"></a></h4>
+                <h4><a th:text="${'Действующий логин :' + user.username}"></a></h4>
             </div>
             <a th:href="@{/user/edit/{id}(id = ${user.getId()})}">
-                <button type="button">Редактировать</button>
+                <button type="button" class="btn btn-secondary">Редактировать</button>
             </a>
+            <hr>
         </div>
     </article>
 </main>

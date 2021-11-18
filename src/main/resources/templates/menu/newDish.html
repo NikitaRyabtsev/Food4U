@@ -19,6 +19,20 @@
     <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
     <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
     <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+    <!-- Ignite UI for jQuery Required Combined CSS Files -->
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css"
+          rel="stylesheet"/>
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css"
+          rel="stylesheet"/>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+
 
     <meta charset="UTF-8">
     <title>Добавление блюда с ингредиентами</title>
@@ -32,7 +46,7 @@
 </nav>
 
 <h3>Добавить новое блюдо</h3>
-<form th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
+<form class="newDish" th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
     <label for="name">Введите название</label>
     <br/>
     <input type="text" th:field="*{name}" id="name" class="add__btn" required>
@@ -42,19 +56,25 @@
     <select th:field="*{type}" name="type" id="type" class="select">
         <option value="0">Выберите тип</option>
         <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                th:value="${dish}" th:text="${dish.displayValue}"></option>
+                th:value="${dish}" th:text="${dish.displayValue}">
+        </option>
     </select>
     <br/>
-    <div>
-        <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
-                multiple="multiple">
-            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                    th:text="${ingredient.name}"></option>
-        </select>
-    </div>
-<!--    <h4 class="combo-label">Выберите ингредиенты</h4>-->
-<!--    <input type="text" id="multiSelectCombo" th:field="*{ingredients}">-->
-<!--    <br>-->
+    <!--    <div>-->
+    <!--        <select id="selectIngrdients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"-->
+    <!--                multiple="multiple">-->
+    <!--            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"-->
+    <!--                    th:text="${ingredient.name}"></option>-->
+    <!--        </select>-->
+    <!--    </div>-->
+    <h4 class="combo-label">Выберите ингредиенты</h4>
+<!--    <div>-->
+<!--        <input type="text" id="gridProducts"th:field="*{ingredients}">-->
+<!--    </div>-->
+    <div id="gridProducts"></div>
+    <div id="updatedMessage"></div>
+    <br>
+
     <label for="price">Введите цену</label>
     <br>
     <input type="number" th:field="*{price}" id="price" class="add__btn" required>
@@ -78,30 +98,138 @@
 
 <script>
     $(function () {
+        var uri = "https://localhost:8082/rest/ingredients/";
 
-        $("#multiSelectCombo").igCombo({
-            width: 300,
-            dataSource: "https://localhost:8082/rest/ingredients/",
-            textKey: "name",
-            valueKey: "name",
-            multiSelection: {
-                enabled: true
-            },
-            dropDownOrientation: "bottom"
+        var northWindCategoriesJSON = [
+            {"ID": 0, "Name": "Food"},
+            {"ID": 1, "Name": "Beverages"},
+            {"ID": 2, "Name": "Electronics"}
+        ];
+
+        //Formatting for igGrid cells to display igCombo text as opposed to igCombo value
+        function formatCategoryCombo(val) {
+            var i, category;
+            for (i = 0; i < northWindCategoriesJSON.length; i++) {
+                category = northWindCategoriesJSON[i];
+                if (category.ID == val) {
+                    val = category.Name;
+                }
+            }
+            return val;
+        }
+
+        function showFeedback(elementID, message) {
+            var selector = '#' + elementID;
+            $(selector).stop(true, true).html(message)
+                .fadeIn(500).delay(3000).fadeOut(500);
+        }
+
+        //Grid Initialization
+        $("#gridProducts").igGrid({
+            autoGenerateColumns: false,
+            primaryKey: "ID",
+            autoCommit: true,
+            width: "100%",
+            height: "360px",
+            columns: [
+                {headerText: "", key: "id", dataType: "number", hidden: true},
+                {headerText: "Вес(г)", key: "weight", dataType: "string", width: "20%"},
+                {headerText: "Название", key: "name", dataType: "string", width: "30%", formatter: formatCategoryCombo}
+            ],
+            features: [
+                {
+                    name: 'Updating',
+                    columnSettings: [{
+                        //The combo is defined as an editor provider. Combo options are defined under 'editorOptions'.
+                        columnKey: "name",
+                        editorType: 'combo',
+                        required: true,
+                        editorOptions: {
+                            mode: "dropdown",
+                            dataSource: uri,
+                            textKey: "name",
+                            valueKey: "name"
+                        }
+                    }],
+                    editRowEnded: function () {
+                        //To access the updated igGrid data
+                        northwindProductsJSON = $("#gridProducts").igGrid().data().igGrid.dataSourceObject();
+
+                        //Show feedback
+                        var message = "The grid's data has been updated...";
+                        showFeedback("updatedMessage", message);
+                    }
+                }
+            ]
         });
     });
-    // $("#multiSelectCombo").igCombo("selectedItems");
-    document.querySelector("#multiSelectCombo").addEventListener("click", function () {
-        event.target.value();
-    })
-    // $("btn btn-secondary").addEventListener("click",function(){
-    //    console.log("sumbit form" + $("multiSelectCombo")[0].value());
-    //    $("#ingredients").value($("#multiSelectCombo").igCombo("selectedItems")[1].data);
-    //     $("#newDish").submit();
-    // })
+
+    const tdItems = document.querySelectorAll('tr');
+    const out = document.querySelector('.out');
+    let dish = [];
+    let ingridients = [];
+    console.log(tdItems);
+
+    tdItems.forEach(item => item.addEventListener('click', (event) =>{
+        let ingridientObj = [];
+        let ingridientsInfo = [];
+        item.childNodes.forEach((item) => {
+            if(item.tagName =='TD'){
+                ingridientsInfo.push(item.outerText);
+            }
+        })
+
+        console.log(ingridientsInfo)
+    }))
+
+
+    let form = document.querySelector('.newDish');
+    form.onsubmit = (event) =>{
+        event.preventDefault();
+        let name = form.elements.name.value;
+        let type = form.elements.type.value;
+        let price = form.elements.price.value;
+        let weight = form.elements.weight.value;
+        let calories = form.elements.calories.value;
+        let src = form.elements.src.value;
+
+        let response = {
+            name: name,
+            type: type,
+            price: price,
+            weight: weight,
+            calories: calories,
+            src: src,
+        }
+        console.log(response);
+    }
+
 
 
 </script>
+<!--<script>-->
+<!--    -->
+<!--    -->
+<!--    -->
+<!--    $(function () {-->
+
+<!--        $("#multiSelectCombo").igCombo({-->
+<!--            width: 300,-->
+<!--            dataSource: "https://localhost:8082/rest/ingredients/",-->
+<!--            textKey: "name",-->
+<!--            valueKey: "name",-->
+<!--            multiSelection: {-->
+<!--                enabled: true-->
+<!--            },-->
+<!--            dropDownOrientation: "bottom"-->
+<!--        });-->
+<!--    });-->
+
+<!--      var a = ($("#multiSelectCombo").igCombo("selectedItems")[1].data);-->
+<!--      console.log(a);-->
+
+
+<!--</script>-->
 </body>
 
 </html>

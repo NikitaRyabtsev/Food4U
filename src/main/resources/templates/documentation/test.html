@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Ignite UI for jQuery Required Combined CSS Files -->
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link href="https://cdn-na.infragistics.com/igniteui/2021.1/latest/css/structure/infragistics.css" rel="stylesheet" />
+
+    <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- Ignite UI for jQuery Required Combined JavaScript Files -->
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.core.js"></script>
+    <script src="https://cdn-na.infragistics.com/igniteui/2021.1/latest/js/infragistics.lob.js"></script>
+
+</head>
+<body>
+<style type="text/css">
+    #updatedMessage
+    {
+        padding-top: 20px;
+    }
+
+    @media all and (max-width:360px) {
+        #gridProducts {
+            font-size: 14px;
+        }
+    }
+</style>
+<div id="gridProducts"></div>
+<div id="updatedMessage"></div>
+<script>
+
+    $(function () {
+        var uri =  "https://localhost:8082/rest/ingredients/";
+
+        var northWindCategoriesJSON = [
+                { "ID": 0, "Name": "Food" },
+                { "ID": 1, "Name": "Beverages" },
+                { "ID": 2, "Name": "Electronics" }
+            ];
+        //Formatting for igGrid cells to display igCombo text as opposed to igCombo value
+        function formatCategoryCombo(val) {
+            var i, category;
+            for (i = 0; i < northWindCategoriesJSON.length; i++) {
+                category = northWindCategoriesJSON[i];
+                if (category.ID == val) {
+                    val = category.Name;
+                }
+            }
+            return val;
+        }
+
+        function showFeedback(elementID, message) {
+            var selector = '#' + elementID;
+            $(selector).stop(true, true).html(message)
+                .fadeIn(500).delay(3000).fadeOut(500);
+        }
+        //Grid Initialization
+        $("#gridProducts").igGrid({
+            dataSource: uri,
+            autoGenerateColumns: false,
+            primaryKey: "ID",
+            autoCommit: true,
+            width: "100%",
+            height: "360px",
+            columns: [
+                { headerText: "", key: "id", dataType: "number", hidden: true },
+                { headerText: "Вес(г)", key: "weight", dataType: "string", width: "20%" },
+                { headerText: "Название", key: "name", dataType: "string", width: "30%", formatter: formatCategoryCombo }
+            ],
+            features: [
+                {
+                    name: 'Updating',
+                    columnSettings: [{
+                        //The combo is defined as an editor provider. Combo options are defined under 'editorOptions'.
+                        columnKey: "name",
+                        editorType: 'combo',
+                        required: true,
+                        editorOptions: {
+                            mode: "dropdown",
+                            dataSource: uri,
+                            textKey: "name",
+                            valueKey: "name"
+                        }
+                    }],
+                    editRowEnded: function () {
+                        //To access the updated igGrid data
+                        northwindProductsJSON = $("#gridProducts").igGrid().data().igGrid.dataSourceObject();
+
+                        //Show feedback
+                        var message = "The grid's data has been updated...";
+                        showFeedback("updatedMessage", message);
+                    }
+                }
+            ]
+        });
+    });
+     var a = ($("#multiSelectCombo").igCombo("selectedItems")[0].data);
+    console.log(a);
+</script>
+</body>
+</html>

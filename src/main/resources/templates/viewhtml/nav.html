@@ -21,7 +21,7 @@
 </head>
 <body th:fragment="nav">
 <input type="checkbox" id="nav-toggle" hidden>
-<nav  class="nav">
+<nav class="nav">
     <label for="nav-toggle" class="nav-toggle" onclick></label>
     <h2 class="logo">
         <a href="/menu/main">Food4U</a>
@@ -80,12 +80,7 @@
             </a>
         </li>
         <li>
-            <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты
-            </a>
-        </li>
-        <li>
-            <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда
-            </a>
+            <a href=/admin sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Страница админа</a>
         </li>
     </ul>
 </nav>

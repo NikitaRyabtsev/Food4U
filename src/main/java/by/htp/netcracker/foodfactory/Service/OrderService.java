@@ -24,6 +24,13 @@ public class OrderService {
         List<Orders> orders = ordersRepository.findOrdersByUserOrderById(user);
         return orders;
     }
+
+    public Orders saveOrderByUser(String username, Orders orders){
+        User user = userRepository.getUserByUsername(username);
+        orders.setUser(user);
+        return ordersRepository.save(orders);
+    }
+
     public Orders findOrderByUserName(String username){
         User user = userRepository.getUserByUsername(username);
         Orders order = ordersRepository.findOrdersByUser(user);
