@@ -9,14 +9,19 @@
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/products.css}">
     <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
     <link th:href="@{/images/icon-close.svg}">
     <style>
         button + button {
             display: none;
         }
+
         .checkbox:checked + button {
             display: none;
         }
+
         .checkbox:checked + button + button {
             display: inline-block;
         }
@@ -49,9 +54,8 @@
                     <p class="product__text">Стоимость:</p>
                     <p class="product__price" th:text="${dish.price}"></p>
                 </div>
-                <input type="checkbox" class="checkbox" th:field="*{dishes}" th:value="${dish.id}">
+                <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dishes}" th:value="${dish.id}">
                 <button class="product__btn">Добавить в корзину</button>
-
             </div>
         </div>
     </section>
@@ -60,6 +64,32 @@
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
+<script>
+
+    window.updateCount = function() {
+        var x = $(".checkbox:checked").length;
+        document.getElementById("y").innerHTML = x;
+    };
+    // var count = 0;
+    // $(function() {
+    //     updateCount();
+    //     $('input[type=checkbox]').change(function() {
+    //         updateCount(this.checked ? 1 : -1);
+    //     });
+    //     $('#invert').click(function(e) {
+    //         e = $('input[type=checkbox]');
+    //         e.each(function(i, el) {
+    //             el.checked = !el.checked;
+    //         });
+    //         updateCount(e.length - count - count);
+    //     });
+    // });
+    // function updateCount(a) {
+    //     count = a ? count + a : $('input[type=checkbox]:checked').length;
+    //     $('#count').text(count);
+    // };
+    // console.log(updateCount());
+</script>
 </body>
 
 </html>
