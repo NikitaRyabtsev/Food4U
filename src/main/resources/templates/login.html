@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
+    <link rel="stylesheet" th:href="@{/css/authorization.css}">
     <link rel="stylesheet" th:href="@{/css/registration.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
@@ -27,17 +28,21 @@
                     <h1>Авторизация</h1>
                     <p>Пожалуйста заполните форму для авторизации</p>
                     <hr>
-<!--                    <div th:if="{param.error}">-->
-<!--                        Не верный логин или пароль.-->
-<!--                    </div>-->
-<!--                    <div th:if="${param.logout}">-->
-<!--                        Вы вышли из своего аккаунта.-->
-<!--                    </div>-->
                     <label for="username"><b>Логин</b></label>
-                    <input type="text" placeholder="Введите логин" id="username" name="username" required>
+                    <input type="text" class="input__valid" placeholder="Введите логин" maxlength="16" minlength="8" id="username" name="username" required>
 
                     <label for="password"><b>Пароль</b></label>
-                    <input type="password" placeholder="Введите пароль" id="password" name="password" required>
+                    <input type="password" class="input__valid" placeholder="Введите пароль" id="password" maxlength="16" minlength="8" name="password" required>
+                    <div th:if="${param.error}">
+                        <div style="color: red">
+                            Не верно введен логин или пароль.
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div style="color: red">
+                            Вы вышли из своего аккаунта.
+                        </div>
+                    </div>
                     <hr>
                     <div >
                         <input type="checkbox" id="remember-me" name="remember-me">

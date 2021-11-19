@@ -32,6 +32,11 @@ button:hover {
     opacity:1;
 }
 
+.input__valid:required:valid {
+    border: solid 1px;
+    border-color: green;
+}
+
 /* Extra styles for the cancel button */
 .cancelbtn {
     padding: 14px 20px;

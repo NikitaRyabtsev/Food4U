@@ -61,7 +61,7 @@
                             th:value="${user}" th:text="${user.displayValue}"></option>
                 </select>
                 <br/>
-                <input type="submit" class="registerbtn" style="position: relative" value="Изменить">
+                <input type="submit" class="registerbtn"  onclick=" return confirm('Вы уверены?')" style="position: relative" value="Изменить">
             </form>
         </div>
     </article>

@@ -32,7 +32,7 @@
                 <div class="product__info" th:with="price = ${dish.price}">
                     <p class="product__text">Стоимость:</p>
                     <!--                    <p class="product__price" th:text="${dish.price}"></p>-->
-                    <p class="product__price" th:text="${'Цена: ' + price + ' бел.р'} "></p>
+                    <p class="product__price" th:text="${price + ' бел.р'} "></p>
                     </p>
                 </div>
 <!--                <button class="product__btn" >Добавить в корзину</button>-->
