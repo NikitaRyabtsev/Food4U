@@ -31,6 +31,11 @@ public class OrderService {
         return ordersRepository.save(orders);
     }
 
+    public Orders findOrderByUserNameAndId(String username , Integer id){
+        User user = userRepository.getUserByUsername(username);
+        Orders order = ordersRepository.findOrdersByUserAndId(user,id);
+        return order;
+    }
     public Orders findOrderByUserName(String username){
         User user = userRepository.getUserByUsername(username);
         Orders order = ordersRepository.findOrdersByUser(user);

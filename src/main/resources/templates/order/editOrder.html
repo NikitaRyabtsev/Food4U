@@ -10,6 +10,7 @@
   <link rel="stylesheet" th:href="@{/css/products.css}">
   <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
   <link th:href="@{/images/icon-close.svg}">
+  <script th:src="@{/js/counterDishes.js}"></script>
   <style>
     button + button {
       display: none;
@@ -32,7 +33,7 @@
   <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <h3>Новый заказ</h3>
-<form th:action="@{~/order/editOrder}" th:method="POST" th:object="${order}">
+<form th:action="@{~/order/{id}/editOrder(id = ${order.getId()})}" th:method="POST" th:object="${order}">
   <input type="hidden" th:field="*{numberOfBooking}" id="name" class="add__btn" required>
   <input type="hidden" th:field="*{user.id}" id="id" class="add__btn" required>
   <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
@@ -48,8 +49,8 @@
         <div class="product__info">
           <p class="product__text">Стоимость:</p>
           <p class="product__price" th:text="${dish.price}"></p>
+          <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dishes}" th:value="${dish.id}">
         </div>
-        <input type="checkbox" class="checkbox" th:field="*{dishes}" th:value="${dish.id}">
         <button class="product__btn">Добавить в корзину</button>
 
       </div>

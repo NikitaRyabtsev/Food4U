@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Controllers;
 
 import by.htp.netcracker.foodfactory.Model.Ingredient;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
+import by.htp.netcracker.foodfactory.Service.IngredientService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/ingredients")
 public class IngredientsController {
 
+    private IngredientService ingredientService;
     private IngredientRepository ingredientRepository;
 
-    public IngredientsController(IngredientRepository ingredientRepository) {
+    public IngredientsController(IngredientRepository ingredientRepository , IngredientService ingredientService) {
         this.ingredientRepository = ingredientRepository;
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping
     public String showAllIngredients(Model model) {
-        model.addAttribute("ingredients", ingredientRepository.findAll());
+        model.addAttribute("ingredients", ingredientService.findIngredientsAndSort());
         return "ingredients/ingredients";
     }
     @PreAuthorize("hasAnyRole('ADMIN')")

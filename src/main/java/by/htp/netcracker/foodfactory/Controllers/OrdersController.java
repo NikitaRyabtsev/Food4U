@@ -82,17 +82,17 @@ public class OrdersController{
         @PostMapping("/delete/{idDish}")
         public String deleteDishFromOrder (@PathVariable("idDish") Integer id){
             orderRepository.deleteDishFromOrderById(id);
-            return "redirect:/order/orders";
+            return "redirect:/order/userOrder";
         }
 
-        @GetMapping("/editOrder")
-        public String editOrder (Model model, Principal principal){
+        @GetMapping("/{id}/editOrder")
+        public String editOrder (Model model, Principal principal, @PathVariable("id") Integer id){
             model.addAttribute("dishes", dishRepository.findAll());
-            model.addAttribute("order" , orderService.findOrderByUserName(principal.getName()));
+            model.addAttribute("order" , orderService.findOrderByUserNameAndId(principal.getName(),id));
             return "order/editOrder";
         }
 
-        @PostMapping("/editOrder")
+        @PostMapping("/{id}/editOrder")
         public String updateOrder (@ModelAttribute("order") Orders order, Principal principal){
             orderService.saveOrderByUser(principal.getName(), order);
             return "redirect:/order/userOrder";
