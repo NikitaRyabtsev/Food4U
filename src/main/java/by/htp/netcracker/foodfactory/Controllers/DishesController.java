@@ -5,7 +5,6 @@ import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -28,7 +27,6 @@ public class DishesController {
 
     @GetMapping("/dishes")
     public String showDishesWithIngredients(Model model) {
-        model.addAttribute("ingredients" , ingredientRepository.findAll());
         model.addAttribute("dishes", dishRepository.findAll());
         model.addAttribute("orders" , ordersRepository.findAll());
         return "menu/dishes";

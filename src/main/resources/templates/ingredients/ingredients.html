@@ -22,14 +22,14 @@
 </nav>
 <main role="main">
     <article>
-        <h3>Ингредиенты</h3>
+        <h3>Ингредиенты(на 100г веса)</h3>
 
             <table class="table">
 
                 <tr>
                     <td>Название</td>
                     <th>Калории</th>
-                    <th>Вес(г)</th>
+<!--                    <th>Вес(г)</th>-->
                     <th>Белки</th>
                     <th>Жиры</th>
                     <th>Углеводы</th>
@@ -38,7 +38,7 @@
                 <tr>
                     <td><a th:href="@{ingredients/{id}(id=${ingredient.getId()})}" th:text="${ingredient.name}"></a></td>
                     <td th:text="${ingredient.calories}"></td>
-                    <td th:text="${ingredient.weight}"></td>
+<!--                    <td th:text="${ingredient.weight}"></td>-->
                     <td th:text="${ingredient.proteins}">/td>
                     <td th:text="${ingredient.fats}"></td>
                     <td th:text="${ingredient.carbohydrates}"></td>
