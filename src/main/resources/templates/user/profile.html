@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
     <link th:href="@{/images/icon-close.svg}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
     <link rel="stylesheet" th:href="@{/css/registration.css}">
     <meta charset="UTF-8">
     <title>Профиль</title>
@@ -22,17 +23,32 @@
 </nav>
 <main role="main">
     <article>
-        <div class="container">
+        <div>
             <hr>
+            <table class="table">
+
+                <tr>
+                    <td>Имя</td>
+                    <th>Фамилия</th>
+                    <th>E-mail</th>
+                    <th>Логин</th>
+                    <th>Пол</th>
+                </tr>
             <div th:each="user:${user}">
-                <h4><a th:text="${'Имя :' + user.name}"></a></h4>
-                <h4><a th:text="${'Фамилия :' + user.surname}"></a></h4>
-                <h4><a th:text="${'E-mail :' + user.email}"></a></h4>
-                <h4><a th:text="${'Действующий логин :' + user.username}"></a></h4>
+                <tr>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.username}">/td>
+                    <td th:text="${user.sex}"></td>
+                </tr>
             </div>
+            </table>
+            <p style="text-align: center">
             <a th:href="@{/user/edit/{id}(id = ${user.getId()})}">
                 <button type="button" class="btn btn-secondary">Редактировать</button>
             </a>
+            </p>
             <hr>
         </div>
     </article>
