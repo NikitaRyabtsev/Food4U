@@ -46,20 +46,20 @@
     <br/>
     <label>Введите тип</label>
     <br/>
-<!--    <select th:field="*{type}" name="type" id="typ" class="select">-->
-<!--        <option value="0">Выберите тип</option>-->
-<!--        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"-->
-<!--                th:value="${dish}" th:text="${dish.displayValue}">-->
-<!--        </option>-->
-<!--    </select>-->
+    <select th:field="*{type}" name="type" id="type" class="select">
+        <option value="0">Выберите тип</option>
+        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                th:value="${dish}" th:text="${dish.displayValue}">
+        </option>
+    </select>
     <h4 class="combo-label">Выберите ингредиенты</h4>
-    <button class="addIngredient">Добавить ингредиент</button>
+<!--    <button class="addIngredient">Добавить ингредиент</button>-->
     <div class="ingredient">
-        <select  class="ingredient__select select"  id="type" name="type" th:field="*{ingredients}">
+        <select  class="ingredient__select select"  id="ingredient" th:field="*{ingredients}" multiple>
             <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
                     th:text="${ingredient.name}"></option>
         </select>
-        <input class="ingredient__weigth" type="text" name="weight" value="" required>
+<!--        <input class="ingredient__weigth" type="text" name="weight" value="" required>-->
     </div>
     <!--    <div>-->
     <!--        <input type="text" id="gridProducts"th:field="*{ingredients}">-->
@@ -71,10 +71,6 @@
     <label for="price">Введите цену</label>
 
     <input type="number" th:field="*{price}" id="price" class="add__btn" required>
-
-    <input type="text" th:field="*{weight}" id="weight" class="add__btn">
-
-    <input type="text" th:field="*{calories}" id="calories" class="add__btn">
 
     <label for="src">Введите путь к картинке</label>
 
@@ -90,87 +86,58 @@
 </footer>
 
 <script>
-    let form = document.querySelector('.form-new-dish');
-    form.onsubmit = (event) =>{
-        event.preventDefault();
-        let name = form.elements.name.value;
-        let type = form.elements.type.value;
-        let ingredients = [];
-        let price = form.elements.price.value;
-        let weight = form.elements.weight.value;
-        let calories = form.elements.calories.value;
-        let src = form.elements.src.value;
-
-        const ingredientsInfo = document.querySelectorAll('.ingredient');
-        ingredientsInfo.forEach((item, index) =>{
-            let ingredient = [];
-            if(index != 0){
-
-                item.childNodes.forEach((item) =>{
-                    if(item.tagName == 'INPUT'){
-                        ingredient.push(item.value)
-                    }
-
-                })
-                ingredients.push(ingredient);
-            }
-
-        })
-        console.log(ingredients);
-
-        let newDish = {
-            name: name,
-            type: type,
-            ingredients: ingredients,
-            price: price,
-            weight: weight,
-            calories: calories,
-            src: src,
-        }
-        console.log(newDish);
-    }
-
-    const addIngredient = document.querySelector('.addIngredient');
-
-    addIngredient.onclick = (event) =>{
-        event.preventDefault();
-        const ingredient = document.querySelector('.ingredient');
-        const ingredientWeigth = document.querySelector('.ingredient__weigth');
-        const select = document.querySelector('.ingredient__select');
-
-        if(ingredientWeigth.value == ''){
-            alert('Введите вес продукта')
-        } else if(select.options[select.selectedIndex].value == 0) {
-            alert('Выберите тип ингредиента')
-        } else{
-            let clone = ingredient.cloneNode(true);
-            let cloneChildrens = clone.childNodes;
-            let inputWeigth = document.createElement('input');
-            inputWeigth.name = 'type';
-
-
-            cloneChildrens.forEach((item) =>{
-
-                if(item.tagName == 'SELECT'){
-                    inputWeigth.value = item.options[select.selectedIndex].value;
-                    item.remove();
-                }
-            })
-            let btnDel = document.createElement('button');
-            btnDel.textContent = 'Удалить ингредиент';
-            btnDel.className = 'ingredient__del';
-            btnDel.onclick = () => {
-                btnDel.parentNode.remove();
-            }
-            clone.prepend(inputWeigth);
-            clone.append(btnDel);
-            ingredient.after(clone);
-        }
-
-
-
-    }
-
+    // let form = document.querySelector('.form-new-dish');
+    // form.onsubmit = (event) =>{
+    //     event.preventDefault();
+    //
+    //     let formData = new FormData(form);
+    //     formData.delete('ingredients');
+    //
+    //     for(let [name,value] of formData){
+    //         console.log(name + ':' + value);
+    //
+    //     }
+    // }
+    // const addIngredient = document.querySelector('.addIngredient');
+    // addIngredient.onclick = (event) =>{
+    //     event.preventDefault();
+    //
+    //
+    //     const ingredient = document.querySelector('.ingredient');
+    //     const ingredientWeigth = document.querySelector('.ingredient__weigth');
+    //     const select = document.querySelector('.ingredient__select');
+    //
+    //     if(ingredientWeigth.value == ''){
+    //         alert('Введите вес продукта')
+    //     } else if(select.options[select.selectedIndex].value == 0) {
+    //         alert('Выберите тип ингредиента')
+    //     } else{
+    //         let clone = ingredient.cloneNode(true);
+    //         let cloneChildrens = clone.childNodes;
+    //
+    //         let inputWeigth = document.createElement('input');
+    //         inputWeigth.name = 'ingredient';
+    //
+    //
+    //         cloneChildrens.forEach((item) =>{
+    //
+    //             if(item.tagName == 'SELECT'){
+    //                 inputWeigth.value = item.options[select.selectedIndex].value;
+    //                 item.remove();
+    //             }
+    //
+    //         })
+    //         let btnDel = document.createElement('button');
+    //         btnDel.textContent = 'Удалить ингредиент';
+    //         btnDel.className = 'ingredient__del';
+    //         btnDel.onclick = () => {
+    //             btnDel.parentNode.remove();
+    //         }
+    //         clone.prepend(inputWeigth);
+    //         clone.append(btnDel);
+    //         ingredient.after(clone);
+    //     }
+    // }
 </script>
 
 </body>

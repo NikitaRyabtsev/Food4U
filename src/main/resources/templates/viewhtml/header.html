@@ -32,7 +32,7 @@
                     </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
-                            <input type="submit" id="logout" onclick=" return confirm('Вы уверены , что хотите выйти?')" sec:authorize="isAuthenticated()"
+                            <input type="submit" id="logout" onclick="return confirm('Вы уверены , что хотите выйти?')" sec:authorize="isAuthenticated()"
                                    class="btn btn-primary" value="Выйти">
                             <a th:href="@{~/login}" sec:authorize="isAnonymous()">
                                 <button class="btn btn-primary" type="button">Войти
@@ -44,6 +44,7 @@
                         <a th:href="@{~/order/userOrder}" class="btn btn-primary">
                             <img src="/images/bucket.png" style="width: 30px ; height: 25px" >
                         </a>
+                        <a id="y"></a>
                     </li>
                 </ul>
             </nav_header>

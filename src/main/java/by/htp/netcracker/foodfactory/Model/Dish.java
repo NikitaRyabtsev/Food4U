@@ -24,13 +24,13 @@ public class Dish implements Serializable {
     private String type;
     @Column
     private double price;
-    @Column
-    private double weight;
-    @Column
-    private double calories;
     @Lob
     @Column
     private String src;
+
+    private double weight;
+
+    private double calories;
     @JsonIgnore
     @ManyToMany
     @JoinTable(name="dish_has_ingredient",
@@ -70,6 +70,7 @@ public class Dish implements Serializable {
     public void setCalories(double calories) {
         this.calories = calories;
     }
+
 
     public String getSrc() {
         return src;
@@ -133,17 +134,12 @@ public class Dish implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        return Double.compare(dish.price, price) == 0 &&
-                Objects.equals(id, dish.id) &&
-                Objects.equals(name, dish.name) &&
-                Objects.equals(type, dish.type) &&
-                Objects.equals(ingredients, dish.ingredients);
-
+        return Double.compare(dish.price, price) == 0 && Double.compare(dish.weight, weight) == 0 && Double.compare(dish.calories, calories) == 0 && Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(type, dish.type) && Objects.equals(src, dish.src) && Objects.equals(ingredients, dish.ingredients) && Objects.equals(orders, dish.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, price, ingredients);
+        return Objects.hash(id, name, type, price, src, weight, calories, ingredients, orders);
     }
 
 }

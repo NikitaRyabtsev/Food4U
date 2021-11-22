@@ -42,7 +42,7 @@
     </section>
 </form>
 <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-    <a th:href="@{~/order/editOrder}" class="btn btn-secondary">Добавить блюдо в заказ</a>
+    <a th:href="@{~/order/{id}/editOrder(id = ${order.getId()})}" class="btn btn-secondary">Добавить блюдо в заказ</a>
 </div>
 <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
     <a th:href="@{~/order/orders}" class="btn btn-secondary">История заказов</a>

@@ -18,14 +18,14 @@ public class Ingredient implements Serializable {
     private String name;
     @Column
     private double calories;
-    @Column
+
     private double weight;
     @Column
     private double proteins;
     @Column
     private double fats;
     @Column
-        private double carbohydrates;
+    private double carbohydrates;
     @JsonIgnore
     @ManyToMany
     @JoinTable(name="dish_has_ingredient",
