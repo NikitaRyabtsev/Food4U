@@ -2,10 +2,7 @@ package by.htp.netcracker.foodfactory.Controllers;
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
-import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
-import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
-import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
-import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
+import by.htp.netcracker.foodfactory.Reposotories.*;
 import by.htp.netcracker.foodfactory.Service.DishService;
 import by.htp.netcracker.foodfactory.Service.OrderService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.exceptions.TemplateProcessingException;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -32,18 +28,20 @@ public class OrdersController{
     private final UserRepository userRepository;
     private final OrderService orderService;
     private final DishService dishService;
+    private final OrdersDishesRepository ordersDishesRepository;
 
 
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
                             IngredientRepository ingredientRepository,OrderService orderService ,
-                            UserRepository userRepository,DishService dishService) {
+                            UserRepository userRepository,DishService dishService , OrdersDishesRepository ordersDishesRepository) {
             this.dishRepository = dishRepository;
             this.orderRepository = orderRepository;
             this.ingredientRepository = ingredientRepository;
             this.orderService = orderService;
             this.userRepository = userRepository;
             this.dishService = dishService;
+            this.ordersDishesRepository = ordersDishesRepository;
 
         }
 
@@ -61,6 +59,7 @@ public class OrdersController{
             model.addAttribute("dishes", dishService.findDishesSortByType());
             model.addAttribute("ingredients", dishRepository.findAll());
             model.addAttribute("username", orderService.findOrderByUserName(principal.getName()));
+            model.addAttribute("orders_dish" , ordersDishesRepository.findAll());
             return "order/newOrder";
         }
 

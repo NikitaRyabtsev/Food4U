@@ -36,8 +36,10 @@
                                 <div class="dish__ingredients">
                                     <p th:text="${'Вес: ' + dish.weight}"></p>
                                     <p style="display: inline">Ингредиенты:</p>
-                                    <p th:each="ingredient:${dish.getIngredients()}"
+                                    <div th:each="dish_ingredient:${dish.getDish_ingredients()}">
+                                    <p th:each="ingredient:${dish_ingredient.getIngredient()}"
                                        th:text="${' , ' + ingredient.name}" style="display: inline"></p>
+                                    </div>
                                 </div>
                                 <div class="dish__footer">
                                     <p class="dish__price" th:text="${'Цена: ' + dish.price + ' бел.р'}"></p>
@@ -52,13 +54,13 @@
         </div>
 
 
-        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
-            <button type="button">Редактировать</button>
-        </a>
+<!--        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">-->
+<!--            <button type="button">Редактировать</button>-->
+<!--        </a>-->
 
-        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
-            <input type="submit" value="Удалить блюдо">
-        </form>
+<!--        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">-->
+<!--            <input type="submit" value="Удалить блюдо">-->
+<!--        </form>-->
 
         <!--        <div class="shopping-cart">
                     <p class="shopping-cart__info">Товаров в корзине:</p>

@@ -23,7 +23,6 @@ public class User {
     @Size(min = 8,max = 16)
     @Column
     private String username;
-    @Size(min = 8,max = 16)
     @Column
     private String password;
     @Column
@@ -64,6 +63,7 @@ public class User {
         this.sex = sex;
         this.block = block;
     }
+
 
     public List<Orders> getOrders() {
         return orders;
