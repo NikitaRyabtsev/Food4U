@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Reposotories;
 
+import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.OrdersDish;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,5 @@ public interface OrdersDishesRepository extends JpaRepository<OrdersDish,Integer
 
     @Override
     List<OrdersDish> findAll();
+
 }

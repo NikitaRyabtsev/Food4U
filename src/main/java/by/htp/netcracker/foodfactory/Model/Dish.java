@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="Dish")
@@ -30,9 +27,8 @@ public class Dish implements Serializable {
     private double calories;
     @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
     private List<DishIngredient> dish_ingredients;
-    @JsonIgnore
-    @OneToMany(mappedBy = "dish" , fetch = FetchType.EAGER)
-    private Set<OrdersDish> orders_dishes;
+    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
+    private Set<OrdersDish> orders_dishes = new HashSet<OrdersDish>();
 
     public Dish() {
 
