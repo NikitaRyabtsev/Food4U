@@ -55,7 +55,7 @@ public class DishesController {
 
     @PostMapping("/newDish")
     public String addDishWithIngredients(@ModelAttribute("dish_ingredient") DishIngredient dishIngredient)  {
-        dishService.saveWithIngredients(dishIngredient);
+        dishIngredientsRepository.save(dishIngredient);
         return "redirect:/menu/dishes";
     }
 

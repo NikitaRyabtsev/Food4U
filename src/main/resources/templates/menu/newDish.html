@@ -53,18 +53,11 @@
     </select>
     <h4 class="combo-label">Выберите ингредиенты</h4>
     <button class="addIngredient" type="button">Добавить ингредиент</button>
-
-<!--    <div th:each="dish_ingredient:${dish_ingredients}">-->
-<!--            <input type="text" th:field="*{dish_ingredient.id}" th:value="">-->
-<!--    </div>-->
-
-<!--    <input type="number"  th:field="*{dish_ingredients}" th:text="${dish_ingredient.ingredient.name}">-->
-
     <select th:field="*{ingredient}" multiple>
         <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
                 th:text="${ingredient.name}"></option>
     </select>
-<!-- <input class="create-ing__weigth" type="text" name="create-ing__weigth" required>-->
+     <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weigth" required>
 
     <label for="price">Введите цену</label>
 

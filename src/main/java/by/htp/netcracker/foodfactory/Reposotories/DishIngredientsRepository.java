@@ -15,4 +15,5 @@ public interface DishIngredientsRepository extends JpaRepository<DishIngredient,
     <S extends DishIngredient> S save(S entity);
 
     List<DishIngredient> findAllByIngredient(Ingredient ingredient);
+    
 }

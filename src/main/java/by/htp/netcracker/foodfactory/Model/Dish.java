@@ -28,9 +28,8 @@ public class Dish implements Serializable {
     private String src;
     private double weight;
     private double calories;
-    @OneToMany(mappedBy = "dish" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
     private List<DishIngredient> dish_ingredients;
-
     @JsonIgnore
     @OneToMany(mappedBy = "dish" , fetch = FetchType.EAGER)
     private Set<OrdersDish> orders_dishes;

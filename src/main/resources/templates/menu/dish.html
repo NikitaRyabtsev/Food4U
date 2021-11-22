@@ -36,9 +36,8 @@
                                 <div class="dish__ingredients">
                                     <p th:text="${'Вес: ' + dish.weight}"></p>
                                     <p style="display: inline">Ингредиенты:</p>
-                                    <div th:each="dish_ingredient:${dish.getDish_ingredients()}">
-                                    <p th:each="ingredient:${dish_ingredient.getIngredient()}"
-                                       th:text="${' , ' + ingredient.name}" style="display: inline"></p>
+                                    <div th:each="dish_ingredient:${dish.getDish_ingredients()}" style="display: inline">
+                                    <p th:each="ingredient:${dish_ingredient.getIngredient()}" th:text="${' , ' + ingredient.name}" style="display: inline"></p>
                                     </div>
                                 </div>
                                 <div class="dish__footer">

@@ -26,7 +26,7 @@ public class Ingredient implements Serializable {
     private double fats;
     @Column
     private double carbohydrates;
-    @OneToMany(mappedBy = "ingredient" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ingredient" , fetch = FetchType.LAZY)
     private List<DishIngredient> ingredientsDish;
 
 

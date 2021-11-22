@@ -9,7 +9,6 @@ import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,10 +26,5 @@ public class DishService {
     }
     public List<Dish> findDishesSortByType(){return dishRepository.findAll(Sort.by(Sort.Direction.DESC,"type"));}
 
-    public DishIngredient saveWithIngredients(DishIngredient dishIngredient) {
-        Dish dish = new Dish();
-        dishIngredient.setDish(dish);
-        dishIngredient.getIngredient().getIngredientsDish();
-        return dishIngredientsRepository.save(dishIngredient);
-    }
+
 }
