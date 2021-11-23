@@ -39,44 +39,44 @@
 </nav>
 <h3>Добавить новое блюдо</h3>
 <form class="form-new-dish" th:action="@{/menu/newDish}" th:method="POST" th:object="${dish_ingredient}" id="newDish">
-    <label for="name">Введите название</label>
-    <br/>
-    <input type="text" th:field="*{dish.name}" id="name" class="add__btn" name="name" required>
-    <br/>
-    <label>Введите тип</label>
-    <br/>
-    <select th:field="*{dish.type}" name="type" id="type" class="select">
-        <option value="0">Выберите тип</option>
-        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                th:value="${dish}" th:text="${dish.displayValue}">
-        </option>
-    </select>
-    <h4 class="combo-label">Выберите ингредиенты</h4>
-    <button class="addIngredient" type="button">Добавить ингредиент</button>
-    <div class="create-ing">
+    <div th:each="dishIng:${dish_ingredient}">
+        <label for="name">Введите название</label>
 
-        <select class="create-ing__select select" th:field="*{ingredient}" id="create-ing__select" name="create-ing__select">
-            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                    th:text="${ingredient.name}"></option>
+        <input type="text" th:field="*{dish.name}" id="name" class="add__btn"
+               name="name" required>
+        <label>Введите тип</label>
+        <br/>
+        <select th:field="*{dish.type}" name="type" id="type" class="select">
+            <option value="0">Выберите тип</option>
+            <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                    th:value="${dish}" th:text="${dish.displayValue}">
+            </option>
         </select>
+        <h4 class="combo-label">Выберите ингредиенты</h4>
+        <button class="addIngredient" type="button">Добавить ингредиент</button>
+        <div class="create-ing">
 
-        <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weigth" required>
+            <select class="create-ing__select select" th:field="*{ingredient}" id="create-ing__select"
+                    name="create-ing__select" multiple>
+                <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                        th:text="${ingredient.name}"></option>
+            </select>
+
+            <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weigth" required>
+        </div>
+
+
+        <label for="price">Введите цену</label>
+
+        <input type="number" th:field="*{dish.price}" id="price" class="add__btn" required>
+
+        <label for="src">Введите путь к картинке</label>
+
+        <input type="text" th:field="*{dish.src}" id="src" name="src" class="add__btn">
+
+        <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
     </div>
-
-
-    <label for="price">Введите цену</label>
-
-    <input type="number" th:field="*{dish.price}" id="price" class="add__btn" required>
-
-    <label for="src">Введите путь к картинке</label>
-
-    <input type="text" th:field="*{dish.src}" id="src" name="src" class="add__btn">
-
-    <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
 </form>
-<!--        <a href="/menu/newIngredientInDish">-->
-<!--            <button type="button">Добавить новый ингредиент</button>>-->
-<!--        </a>-->
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>

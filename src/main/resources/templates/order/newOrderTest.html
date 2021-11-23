@@ -49,8 +49,8 @@
                     <p class="product__price" th:text="${dishes.price + ' бел.р'}"></p>
                     <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
                            th:value="${dishes.id}">
+                    <input type="number" th:field="*{countOfDishes}">
                 </div>
-                <input type="number" th:field="*{countOfDishes}">
                 <button class="product__btn">Добавить в корзину</button>
             </div>
         </div>

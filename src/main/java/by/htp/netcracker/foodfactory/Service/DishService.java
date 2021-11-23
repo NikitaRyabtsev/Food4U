@@ -27,4 +27,5 @@ public class DishService {
     public List<Dish> findDishesSortByType(){return dishRepository.findAll(Sort.by(Sort.Direction.DESC,"type"));}
 
 
+
 }
