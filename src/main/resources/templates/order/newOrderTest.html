@@ -14,16 +14,45 @@
 
     <link th:href="@{/images/icon-close.svg}">
     <style>
-        button + button {
-            display: none;
+        div label input {
+            margin-right:100px;
+        }
+        body {
+            font-family:sans-serif;
         }
 
-        .checkbox:checked + button {
-            display: none;
+        #ck-button {
+            margin:4px;
+            background-color:#EFEFEF;
+            border-radius:4px;
+            border:1px solid #D0D0D0;
+            overflow:auto;
+            float:left;
         }
 
-        .checkbox:checked + button + button {
-            display: inline-block;
+        #ck-button:hover {
+            background:red;
+        }
+
+        #ck-button label {
+            float:left;
+            width:4.0em;
+        }
+
+        #ck-button label span {
+            text-align:center;
+            padding:3px 0px;
+            display:block;
+        }
+
+        #ck-button label input {
+            position:absolute;
+            top:-20px;
+        }
+
+        #ck-button input:checked + span {
+            background-color:#911;
+            color:#fff;
         }
     </style>
     <meta charset="UTF-8">
@@ -40,23 +69,23 @@
 <form th:action="@{/order/newOrderTest}" th:method="POST" th:object="${order_dishes}">
     <section class="products">
         <div class="products__body">
-            <div class="product" th:each="dishes:${dishes}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dishes.getId()})}">
-                    <img class="product__img" th:src="${dishes.src}"></a>
-                <p th:text="${dishes.name}"></p>
+            <div class="product" th:each="dish:${dishes}">
+                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                    <img class="product__img" th:src="${dish.src}" th:value="${dish.id}"></a>
+                <p th:text="${dish.name}"></p>
                 <div class="product__info">
                     <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dishes.price + ' бел.р'}"></p>
+                    <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
                     <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
-                           th:value="${dishes.id}">
-                    <input type="number" th:field="*{countOfDishes}">
+                           th:value="${dish.id}">
+                    <input type="number" th:field="*{countOfDishes}" th:value="${order_dishes.countOfDishes}">
                 </div>
-                <button class="product__btn">Добавить в корзину</button>
+                <button class="product__btn" th:field="*{dish}">Добавить в корзину
+                </button>
             </div>
         </div>
     </section>
 </form>
-</div>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>

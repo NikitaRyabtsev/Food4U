@@ -7,6 +7,7 @@ import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Reposotories.*;
 import by.htp.netcracker.foodfactory.Service.DishService;
 import by.htp.netcracker.foodfactory.Service.OrderService;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.security.Principal;
 
 @Controller
+@Scope("session")
 @RequestMapping("/order")
 public class OrdersController {
 
@@ -55,7 +59,8 @@ public class OrdersController {
     }
 
     @GetMapping("/newOrderTest")
-    public String newTestOrder(Principal principal, Model model) {
+    public String newTestOrder(Principal principal, Model model , HttpSession session) {
+        Orders orders = orderService.findOrderByUserName(principal.getName());
         model.addAttribute("order_dishes" , new OrdersDish());
         model.addAttribute("dishes" , dishRepository.findAll());
         model.addAttribute("username" , orderService.findOrderByUserName(principal.getName()));
@@ -64,7 +69,7 @@ public class OrdersController {
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("/newOrderTest")
-    public String addTestOrder(@ModelAttribute("order_dishes")OrdersDish ordersDish ){
+    public String addTestOrder(@ModelAttribute("order_dishes")OrdersDish ordersDish){
         ordersDishesRepository.save(ordersDish);
         return "redirect:/order/newOrderTest";
     }
