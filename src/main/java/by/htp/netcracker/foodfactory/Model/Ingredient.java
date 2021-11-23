@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="Ingredient")
@@ -16,9 +18,7 @@ public class Ingredient implements Serializable {
     private Integer id;
     @Column
     private String name;
-    @Column
     private double calories;
-
     private double weight;
     @Column
     private double proteins;
@@ -26,12 +26,9 @@ public class Ingredient implements Serializable {
     private double fats;
     @Column
     private double carbohydrates;
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name="dish_has_ingredient",
-            joinColumns = @JoinColumn(name="ingredient_id"),
-            inverseJoinColumns = @JoinColumn(name="dish_id"))
-    private List<Dish> dishes;
+    @OneToMany(mappedBy = "ingredient" , fetch = FetchType.LAZY)
+    private List<DishIngredient> ingredientsDish;
+
 
     public Ingredient(Integer id, String name, double calories, double weight, double proteins, double fats, double carbohydrates, List<Dish> dishes) {
         this.id = id;
@@ -41,11 +38,18 @@ public class Ingredient implements Serializable {
         this.proteins = proteins;
         this.fats = fats;
         this.carbohydrates = carbohydrates;
-        this.dishes = dishes;
     }
 
     public Ingredient() {
 
+    }
+
+    public List<DishIngredient> getIngredientsDish() {
+        return ingredientsDish;
+    }
+
+    public void setIngredientsDish(List<DishIngredient> ingredientsDish) {
+        this.ingredientsDish = ingredientsDish;
     }
 
     public Integer getId() {
@@ -104,45 +108,16 @@ public class Ingredient implements Serializable {
         this.carbohydrates = carbohydrates;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Double.compare(that.calories, calories) == 0 &&
-                Double.compare(that.weight, weight) == 0 &&
-                Double.compare(that.proteins, proteins) == 0 &&
-                Double.compare(that.fats, fats) == 0 &&
-                Double.compare(that.carbohydrates, carbohydrates) == 0 &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(dishes, that.dishes);
+        return Double.compare(that.calories, calories) == 0 && Double.compare(that.weight, weight) == 0 && Double.compare(that.proteins, proteins) == 0 && Double.compare(that.fats, fats) == 0 && Double.compare(that.carbohydrates, carbohydrates) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(ingredientsDish, that.ingredientsDish);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, calories, weight, proteins, fats, carbohydrates, dishes);
-    }
-
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", calories=" + calories +
-                ", weight=" + weight +
-                ", proteins=" + proteins +
-                ", fats=" + fats +
-                ", carbohydrates=" + carbohydrates +
-                ", dishes=" + dishes +
-                '}';
+        return Objects.hash(id, name, calories, weight, proteins, fats, carbohydrates, ingredientsDish);
     }
 }

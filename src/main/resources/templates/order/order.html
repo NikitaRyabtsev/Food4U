@@ -25,18 +25,20 @@
 <form th:action="@{/order/{id}/edit/(id=${order.getId()})}" th:method="POST" th:object="${order}">
     <section class="products">
         <div class="products__body" th:each="order:${order}">
-            <div class="product" th:each="dish:${order.getDishes()}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                    <img class="product__img" th:src="${dish.src}">
-                </a>
-                <p th:text="${dish.name}"></p>
-                <div class="product__info">
-                    <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dish.price}"></p>
+            <div  class="product" th:each="getOrders_dishes:${order.getOrders_dishes()}">
+                <div th:each="dish:${getOrders_dishes.getDish()}">
+                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                        <img class="product__img" th:src="${dish.src}">
+                    </a>
+                    <p th:text="${dish.name}"></p>
+                    <div class="product__info">
+                        <p class="product__text">Стоимость:</p>
+                        <p class="product__price" th:text="${dish.price}"></p>
+                    </div>
+                    <form th:method="POST" th:action="@{/order/delete/{idDish}(idDish = ${dish.getId()})} ">
+                        <input type="submit" class="btn btn-secondary" value="Удалить блюдо">
+                    </form>
                 </div>
-                <form th:method="POST" th:action="@{/order/delete/{idDish}(idDish = ${dish.getId()})} ">
-                    <input type="submit" class="btn btn-secondary" value="Удалить блюдо">
-                </form>
             </div>
         </div>
     </section>

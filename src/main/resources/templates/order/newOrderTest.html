@@ -37,29 +37,20 @@
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <h3>Новый заказ</h3>
-<form th:action="@{/order/newOrder}" th:method="POST" th:object="${order}">
-    <input type="hidden" th:field="*{numberOfBooking}" id="name" class="add__btn" required>
-    <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
-        <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).INPROGRESS}"
-                th:value="${status}"></option>
-    </select>
+<form th:action="@{/order/newOrderTest}" th:method="POST" th:object="${order_dishes}">
     <section class="products">
         <div class="products__body">
-            <div class="product" th:each="dish:${dishes}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                    <img class="product__img" th:src="${dish.src}"></a>
-                <p th:text="${dish.name}"></p>
+            <div class="product" th:each="dishes:${dishes}">
+                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dishes.getId()})}">
+                    <img class="product__img" th:src="${dishes.src}"></a>
+                <p th:text="${dishes.name}"></p>
                 <div class="product__info">
                     <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-                    <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{orders_dishes}"
-                           th:value="${dish.id}">
-                    <div th:each="orders_dish:${orders_dish}">
-                        <input type="number" th:value="${orders_dish.orders}">
-                        <input type="number" th:field="${orders_dish}" th:value="${dish.id}">
-                        <input type="number" th:value="${orders_dish.countOfDishes}">
-                    </div>
+                    <p class="product__price" th:text="${dishes.price + ' бел.р'}"></p>
+                    <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
+                           th:value="${dishes.id}">
                 </div>
+                <input type="number" th:field="*{countOfDishes}">
                 <button class="product__btn">Добавить в корзину</button>
             </div>
         </div>

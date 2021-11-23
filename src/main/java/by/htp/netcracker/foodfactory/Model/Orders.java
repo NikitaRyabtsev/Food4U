@@ -2,24 +2,15 @@ package by.htp.netcracker.foodfactory.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Orders")
-public class Orders {
+public class Orders implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,39 +23,23 @@ public class Orders {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
-
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name="order_has_dish",
-            joinColumns = @JoinColumn(name="order_id"),
-            inverseJoinColumns = @JoinColumn(name="dish_id"))
-    private List<Dish> dishes;
+    @OneToMany(mappedBy = "orders" , fetch = FetchType.EAGER)
+    private List<OrdersDish> orders_dishes;
 
     public Orders(){
-
     }
 
-    public Orders(Integer id, String status) {
-        this.id = id;
-        this.status = status;
-    }
-
-    public Orders(Integer id, String status, int numberOfBooking) {
+    public Orders(Integer id, String status, double numberOfBooking, User user, List<OrdersDish> orders_dishes) {
         this.id = id;
         this.status = status;
         this.numberOfBooking = numberOfBooking;
+        this.user = user;
+        this.orders_dishes = orders_dishes;
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public double getNumberOfBooking() {
-        return numberOfBooking;
-    }
-
-    public void setNumberOfBooking(double numberOfBooking) {
-        this.numberOfBooking = numberOfBooking;
     }
 
     public void setId(Integer id) {
@@ -79,6 +54,14 @@ public class Orders {
         this.status = status;
     }
 
+    public double getNumberOfBooking() {
+        return numberOfBooking;
+    }
+
+    public void setNumberOfBooking(double numberOfBooking) {
+        this.numberOfBooking = numberOfBooking;
+    }
+
     public User getUser() {
         return user;
     }
@@ -87,12 +70,12 @@ public class Orders {
         this.user = user;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
+    public List<OrdersDish> getOrders_dishes() {
+        return orders_dishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public void setOrders_dishes(List<OrdersDish> orders_dishes) {
+        this.orders_dishes = orders_dishes;
     }
 
     @Override
@@ -100,16 +83,12 @@ public class Orders {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return Objects.equals(id, orders.id) &&
-                Objects.equals(status, orders.status) &&
-                Objects.equals(numberOfBooking, orders.numberOfBooking) &&
-                Objects.equals(user, orders.user) &&
-                Objects.equals(dishes, orders.dishes);
+        return Double.compare(orders.numberOfBooking, numberOfBooking) == 0 && Objects.equals(id, orders.id) && Objects.equals(status, orders.status) && Objects.equals(user, orders.user) && Objects.equals(orders_dishes, orders.orders_dishes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, numberOfBooking, user, dishes);
+        return Objects.hash(id, status, numberOfBooking, user, orders_dishes);
     }
 
     @Override
@@ -117,9 +96,9 @@ public class Orders {
         return "Orders{" +
                 "id=" + id +
                 ", status='" + status + '\'' +
-                ", numberOfBooking='" + numberOfBooking + '\'' +
+                ", numberOfBooking=" + numberOfBooking +
                 ", user=" + user +
-                ", dishes=" + dishes +
+                ", orders_dishes=" + orders_dishes +
                 '}';
     }
 }

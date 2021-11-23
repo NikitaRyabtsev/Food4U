@@ -36,7 +36,7 @@ public class IngredientsController {
     }
 
     @PostMapping("/new")
-    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient , HttpServletRequest request){
+    public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient){
         ingredientRepository.save(ingredient);
         return "redirect:/ingredients";
     }

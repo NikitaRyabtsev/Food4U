@@ -4,15 +4,11 @@ package by.htp.netcracker.foodfactory.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name="Dish")
-
 public class Dish implements Serializable {
 
     @Id
@@ -27,65 +23,41 @@ public class Dish implements Serializable {
     @Lob
     @Column
     private String src;
-
     private double weight;
-
     private double calories;
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name="dish_has_ingredient",
-                joinColumns = @JoinColumn(name="dish_id"),
-                inverseJoinColumns = @JoinColumn(name="ingredient_id"))
-    private List<Ingredient> ingredients;
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name="order_has_dish",
-                joinColumns = @JoinColumn(name="dish_id"),
-                inverseJoinColumns = @JoinColumn(name="order_id"))
-    private List<Orders> orders;
+    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
+    private List<DishIngredient> dish_ingredients;
+    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
+    private Set<OrdersDish> orders_dishes = new HashSet<OrdersDish>();
 
-    public Dish(){
+    public Dish() {
 
     }
-    public Dish(Integer id, String name, String type, double price, List<Ingredient> ingredients) {
+    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<OrdersDish> orders_dishes) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
-        this.ingredients = ingredients;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public double getCalories() {
-        return calories;
-    }
-
-    public void setCalories(double calories) {
-        this.calories = calories;
-    }
-
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
         this.src = src;
+        this.weight = weight;
+        this.calories = calories;
+
     }
 
-    public List<Orders> getOrders() {
-        return orders;
+    public List<DishIngredient> getDish_ingredients() {
+        return dish_ingredients;
     }
 
-    public void setOrders(List<Orders> orders) {
-        this.orders = orders;
+    public void setDish_ingredients(List<DishIngredient> dish_ingredients) {
+        this.dish_ingredients = dish_ingredients;
+    }
+
+    public Set<OrdersDish> getOrders_dishes() {
+        return orders_dishes;
+    }
+
+    public void setOrders_dishes(Set<OrdersDish> orders_dishes) {
+        this.orders_dishes = orders_dishes;
     }
 
     public Integer getId() {
@@ -120,12 +92,28 @@ public class Dish implements Serializable {
         this.price = price;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public String getSrc() {
+        return src;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
     }
 
 
@@ -134,14 +122,28 @@ public class Dish implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        return Double.compare(dish.price, price) == 0 && Double.compare(dish.weight, weight) == 0 && Double.compare(dish.calories, calories) == 0 && Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(type, dish.type) && Objects.equals(src, dish.src) && Objects.equals(ingredients, dish.ingredients) && Objects.equals(orders, dish.orders);
+        return Double.compare(dish.price, price) == 0 && Double.compare(dish.weight, weight) == 0 && Double.compare(dish.calories, calories) == 0 && Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(type, dish.type) && Objects.equals(src, dish.src) && Objects.equals(dish_ingredients, dish.dish_ingredients) && Objects.equals(orders_dishes, dish.orders_dishes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, price, src, weight, calories, ingredients, orders);
+        return Objects.hash(id, name, type, price, src, weight, calories, dish_ingredients, orders_dishes);
     }
 
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", src='" + src + '\'' +
+                ", weight=" + weight +
+                ", calories=" + calories +
+                ", dish_ingredients=" + dish_ingredients +
+                ", orders_dishes=" + orders_dishes +
+                '}';
+    }
 }
 
 

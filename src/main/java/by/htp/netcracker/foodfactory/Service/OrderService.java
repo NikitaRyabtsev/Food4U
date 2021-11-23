@@ -36,6 +36,7 @@ public class OrderService {
         Orders order = ordersRepository.findOrdersByUserAndId(user,id);
         return order;
     }
+
     public Orders findOrderByUserName(String username){
         User user = userRepository.getUserByUsername(username);
         Orders order = ordersRepository.findOrdersByUser(user);
