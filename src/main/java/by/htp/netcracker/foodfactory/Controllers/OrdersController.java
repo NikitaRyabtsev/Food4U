@@ -7,6 +7,7 @@ import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Reposotories.*;
 import by.htp.netcracker.foodfactory.Service.DishService;
 import by.htp.netcracker.foodfactory.Service.OrderService;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
@@ -60,7 +61,7 @@ public class OrdersController {
 
     @GetMapping("/newOrderTest")
     public String newTestOrder(Principal principal, Model model , HttpSession session) {
-        Orders orders = orderService.findOrderByUserName(principal.getName());
+        session.setAttribute("order", new Orders());
         model.addAttribute("order_dishes" , new OrdersDish());
         model.addAttribute("dishes" , dishRepository.findAll());
         model.addAttribute("username" , orderService.findOrderByUserName(principal.getName()));

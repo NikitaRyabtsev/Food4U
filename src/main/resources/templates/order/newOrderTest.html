@@ -79,6 +79,7 @@
                     <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
                            th:value="${dish.id}">
                     <input type="number" th:field="*{countOfDishes}" th:value="${order_dishes.countOfDishes}">
+<!--                    <p th:text="${session.order}" th:field="*{orders}"></p>-->
                 </div>
                 <button class="product__btn" th:field="*{dish}">Добавить в корзину
                 </button>

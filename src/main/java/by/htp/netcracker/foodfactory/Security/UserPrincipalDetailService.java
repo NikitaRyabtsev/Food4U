@@ -1,11 +1,14 @@
 package by.htp.netcracker.foodfactory.Security;
 
+
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.security.Security;
 
 @Service
 public class UserPrincipalDetailService implements UserDetailsService {
@@ -24,5 +27,6 @@ public class UserPrincipalDetailService implements UserDetailsService {
         }
         return new UserPrincipal(user);
     }
+
 
 }
