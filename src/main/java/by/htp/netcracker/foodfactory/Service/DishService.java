@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Service;
 
+import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
 import by.htp.netcracker.foodfactory.Model.Ingredient;
@@ -27,5 +28,11 @@ public class DishService {
     }
     public List<Dish> findDishesSortByType(){return dishRepository.findAll(Sort.by(Sort.Direction.DESC,"type"));}
 
+
+    public List<DishIngredient> createDish(){
+        List<DishIngredient> dishIngredientList = new ArrayList<>();
+        dishIngredientList.add(new DishIngredient());
+       return dishIngredientList;
+    }
 
 }

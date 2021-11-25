@@ -4,6 +4,7 @@ import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
 import by.htp.netcracker.foodfactory.Model.Dish;
 
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
+import by.htp.netcracker.foodfactory.Model.Ingredient;
 import by.htp.netcracker.foodfactory.Reposotories.DishIngredientsRepository;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
@@ -47,7 +48,11 @@ public class DishesController {
 
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) {
-        model.addAttribute("dish_ingredient" , new DishIngredient());
+        DishIngredientDto wrapper = new DishIngredientDto();
+        List<DishIngredient> dishIngredientList = dishService.createDish();
+        wrapper.setDishIngredientList(dishIngredientList);
+        model.addAttribute("wrapper" , wrapper);
+//        model.addAttribute("dish_ingredient" , new DishIngredient());
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         model.addAttribute("dishes" , dishRepository.findAll());
         model.addAttribute("dish_ingredients", dishIngredientsRepository.findAll());
@@ -55,10 +60,8 @@ public class DishesController {
     }
 
     @PostMapping("/newDish")
-    public String addDishWithIngredients(@ModelAttribute("dish_ingredient")DishIngredient dishIngredient)  {
-        List<DishIngredient> dishIngredients = new ArrayList<>();
-        dishIngredients.add(dishIngredient);
-        dishIngredientsRepository.saveAll(dishIngredients);
+    public String addDishWithIngredients(@ModelAttribute DishIngredientDto wrapper)  {
+        dishIngredientsRepository.saveAll(wrapper.getDishIngredientList());
         return "redirect:/menu/dishes";
     }
 
