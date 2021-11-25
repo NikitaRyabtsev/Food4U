@@ -51,8 +51,7 @@ public class DishesController {
         DishIngredientDto wrapper = new DishIngredientDto();
         List<DishIngredient> dishIngredientList = dishService.createDish();
         wrapper.setDishIngredientList(dishIngredientList);
-        model.addAttribute("wrapper" , wrapper);
-//        model.addAttribute("dish_ingredient" , new DishIngredient());
+        model.addAttribute("wrapper" , dishIngredientList);
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         model.addAttribute("dishes" , dishRepository.findAll());
         model.addAttribute("dish_ingredients", dishIngredientsRepository.findAll());
@@ -60,7 +59,7 @@ public class DishesController {
     }
 
     @PostMapping("/newDish")
-    public String addDishWithIngredients(@ModelAttribute DishIngredientDto wrapper)  {
+    public String addDishWithIngredients(@ModelAttribute("wrapper") DishIngredientDto wrapper)  {
         dishIngredientsRepository.saveAll(wrapper.getDishIngredientList());
         return "redirect:/menu/dishes";
     }

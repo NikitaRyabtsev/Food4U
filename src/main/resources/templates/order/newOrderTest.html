@@ -66,7 +66,7 @@
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <h3>Новый заказ</h3>
-<form th:action="@{/order/newOrderTest}" th:method="POST" th:object="${order_dishes}">
+<form th:action="@{/order/newOrderTest}" th:method="POST" th:object="${orderDishes}">
     <section class="products">
         <div class="products__body">
             <div class="product" th:each="dish:${dishes}">
@@ -78,10 +78,10 @@
                     <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
                     <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
                            th:value="${dish.id}">
-                    <input type="number" th:field="*{countOfDishes}" th:value="${order_dishes.countOfDishes}">
+                    <input type="number" th:field="*{countOfDishes}" >
 <!--                    <p th:text="${session.order}" th:field="*{orders}"></p>-->
                 </div>
-                <button class="product__btn" th:field="*{dish}">Добавить в корзину
+                <button class="product__btn" th:field="*{dish}" onclick="updateCount()" th:value="${dish.id}">Добавить в корзину
                 </button>
             </div>
         </div>
