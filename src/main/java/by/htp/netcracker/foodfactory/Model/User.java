@@ -1,8 +1,6 @@
 package by.htp.netcracker.foodfactory.Model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +31,10 @@ public class User {
     private String sex;
     @Column
     private String block;
-    @OneToMany(mappedBy = "user" , fetch = FetchType.EAGER)
-    private List<Orders> orders;
+    @OneToOne(mappedBy="user")
+    private Orders order;
+    @OneToMany(mappedBy = "user" )
+    private List<UserDish> userDishes;
 
 
     public User(Integer id, String role, String name, String login, String password, String email, String surname, String sex, String block) {
@@ -64,13 +64,12 @@ public class User {
         this.block = block;
     }
 
-
-    public List<Orders> getOrders() {
-        return orders;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setOrders(List<Orders> orders) {
-        this.orders = orders;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 
     public Integer getId() {

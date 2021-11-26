@@ -2,9 +2,6 @@ package by.htp.netcracker.foodfactory.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,12 +29,12 @@ public class Dish implements Serializable {
     private List<DishIngredient> dish_ingredients;
     @JsonIgnore
     @OneToMany(mappedBy = "dish")
-    private Set<OrdersDish> orders_dishes = new HashSet<OrdersDish>();
+    private Set<UserDish> orders_dishes = new HashSet<UserDish>();
 
     public Dish() {
 
     }
-    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<OrdersDish> orders_dishes) {
+    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<UserDish> orders_dishes) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -56,11 +53,11 @@ public class Dish implements Serializable {
         this.dish_ingredients = dish_ingredients;
     }
 
-    public Set<OrdersDish> getOrders_dishes() {
+    public Set<UserDish> getOrders_dishes() {
         return orders_dishes;
     }
 
-    public void setOrders_dishes(Set<OrdersDish> orders_dishes) {
+    public void setOrders_dishes(Set<UserDish> orders_dishes) {
         this.orders_dishes = orders_dishes;
     }
 
