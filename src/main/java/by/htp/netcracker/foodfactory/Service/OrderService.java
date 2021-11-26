@@ -2,7 +2,9 @@ package by.htp.netcracker.foodfactory.Service;
 
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
+import by.htp.netcracker.foodfactory.Model.UserDish;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import by.htp.netcracker.foodfactory.Reposotories.UserDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,19 @@ import java.util.List;
 public class OrderService {
     private final UserRepository userRepository;
     private final OrdersRepository ordersRepository;
+    private final UserDishesRepository userDishesRepository;
 
-    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository) {
+    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository , UserDishesRepository userDishesRepository) {
         this.userRepository = userRepository;
         this.ordersRepository = ordersRepository;
+        this.userDishesRepository =userDishesRepository;
     }
 
+    public UserDish saveUserDishByUser(String username , UserDish userDish){
+        User user = userRepository.getUserByUsername(username);
+        userDish.setUser(user);;
+        return userDishesRepository.save(userDish);
+    }
     public List<Orders> findOrdersByUserName(String username){
         User user = userRepository.getUserByUsername(username);
         List<Orders> orders = ordersRepository.findOrdersByUserOrderById(user);
@@ -41,5 +50,11 @@ public class OrderService {
         User user = userRepository.getUserByUsername(username);
         Orders order = ordersRepository.findOrdersByUser(user);
         return order;
+    }
+
+    public List<UserDish> findUserDishesByUser(String username){
+        User user = userRepository.getUserByUsername(username);
+        List<UserDish> userDishes = userDishesRepository.findAllByUser(user);
+        return userDishes;
     }
 }

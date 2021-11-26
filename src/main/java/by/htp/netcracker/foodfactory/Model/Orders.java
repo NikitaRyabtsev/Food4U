@@ -1,13 +1,9 @@
 package by.htp.netcracker.foodfactory.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.context.annotation.Scope;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,22 +19,21 @@ public class Orders implements Serializable {
     @NotNull
     @Column(name="numberOfBooking")
     private double numberOfBooking;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
+    @Column
+    private LocalDateTime dateTimeOfBooking;
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn (name = "user")
     private User user;
-    @JsonIgnore
-    @OneToMany(mappedBy = "orders" , fetch = FetchType.EAGER)
-    private List<OrdersDish> orders_dishes;
 
     public Orders(){
     }
 
-    public Orders(Integer id, String status, double numberOfBooking, User user, List<OrdersDish> orders_dishes) {
+    public Orders(Integer id, String status, double numberOfBooking, LocalDateTime dateTimeOfBooking, User user) {
         this.id = id;
         this.status = status;
         this.numberOfBooking = numberOfBooking;
+        this.dateTimeOfBooking = dateTimeOfBooking;
         this.user = user;
-        this.orders_dishes = orders_dishes;
     }
 
     public Integer getId() {
@@ -65,6 +60,14 @@ public class Orders implements Serializable {
         this.numberOfBooking = numberOfBooking;
     }
 
+    public LocalDateTime getDateTimeOfBooking() {
+        return dateTimeOfBooking;
+    }
+
+    public void setDateTimeOfBooking(LocalDateTime dateTimeOfBooking) {
+        this.dateTimeOfBooking = dateTimeOfBooking;
+    }
+
     public User getUser() {
         return user;
     }
@@ -73,35 +76,17 @@ public class Orders implements Serializable {
         this.user = user;
     }
 
-    public List<OrdersDish> getOrders_dishes() {
-        return orders_dishes;
-    }
-
-    public void setOrders_dishes(List<OrdersDish> orders_dishes) {
-        this.orders_dishes = orders_dishes;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Orders orders = (Orders) o;
-        return Double.compare(orders.numberOfBooking, numberOfBooking) == 0 && Objects.equals(id, orders.id) && Objects.equals(status, orders.status) && Objects.equals(user, orders.user) && Objects.equals(orders_dishes, orders.orders_dishes);
+        return Double.compare(orders.numberOfBooking, numberOfBooking) == 0 && Objects.equals(id, orders.id) && Objects.equals(status, orders.status) && Objects.equals(dateTimeOfBooking, orders.dateTimeOfBooking) && Objects.equals(user, orders.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, numberOfBooking, user, orders_dishes);
-    }
-
-    @Override
-    public String toString() {
-        return "Orders{" +
-                "id=" + id +
-                ", status='" + status + '\'' +
-                ", numberOfBooking=" + numberOfBooking +
-                ", user=" + user +
-                ", orders_dishes=" + orders_dishes +
-                '}';
+        return Objects.hash(id, status, numberOfBooking, dateTimeOfBooking, user);
     }
 }
+

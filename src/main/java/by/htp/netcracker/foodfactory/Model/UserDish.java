@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Table(name = "orders_dish")
+@Table(name = "user_dish")
 @Entity
-public class OrdersDish implements Serializable {
+public class UserDish implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,19 +14,14 @@ public class OrdersDish implements Serializable {
     @Column
     private int countOfDishes;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Orders orders;
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dish_id")
     private Dish dish;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    public OrdersDish() {
-    }
-    public OrdersDish(Integer id, int countOfDishes, Orders orders, Dish dish) {
-        this.id = id;
-        this.countOfDishes = countOfDishes;
-        this.orders = orders;
-        this.dish = dish;
+
+    public UserDish() {
     }
 
     public Integer getId() {
@@ -45,14 +40,6 @@ public class OrdersDish implements Serializable {
         this.countOfDishes = countOfDishes;
     }
 
-    public Orders getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Orders orders) {
-        this.orders = orders;
-    }
-
     public Dish getDish() {
         return dish;
     }
@@ -61,17 +48,24 @@ public class OrdersDish implements Serializable {
         this.dish = dish;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrdersDish that = (OrdersDish) o;
-        return countOfDishes == that.countOfDishes && Objects.equals(id, that.id) && Objects.equals(orders, that.orders) && Objects.equals(dish, that.dish);
+        UserDish userDish = (UserDish) o;
+        return countOfDishes == userDish.countOfDishes && Objects.equals(id, userDish.id) && Objects.equals(dish, userDish.dish) && Objects.equals(user, userDish.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, countOfDishes, orders, dish);
+        return Objects.hash(id, countOfDishes, dish, user);
     }
-
 }
