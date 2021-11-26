@@ -4,7 +4,6 @@ import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
 import by.htp.netcracker.foodfactory.Model.Dish;
 
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
-import by.htp.netcracker.foodfactory.Model.Ingredient;
 import by.htp.netcracker.foodfactory.Reposotories.DishIngredientsRepository;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;

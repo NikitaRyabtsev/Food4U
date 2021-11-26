@@ -25,7 +25,7 @@ public class OrderService {
 
     public UserDish saveUserDishByUser(String username , UserDish userDish){
         User user = userRepository.getUserByUsername(username);
-        userDish.setUser(user);;
+        userDish.setUser(user);
         return userDishesRepository.save(userDish);
     }
     public List<Orders> findOrdersByUserName(String username){

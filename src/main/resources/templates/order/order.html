@@ -22,27 +22,31 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<!--<form th:action="@{/order/{id}/edit/(id=${order.getId()})}" th:method="POST" th:object="${order}">-->
-<!--    <section class="products">-->
-<!--        <div class="products__body" th:each="order:${order}">-->
-<!--            <div  class="product" th:each="getOrders_dishes:${order.getOrders_dishes()}">-->
-<!--                <div th:each="dish:${getOrders_dishes.getDish()}">-->
-<!--                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">-->
-<!--                        <img class="product__img" th:src="${dish.src}">-->
-<!--                    </a>-->
-<!--                    <p th:text="${dish.name}"></p>-->
-<!--                    <div class="product__info">-->
-<!--                        <p class="product__text">Стоимость:</p>-->
-<!--                        <p class="product__price" th:text="${dish.price}"></p>-->
-<!--                    </div>-->
-<!--                    <form th:method="POST" th:action="@{/order/delete/{idDish}(idDish = ${dish.getId()})} ">-->
-<!--                        <input type="submit" class="btn btn-secondary" value="Удалить блюдо">-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </section>-->
-<!--</form>-->
+<form th:action="@{/order/userOrder}" th:method="POST" th:object="${orders}">
+    <section class="products">
+        <div class="products__body">
+            <div class="product" th:each="userDish:${userDishes}">
+                <div th:each="dish:${userDish.getDish()}">
+                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                        <img class="product__img" th:src="${dish.src}">
+                    </a>
+                    <p th:text="${dish.name}"></p>
+                    <div class="product__info">
+                        <p class="product__text">Стоимость:</p>
+                        <p class="product__price" th:text="${dish.price}"></p>
+                    </div>
+                    <!--                    <form th:method="POST" th:action="@{/order/delete/{idDish}(idDish = ${dish.getId()})} ">-->
+                    <!--                        <input type="submit" class="btn btn-secondary" value="Удалить блюдо">-->
+                    <!--                    </form>-->
+                </div>
+            </div>
+        </div>
+    </section>
+        <input type="number" th:value="${orders.numberOfBooking + random}" name="numberOfBooking" id="numberOfBooking">
+        <input type="datetime-local" th:value="${orders.dateTimeOfBooking}" th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"
+         name="dateTimeOfBooking" id="dateTimeOfBooking">
+        <input type="submit" value="Оформить заказ">
+</form>
 <!--<div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">-->
 <!--    <a th:href="@{~/order/{id}/editOrder(id = ${order.getId()})}" class="btn btn-secondary">Добавить блюдо в заказ</a>-->
 <!--</div>-->

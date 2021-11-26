@@ -1,9 +1,12 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
+import by.htp.netcracker.foodfactory.Helper.MathRandom;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.UserDish;
-import by.htp.netcracker.foodfactory.Reposotories.*;
-import by.htp.netcracker.foodfactory.Service.DishService;
+import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
+import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import by.htp.netcracker.foodfactory.Reposotories.UserDishesRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,16 +30,13 @@ public class OrdersController {
     private final OrdersRepository orderRepository;
     private final IngredientRepository ingredientRepository;
     private final OrderService orderService;
-    private final UserDishesRepository userDishesRepository;
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository, OrderService orderService,
-                          UserDishesRepository  userDishesRepository) {
+                            IngredientRepository ingredientRepository, OrderService orderService ){
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
         this.orderService = orderService;
-        this.userDishesRepository =  userDishesRepository;
 
     }
 
@@ -93,14 +93,21 @@ public class OrdersController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/userOrder")
     public String findUserOrder(Model model, Principal principal) {
-        model.addAttribute("userDish" , new Orders());
-        model.addAttribute("dishes", dishRepository.findAll());
+        MathRandom mathRandom = new MathRandom();
+        model.addAttribute("random" , mathRandom.generateNumberOfBooking());
+        model.addAttribute("orders" , new Orders());
         model.addAttribute("userDishes" , orderService.findUserDishesByUser(principal.getName()));
         model.addAttribute("order", orderService.findOrderByUserName(principal.getName()));
         if (orderService.findUserDishesByUser(principal.getName()) == null) {
             return "redirect:/order/newOrderTest";
         }
         return "/order/order";
+    }
+
+    @PostMapping("/userOrder")
+    public String ordering(@ModelAttribute("order") Orders orders , Principal principal){
+        orderService.saveOrderByUser(principal.getName(),orders);
+        return "redirect:/order/newOrderTest";
     }
 
 }
