@@ -1,5 +1,7 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class DishIngredient implements Serializable {
     private Integer id;
     @Column
     private double weight;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dish_id")
     private Dish dish;

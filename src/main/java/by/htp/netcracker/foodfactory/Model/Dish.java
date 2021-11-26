@@ -2,6 +2,9 @@ package by.htp.netcracker.foodfactory.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,9 +28,10 @@ public class Dish implements Serializable {
     private String src;
     private double weight;
     private double calories;
-    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dish")
     private List<DishIngredient> dish_ingredients;
-    @OneToMany(mappedBy = "dish" , fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "dish")
     private Set<OrdersDish> orders_dishes = new HashSet<OrdersDish>();
 
     public Dish() {
@@ -130,20 +134,6 @@ public class Dish implements Serializable {
         return Objects.hash(id, name, type, price, src, weight, calories, dish_ingredients, orders_dishes);
     }
 
-    @Override
-    public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", src='" + src + '\'' +
-                ", weight=" + weight +
-                ", calories=" + calories +
-                ", dish_ingredients=" + dish_ingredients +
-                ", orders_dishes=" + orders_dishes +
-                '}';
-    }
 }
 
 
