@@ -2,9 +2,8 @@ package by.htp.netcracker.foodfactory.Helper;
 
 public enum OrderStatus {
 
-    DONE("Оплачен"),
-    INPROGRESS("Добавлен"),
-    UNDONE("Не выполнен");
+    DONE("Подтверждён"),
+    CONSIDERED("Рассматривается");
 
     private final String displayValue;
 

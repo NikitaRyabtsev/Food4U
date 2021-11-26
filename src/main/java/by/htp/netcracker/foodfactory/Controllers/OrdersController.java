@@ -30,13 +30,15 @@ public class OrdersController {
     private final OrdersRepository orderRepository;
     private final IngredientRepository ingredientRepository;
     private final OrderService orderService;
+    private final UserDishesRepository userDishesRepository;
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository, OrderService orderService ){
+                            IngredientRepository ingredientRepository, OrderService orderService, UserDishesRepository userDishesRepository ){
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
         this.orderService = orderService;
+        this.userDishesRepository =userDishesRepository;
 
     }
 
@@ -48,46 +50,18 @@ public class OrdersController {
         return "order/orders";
     }
 
-    @GetMapping("/newOrderTest")
-    public String newTestOrder(Principal principal, Model model) {
+    @GetMapping("/newOrder")
+    public String newOrder(Model model) {
         model.addAttribute("userDish" , new UserDish());
         model.addAttribute("dishes" , dishRepository.findAll());
         return "order/newOrderTest";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @PostMapping("/newOrderTest")
-    public String addTestOrder(@ModelAttribute("userDish") UserDish ordersDish, Principal principal){
+    @PostMapping("/newOrder")
+    public String addOrder(@ModelAttribute("userDish") UserDish ordersDish, Principal principal){
         orderService.saveUserDishByUser(principal.getName(), ordersDish);
         return "redirect:/order/newOrderTest";
-    }
-
-    @GetMapping("/{id}/order")
-    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("order", orderRepository.getById(id));
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "order/order";
-    }
-
-    @Transactional
-    @PostMapping("/delete/{idDish}")
-    public String deleteDishFromOrder(@PathVariable("idDish") Integer id) {
-        orderRepository.deleteDishFromOrderById(id);
-        return "redirect:/order/userOrder";
-    }
-
-    @GetMapping("/{id}/editOrder")
-    public String editOrder(Model model, Principal principal, @PathVariable("id") Integer id) {
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("order", orderService.findOrderByUserNameAndId(principal.getName(), id));
-        return "order/editOrder";
-    }
-
-    @PostMapping("/{id}/editOrder")
-    public String updateOrder(@ModelAttribute("order") Orders order, Principal principal) {
-        orderService.saveOrderByUser(principal.getName(), order);
-        return "redirect:/order/userOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -105,9 +79,17 @@ public class OrdersController {
     }
 
     @PostMapping("/userOrder")
-    public String ordering(@ModelAttribute("order") Orders orders , Principal principal){
+    public String ordering(@ModelAttribute("order") Orders orders ,@ModelAttribute("userDishes") UserDish userDish, Principal principal){
         orderService.saveOrderByUser(principal.getName(),orders);
-        return "redirect:/order/newOrderTest";
+        orderService.saveUserDishByUser(principal.getName(),userDish);
+        return "redirect:/order/newOrder";
+    }
+
+    @Transactional
+    @PostMapping("/{id}/delete")
+    public String deleteDishFromUserDish(@PathVariable("id")Integer id){
+        userDishesRepository.deleteByDishId(id);
+        return "redirect:/order/userOrder";
     }
 
 }

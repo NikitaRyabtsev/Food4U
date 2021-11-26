@@ -1,60 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/popup/style.css}">
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/products.css}">
-    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
     <script th:src="@{/js/counterDishes.js}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-    <link th:href="@{/images/icon-close.svg}">
-    <style>
-        div label input {
-            margin-right:100px;
-        }
-        body {
-            font-family:sans-serif;
-        }
-
-        #ck-button {
-            margin:4px;
-            background-color:#EFEFEF;
-            border-radius:4px;
-            border:1px solid #D0D0D0;
-            overflow:auto;
-            float:left;
-        }
-
-        #ck-button:hover {
-            background:red;
-        }
-
-        #ck-button label {
-            float:left;
-            width:4.0em;
-        }
-
-        #ck-button label span {
-            text-align:center;
-            padding:3px 0px;
-            display:block;
-        }
-
-        #ck-button label input {
-            position:absolute;
-            top:-20px;
-        }
-
-        #ck-button input:checked + span {
-            background-color:#911;
-            color:#fff;
-        }
-    </style>
     <meta charset="UTF-8">
     <title>Добавление блюда с ингредиентами</title>
 </head>
@@ -66,7 +18,6 @@
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <h3>Новый заказ</h3>
-<form th:action="@{/order/newOrderTest}" th:method="POST" th:object="${userDish}">
     <section class="products">
         <div class="products__body">
             <div class="product" th:each="dish:${dishes}">
@@ -76,15 +27,18 @@
                 <div class="product__info">
                     <p class="product__text">Стоимость:</p>
                     <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-                    <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"
-                           th:value="${dish.id}">
-                    <input type="number"  th:value="${countOfDishes}">
+<!--                    <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"-->
+<!--                           th:value="${dish.id}">-->
                 </div>
-                <button type="checkbox" class="product__btn">Добавить в корзину</button>
+                <form th:action="@{/order/newOrder}" th:method="POST" th:object="${userDish}">
+                <button type="submit" th:field="*{dish}" th:value="${dish.id}" name="dish" onclick="updateCount()"
+                        id="dish" class="product__btn">Добавить в корзину</button>
+                <input type="number" th:field="*{countOfDishes}" name="countOfDishes" id="countOfDishes">
+                </form>
             </div>
+
         </div>
     </section>
-</form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
