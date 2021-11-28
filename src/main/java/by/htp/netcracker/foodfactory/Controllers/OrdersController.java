@@ -2,13 +2,12 @@ package by.htp.netcracker.foodfactory.Controllers;
 
 import by.htp.netcracker.foodfactory.Helper.MathRandom;
 import by.htp.netcracker.foodfactory.Model.Orders;
-import by.htp.netcracker.foodfactory.Model.UserDish;
+import by.htp.netcracker.foodfactory.Model.OrderDish;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
-import by.htp.netcracker.foodfactory.Reposotories.UserDishesRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import javax.transaction.Transactional;
 import java.security.Principal;
 
 @Controller
-@Scope("session")
 @RequestMapping("/order")
 public class OrdersController {
 
@@ -30,10 +28,10 @@ public class OrdersController {
     private final OrdersRepository orderRepository;
     private final IngredientRepository ingredientRepository;
     private final OrderService orderService;
-    private final UserDishesRepository userDishesRepository;
+    private final OrderDishesRepository userDishesRepository;
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository, OrderService orderService, UserDishesRepository userDishesRepository ){
+                            IngredientRepository ingredientRepository, OrderService orderService, OrderDishesRepository userDishesRepository ){
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
@@ -43,25 +41,32 @@ public class OrdersController {
     }
 
     @GetMapping("/orders")
-    public String showOrders(Model model, Principal principal) {
-        model.addAttribute("orders", orderService.findOrdersByUserName(principal.getName()));
+    public String showOrders(Model model) {
+        model.addAttribute("orders", orderRepository.findAll());
         model.addAttribute("dishes", dishRepository.findAll());
         model.addAttribute("ingredients", ingredientRepository.findAll());
+
         return "order/orders";
+    }
+
+    @PostMapping("/confirmOrder")
+    public String confirmOrder(@ModelAttribute("order") Orders order){
+        orderRepository.save(order);
+        return "redirect:/order/orders";
     }
 
     @GetMapping("/newOrder")
     public String newOrder(Model model) {
-        model.addAttribute("userDish" , new UserDish());
+        model.addAttribute("userDish" , new OrderDish());
         model.addAttribute("dishes" , dishRepository.findAll());
-        return "order/newOrderTest";
+        return "order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("/newOrder")
-    public String addOrder(@ModelAttribute("userDish") UserDish ordersDish, Principal principal){
-        orderService.saveUserDishByUser(principal.getName(), ordersDish);
-        return "redirect:/order/newOrderTest";
+    public String addOrder(@ModelAttribute("userDish") OrderDish ordersDish, Principal principal){
+        orderService.saveOrderDishByOrder(principal.getName(), ordersDish);
+        return "redirect:/order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -70,18 +75,16 @@ public class OrdersController {
         MathRandom mathRandom = new MathRandom();
         model.addAttribute("random" , mathRandom.generateNumberOfBooking());
         model.addAttribute("orders" , new Orders());
-        model.addAttribute("userDishes" , orderService.findUserDishesByUser(principal.getName()));
-        model.addAttribute("order", orderService.findOrderByUserName(principal.getName()));
+        model.addAttribute("orderDishes", orderService.findUserDishesByUser(principal.getName()));
         if (orderService.findUserDishesByUser(principal.getName()) == null) {
-            return "redirect:/order/newOrderTest";
+            return "redirect:/order/newOrder";
         }
         return "/order/order";
     }
 
     @PostMapping("/userOrder")
-    public String ordering(@ModelAttribute("order") Orders orders ,@ModelAttribute("userDishes") UserDish userDish, Principal principal){
-        orderService.saveOrderByUser(principal.getName(),orders);
-        orderService.saveUserDishByUser(principal.getName(),userDish);
+    public String ordering(@ModelAttribute("orders") Orders order, Principal principal){
+        orderService.saveOrderByUser(principal.getName(),order);
         return "redirect:/order/newOrder";
     }
 

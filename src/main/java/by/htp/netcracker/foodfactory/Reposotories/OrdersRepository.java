@@ -24,7 +24,9 @@ public interface OrdersRepository extends JpaRepository<Orders,Integer> {
 
     List<Orders> findOrdersByUserOrderById(User user);
 
-    Orders findOrdersByUserAndId(User user , Integer id);
-
     Orders findOrdersByUser(User user);
+
+//    @Query(value="UPDATE orders SET status = :status WHERE id = :id" , nativeQuery = true)
+//    Orders updateOrderById(Integer id);
+
 }

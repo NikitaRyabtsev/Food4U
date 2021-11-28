@@ -17,14 +17,9 @@ import java.util.List;
 public class DishService {
 
     private final  DishRepository dishRepository;
-    private final IngredientRepository ingredientRepository;
-    private final DishIngredientsRepository dishIngredientsRepository;
 
-    public DishService(DishRepository dishRepository, IngredientRepository ingredientRepository
-    , DishIngredientsRepository dishIngredientsRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public DishService(DishRepository dishRepository) {
         this.dishRepository = dishRepository;
-        this.dishIngredientsRepository = dishIngredientsRepository;
     }
     public List<Dish> findDishesSortByType(){return dishRepository.findAll(Sort.by(Sort.Direction.DESC,"type"));}
 

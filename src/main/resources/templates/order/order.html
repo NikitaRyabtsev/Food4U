@@ -21,10 +21,11 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
+<form th:action="@{/order/userOrder}" th:method="POST" th:object="${orders}">
 <section class="products">
     <div class="products__body">
-        <div class="product" th:each="userDish:${userDishes}">
-            <div th:each="dish:${userDish.getDish()}">
+        <div class="product" th:each="orderDish:${orderDishes}">
+            <div th:each="dish:${orderDish.getDish()}">
                 <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
                     <img class="product__img" th:src="${dish.src}">
                 </a>
@@ -32,17 +33,16 @@
                 <div class="product__info">
                     <p class="product__text">Стоимость:</p>
                     <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-                    <input type="number" th:value="${userDish.countOfDishes}" name="countOfDishes"
-                           id="countOfDishes">
+<!--                    <input type="number" th:value="${userDish.countOfDishes}" th:field="" name="countOfDishes"-->
+<!--                           id="countOfDishes">-->
                 </div>
-                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">
-                    <input type="submit" value="Удалить блюдо">
-                </form>
+<!--                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">-->
+<!--                    <input type="submit" value="Удалить блюдо">-->
+<!--                </form>-->
             </div>
         </div>
     </div>
 </section>
-<form th:action="@{/order/userOrder}" th:method="POST" th:object="${orders}">
     <input type="hidden" th:value="${orders.numberOfBooking + random}" name="numberOfBooking" id="numberOfBooking">
     <input type="datetime-local" th:value="${orders.dateTimeOfBooking}"
            th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"

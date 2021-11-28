@@ -2,15 +2,12 @@ package by.htp.netcracker.foodfactory.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -41,12 +38,12 @@ public class Dish implements Serializable {
     private List<DishIngredient> dish_ingredients;
     @JsonIgnore
     @OneToMany(mappedBy = "dish")
-    private Set<UserDish> orders_dishes = new HashSet<UserDish>();
+    private Set<OrderDish> orders_dishes = new HashSet<OrderDish>();
 
     public Dish() {
 
     }
-    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<UserDish> orders_dishes) {
+    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<OrderDish> orders_dishes) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -65,11 +62,11 @@ public class Dish implements Serializable {
         this.dish_ingredients = dish_ingredients;
     }
 
-    public Set<UserDish> getOrders_dishes() {
+    public Set<OrderDish> getOrders_dishes() {
         return orders_dishes;
     }
 
-    public void setOrders_dishes(Set<UserDish> orders_dishes) {
+    public void setOrders_dishes(Set<OrderDish> orders_dishes) {
         this.orders_dishes = orders_dishes;
     }
 

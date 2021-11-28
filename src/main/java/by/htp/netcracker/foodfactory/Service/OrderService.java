@@ -2,53 +2,50 @@ package by.htp.netcracker.foodfactory.Service;
 
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
-import by.htp.netcracker.foodfactory.Model.UserDish;
+import by.htp.netcracker.foodfactory.Model.OrderDish;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
-import by.htp.netcracker.foodfactory.Reposotories.UserDishesRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderService {
     private final UserRepository userRepository;
     private final OrdersRepository ordersRepository;
-    private final UserDishesRepository userDishesRepository;
+    private final OrderDishesRepository orderDishesRepository;
 
-    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository , UserDishesRepository userDishesRepository) {
+    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository, OrderDishesRepository userDishesRepository) {
         this.userRepository = userRepository;
         this.ordersRepository = ordersRepository;
-        this.userDishesRepository =userDishesRepository;
+        this.orderDishesRepository = userDishesRepository;
     }
 
-    public UserDish saveUserDishByUser(String username , UserDish userDish){
+    public OrderDish saveOrderDishByOrder(String username, OrderDish orderDish) {
         User user = userRepository.getUserByUsername(username);
-        userDish.setUser(user);
-        return userDishesRepository.save(userDish);
+        orderDish.setUser(user);
+        orderDish.setOrder(new Orders());
+        return orderDishesRepository.save(orderDish);
     }
-    public List<Orders> findOrdersByUserName(String username){
+
+    public List<Orders> findOrdersByUserName(String username) {
         User user = userRepository.getUserByUsername(username);
         List<Orders> orders = ordersRepository.findOrdersByUserOrderById(user);
         return orders;
     }
 
-    public Orders saveOrderByUser(String username, Orders orders){
+    public Orders saveOrderByUser(String username, Orders orders) {
         User user = userRepository.getUserByUsername(username);
         orders.setUser(user);
         return ordersRepository.save(orders);
     }
 
-    public Orders findOrderByUserName(String username){
-        User user = userRepository.getUserByUsername(username);
-        Orders order = ordersRepository.findOrdersByUser(user);
-        return order;
-    }
 
-    public List<UserDish> findUserDishesByUser(String username){
+    public List<OrderDish> findUserDishesByUser(String username) {
         User user = userRepository.getUserByUsername(username);
-        List<UserDish> userDishes = userDishesRepository.findAllByUser(user);
-        return userDishes;
+
+        List<OrderDish> orderDishes = orderDishesRepository.findAllByUser(user);
+        return orderDishes ;
     }
 }
