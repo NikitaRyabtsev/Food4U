@@ -17,13 +17,8 @@ public interface OrderDishesRepository extends JpaRepository<OrderDish,Integer> 
     @Override
     List<OrderDish> findAll();
 
-    List<OrderDish> findAllByUser(User user);
-
     List<OrderDish> findAllByOrder(Orders order);
 
-    List<OrderDish> findAllByUserAndOrder(User user , Orders orders);
-
-    OrderDish findByUser(User user);
     @Modifying
     @Query(value = "DELETE user_dish FROM user_dish WHERE dish_id= :dish_id" , nativeQuery = true)
     void deleteByDishId(@Param("dish_id") Integer id);

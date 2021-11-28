@@ -1,5 +1,7 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,22 +26,12 @@ public class OrderDish implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dish_id")
     private Dish dish;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private Orders order;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private User user;
 
     public OrderDish() {
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Orders getOrder() {
@@ -84,6 +76,6 @@ public class OrderDish implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, countOfDishes, dish);
+        return Objects.hash(id, countOfDishes, dish, order);
     }
 }

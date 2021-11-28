@@ -37,7 +37,7 @@ public class Orders implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user")
     private User user;
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order")
     private List<OrderDish> orderDishes;
 
     public Orders(){
@@ -111,6 +111,18 @@ public class Orders implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, status, numberOfBooking, dateTimeOfBooking, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", numberOfBooking=" + numberOfBooking +
+                ", dateTimeOfBooking=" + dateTimeOfBooking +
+                ", user=" + user +
+                ", orderDishes=" + orderDishes +
+                '}';
     }
 }
 

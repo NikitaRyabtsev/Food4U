@@ -46,8 +46,8 @@ body {
 .product__link {
 }
 .product__img {
-    height: 270px;
-    width: 300px;
+    height: auto;
+    width: auto;
     background-size: cover;
 }
 .select {

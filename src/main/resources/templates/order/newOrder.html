@@ -18,29 +18,29 @@
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <h3>Новый заказ</h3>
-<section class="products">
-    <div class="products__body">
-        <div class="product" th:each="dish:${dishes}">
-            <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                <img class="product__img" th:src="${dish.src}" th:value="${dish.id}"></a>
-            <p th:text="${dish.name}"></p>
-            <div class="product__info">
-                <p class="product__text">Стоимость:</p>
-                <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-<!--                                    <input type="checkbox" class="checkbox" onclick="updateCount()" th:field="*{dish}"-->
-<!--                                           th:value="${dish.id}" name="dish"  id="dish">-->
+<form th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
+    <section class="products">
+        <div class="products__body">
+            <div class="product" th:each="dish:${dishes}">
+                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                    <img class="product__img" th:src="${dish.src}" th:value="${dish.id}"></a>
+                <p th:text="${dish.name}"></p>
+                <div class="product__info">
+                    <p class="product__text">Стоимость:</p>
+                    <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
+                    <input type="checkbox" class="checkbox" th:field="*{orderDishes}"
+                           th:value="${dish.id}">
+                    <!--                    <input type="number" th:field="*{orderDishes.countOfDishes}"  name="countOfDishes" id="countOfDishes">-->
+                </div>
+                <p th:each="orderDish:${orderDishes}">
+                <input type="submit" th:field="*{orderDishes}"
+                       th:value="${dish.id}" value="Добавить в корзину">
+                    <input type="number" th:field="${orderDish.order}" th:value="${order.getId()}" id="order" name="order">
+                </p>
             </div>
-            <form th:action="@{~/order/newOrder}" th:method="POST" th:object="${userDish}">
-                <button type="submit" th:field="*{dish}" th:value="${dish.id}" name="dish" onclick="clickCounter()"
-                        id="dish" class="product__btn">Добавить в корзину
-                </button>
-                <input type="number" th:field="*{countOfDishes}" name="countOfDishes" id="countOfDishes">
-<!--                <input type="hidden" th:field="*{order}"  id="order" name="order">-->
-            </form>
         </div>
-
-    </div>
-</section>
+    </section>
+</form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>

@@ -41,8 +41,6 @@ public class User {
     private String block;
     @OneToMany(mappedBy="user")
     private List<Orders> orders;
-    @OneToMany(mappedBy = "user")
-    private List<OrderDish> userDishes;
 
 
 
@@ -71,15 +69,6 @@ public class User {
         this.surname = surname;
         this.sex = sex;
         this.block = block;
-    }
-
-
-    public List<OrderDish> getUserDishes() {
-        return userDishes;
-    }
-
-    public void setUserDishes(List<OrderDish> userDishes) {
-        this.userDishes = userDishes;
     }
 
     public List<Orders> getOrders() {

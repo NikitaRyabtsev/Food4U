@@ -11,10 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name="Dish")
@@ -28,7 +27,7 @@ public class Dish implements Serializable {
     @Column
     private String type;
     @Column
-    private double price;
+    private BigDecimal price;
     @Lob
     @Column
     private String src;
@@ -38,12 +37,12 @@ public class Dish implements Serializable {
     private List<DishIngredient> dish_ingredients;
     @JsonIgnore
     @OneToMany(mappedBy = "dish")
-    private Set<OrderDish> orders_dishes = new HashSet<OrderDish>();
+    private List<OrderDish> orders_dishes;
 
     public Dish() {
 
     }
-    public Dish(Integer id, String name, String type, double price, String src, double weight, double calories, List<Ingredient> ingredients, List<OrderDish> orders_dishes) {
+    public Dish(Integer id, String name, String type, BigDecimal price, String src, double weight, double calories, List<Ingredient> ingredients, List<OrderDish> orders_dishes) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -62,11 +61,11 @@ public class Dish implements Serializable {
         this.dish_ingredients = dish_ingredients;
     }
 
-    public Set<OrderDish> getOrders_dishes() {
+    public List<OrderDish> getOrders_dishes() {
         return orders_dishes;
     }
 
-    public void setOrders_dishes(Set<OrderDish> orders_dishes) {
+    public void setOrders_dishes(List<OrderDish> orders_dishes) {
         this.orders_dishes = orders_dishes;
     }
 
@@ -94,11 +93,11 @@ public class Dish implements Serializable {
         this.type = type;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -132,7 +131,7 @@ public class Dish implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Dish dish = (Dish) o;
-        return Double.compare(dish.price, price) == 0 && Double.compare(dish.weight, weight) == 0 && Double.compare(dish.calories, calories) == 0 && Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(type, dish.type) && Objects.equals(src, dish.src) && Objects.equals(dish_ingredients, dish.dish_ingredients) && Objects.equals(orders_dishes, dish.orders_dishes);
+        return Double.compare(dish.weight, weight) == 0 && Double.compare(dish.calories, calories) == 0 && Objects.equals(id, dish.id) && Objects.equals(name, dish.name) && Objects.equals(type, dish.type) && Objects.equals(price, dish.price) && Objects.equals(src, dish.src) && Objects.equals(dish_ingredients, dish.dish_ingredients) && Objects.equals(orders_dishes, dish.orders_dishes);
     }
 
     @Override
@@ -140,6 +139,20 @@ public class Dish implements Serializable {
         return Objects.hash(id, name, type, price, src, weight, calories, dish_ingredients, orders_dishes);
     }
 
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", src='" + src + '\'' +
+                ", weight=" + weight +
+                ", calories=" + calories +
+                ", dish_ingredients=" + dish_ingredients +
+                ", orders_dishes=" + orders_dishes +
+                '}';
+    }
 }
 
 

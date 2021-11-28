@@ -30,13 +30,14 @@
             <div th:each="order:${orders}">
                 <form th:action="@{/order/confirmOrder}" th:method="POST" th:object="${order}">
                     <tr>
-                        <td th:value="${order.id}" th:text="${order.id}" id="id" name="id"></td>
                         <td th:value="${order.numberOfBooking}" th:text="${order.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
                         <td th:value="${order.dateTimeOfBooking}" th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"> </td>
                         <td><select th:value="${order.status}" name="status" id="status" class="select">
-                            <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).values()}"
+                            <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).DONE}"
                                     th:value="${status}" th:text="${status.displayValue}"></option>
                         </select></td>
+                        <td><input th:field="*{user}" id="user" name="user"></td>
+                        <td> <input th:field="*{numberOfBooking}"></td>
                         <td>
                             <input type="submit" value="Подтвердить заказ">
                         </td>
