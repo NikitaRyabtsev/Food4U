@@ -2,6 +2,8 @@ package by.htp.netcracker.foodfactory.Controllers;
 
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
+import by.htp.netcracker.foodfactory.Service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,15 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
-    UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    UserRepository userRepository;
+    private final UserService userService;
+
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
+
 
     @GetMapping
     public String showUsers(Model model) {
@@ -36,7 +42,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("user") User user)  {
-        userRepository.save(user);
+        userService.registration(user);
         return "redirect:/menu/dishes";
     }
 

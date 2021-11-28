@@ -56,6 +56,19 @@ public class User {
         this.block = block;
     }
 
+    public User(Integer id, String role, String name, String username, String password, String email, String surname, String sex, String block, List<Orders> orders) {
+        this.id = id;
+        this.role = role;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.surname = surname;
+        this.sex = sex;
+        this.block = block;
+        this.orders = orders;
+    }
+
     public User() {
 
     }

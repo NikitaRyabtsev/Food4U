@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <title>История</title>
 </head>
-<body>
+<body style="text-align: center">
 <header class="header_header">
     <div th:insert="/viewhtml/header :: header"></div>
 </header>
@@ -21,17 +21,19 @@
 </nav>
 <main role="main">
     <article>
-        <h3>Список заказов</h3>
-        <table class="table">
+        <table class="table" >
+            <h3>История заказов</h3>
             <tr>
                 <td>Номер заказа</td>
                 <td>Дата и время</td>
+                <td>Статус заказа</td>
             </tr>
             <div th:each="order:${orders}">
                 <form th:action="@{/order/confirmOrder}" th:method="POST" th:object="${order}">
                     <tr>
                         <td  th:text="${order.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
                         <td  th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"> </td>
+                        <td  th:text="${order.status}" id="status" name="status"> </td>
                     </tr>
                 </form>
             </div>
