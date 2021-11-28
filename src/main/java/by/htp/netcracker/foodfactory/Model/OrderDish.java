@@ -31,7 +31,6 @@ public class OrderDish implements Serializable {
     @JoinColumn(name="user_id")
     private User user;
 
-
     public OrderDish() {
     }
 

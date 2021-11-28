@@ -78,7 +78,7 @@ public class DishesController {
 
     @PostMapping("/addDishInOrder")
     public String addDishInOrder(@ModelAttribute("userDish") OrderDish ordersDish, Principal principal){
-        orderService.saveOrderDishByOrder(principal.getName(), ordersDish);
+//        orderService.saveOrderDishByOrder(principal.getName(), ordersDish);
         return "redirect:/order/newOrder";
     }
 

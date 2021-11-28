@@ -8,6 +8,7 @@ import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
@@ -25,13 +26,12 @@ public class OrderService {
     public OrderDish saveOrderDishByOrder(String username, OrderDish orderDish) {
         User user = userRepository.getUserByUsername(username);
         orderDish.setUser(user);
-        orderDish.setOrder(new Orders());
         return orderDishesRepository.save(orderDish);
     }
 
-    public List<Orders> findOrdersByUserName(String username) {
+    public List<Orders> findOrdersByUser(String username) {
         User user = userRepository.getUserByUsername(username);
-        List<Orders> orders = ordersRepository.findOrdersByUserOrderById(user);
+        List<Orders> orders = ordersRepository.findAllByUser(user);
         return orders;
     }
 
@@ -44,7 +44,6 @@ public class OrderService {
 
     public List<OrderDish> findUserDishesByUser(String username) {
         User user = userRepository.getUserByUsername(username);
-
         List<OrderDish> orderDishes = orderDishesRepository.findAllByUser(user);
         return orderDishes ;
     }

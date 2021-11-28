@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Reposotories;
 
+import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,10 @@ public interface OrderDishesRepository extends JpaRepository<OrderDish,Integer> 
     List<OrderDish> findAll();
 
     List<OrderDish> findAllByUser(User user);
+
+    List<OrderDish> findAllByOrder(Orders order);
+
+    List<OrderDish> findAllByUserAndOrder(User user , Orders orders);
 
     OrderDish findByUser(User user);
     @Modifying

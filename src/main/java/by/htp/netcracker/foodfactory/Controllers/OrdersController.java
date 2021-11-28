@@ -59,6 +59,7 @@ public class OrdersController {
     public String newOrder(Model model) {
         model.addAttribute("userDish" , new OrderDish());
         model.addAttribute("dishes" , dishRepository.findAll());
+        model.addAttribute("order" , new Orders());
         return "order/newOrder";
     }
 
@@ -93,6 +94,12 @@ public class OrdersController {
     public String deleteDishFromUserDish(@PathVariable("id")Integer id){
         userDishesRepository.deleteByDishId(id);
         return "redirect:/order/userOrder";
+    }
+
+    @GetMapping("/ordersHistory")
+    public String findOrdersByUser(Model model , Principal principal){
+        model.addAttribute("orders",orderService.findOrdersByUser(principal.getName()));
+        return "order/ordersHistory";
     }
 
 }
