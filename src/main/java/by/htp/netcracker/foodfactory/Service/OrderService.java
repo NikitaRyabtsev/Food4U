@@ -1,7 +1,7 @@
 package by.htp.netcracker.foodfactory.Service;
 
+import by.htp.netcracker.foodfactory.Helper.MathRandom;
 import by.htp.netcracker.foodfactory.Helper.OrderStatus;
-import by.htp.netcracker.foodfactory.Model.DishIngredient;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @Service
 public class OrderService {
@@ -41,13 +42,21 @@ public class OrderService {
 
     public Orders saveOrderByUser(String username, Orders orders) {
         User user = userRepository.getUserByUsername(username);
-        orders.setUser(user);
-        if(!Objects.equals(orders.getStatus(), OrderStatus.CONSIDERED.toString()) ||
-                !Objects.equals(orders.getStatus(), OrderStatus.DONE.toString())){
-            ordersRepository.findByUser(user);
-            ordersRepository.save(orders);
+        OrderDish orderDish = new OrderDish();
+        orderDish.setOrder(findActiveOrder(user.getUsername()));
+        if (findActiveOrder(user.getUsername()) == null) {
+            orderDish.setOrder(orders);
+            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
+            orders.setUser(user);
+            orders.setStatus(OrderStatus.CONSIDERED.toString());
         }
-        orderDishesRepository.save(new OrderDish());
+        orderDishesRepository.save(orderDish);
+        return orders;
+    }
+
+    public Orders findActiveOrder(String username) {
+        User user = userRepository.getUserByUsername(username);
+        Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
         return orders;
     }
 //

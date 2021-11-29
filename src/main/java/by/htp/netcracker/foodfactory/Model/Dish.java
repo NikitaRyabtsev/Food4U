@@ -33,6 +33,7 @@ public class Dish implements Serializable {
     private String src;
     private double weight;
     private double calories;
+    @JsonIgnore
     @OneToMany(mappedBy = "dish")
     private List<DishIngredient> dish_ingredients;
     @JsonIgnore

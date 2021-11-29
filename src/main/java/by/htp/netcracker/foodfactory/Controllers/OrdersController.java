@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,12 +33,12 @@ public class OrdersController {
     private final OrderDishesRepository orderDishesRepository;
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository, OrderService orderService, OrderDishesRepository userDishesRepository ){
+                            IngredientRepository ingredientRepository, OrderService orderService, OrderDishesRepository userDishesRepository) {
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
         this.orderService = orderService;
-        this.orderDishesRepository =userDishesRepository;
+        this.orderDishesRepository = userDishesRepository;
 
     }
 
@@ -50,31 +51,33 @@ public class OrdersController {
     }
 
     @PostMapping("/confirmOrder")
-    public String confirmOrder(@ModelAttribute("order") Orders order ){
+    public String confirmOrder(@ModelAttribute("order") Orders order) {
         orderRepository.save(order);
         return "redirect:/order/orders";
     }
 
     @GetMapping("/newOrder")
-    public String newOrder(Model model) {
-        model.addAttribute("dishes" , dishRepository.findAll());
-        model.addAttribute("order" , new Orders());
+    public String newOrder(Model model, Principal principal) {
+        model.addAttribute("dishes", dishRepository.findAll());
+        Orders orders = orderService.findActiveOrder(principal.getName());
+        if(orders == null){
+            model.addAttribute("order", new Orders());
+        }else{
+            model.addAttribute("order", orders);
+        }
         return "order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("/newOrder")
-    public String addOrder(@ModelAttribute("order") Orders order, Principal principal){
-        orderService.saveOrderByUser(principal.getName(),order);
+    public String addOrder(@ModelAttribute("order") Orders order, Principal principal) {
+        orderService.saveOrderByUser(principal.getName(), order);
         return "redirect:/order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/userOrder")
     public String findUserOrder(Model model, Principal principal) {
-        MathRandom mathRandom = new MathRandom();
-        model.addAttribute("random" , mathRandom.generateNumberOfBooking());
-        model.addAttribute("orders" , new Orders());
 //        model.addAttribute("orderDishes", orderService.findUserDishesByUser(principal.getName()));
 //        if (orderService.findUserDishesByUser(principal.getName()) == null) {
 //            return "redirect:/order/newOrder";
@@ -83,21 +86,21 @@ public class OrdersController {
     }
 
     @PostMapping("/userOrder")
-    public String ordering(@ModelAttribute("orders") Orders order, Principal principal){
-        orderService.saveOrderByUser(principal.getName(),order);
+    public String ordering(@ModelAttribute("orders") Orders order, Principal principal) {
+        orderService.saveOrderByUser(principal.getName(), order);
         return "redirect:/order/newOrder";
     }
 
     @Transactional
     @PostMapping("/{id}/delete")
-    public String deleteDishFromUserDish(@PathVariable("id")Integer id){
+    public String deleteDishFromUserDish(@PathVariable("id") Integer id) {
         orderDishesRepository.deleteByDishId(id);
         return "redirect:/order/userOrder";
     }
 
     @GetMapping("/ordersHistory")
-    public String findOrdersByUser(Model model , Principal principal){
-        model.addAttribute("orders",orderService.findOrdersByUser(principal.getName()));
+    public String findOrdersByUser(Model model, Principal principal) {
+        model.addAttribute("orders", orderService.findOrdersByUser(principal.getName()));
         return "order/ordersHistory";
     }
 
