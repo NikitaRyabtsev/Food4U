@@ -21,35 +21,36 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<form th:action="@{/order/userOrder}" th:method="POST" th:object="${orders}">
-<section class="products">
-    <div class="products__body">
-        <div class="product" th:each="orderDish:${orderDishes}">
-            <div th:each="dish:${orderDish.getDish()}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                    <img class="product__img" th:src="${dish.src}">
-                </a>
-                <p th:text="${dish.name}"></p>
-                <div class="product__info">
-                    <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
+<form th:action="@{/order/userOrder}" th:method="POST" th:object="${order}">
+    <section class="products">
+        <div class="products__body">
+            <div class="product" th:each="orderDish:${order.getOrderDishes()}">
+                <div th:each="dish:${orderDish.getDish()}">
+                    <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                        <img class="product__img" th:src="${dish.src}">
+                    </a>
+                    <p th:text="${dish.name}"></p>
+                    <div class="product__info">
+                        <p class="product__text">Стоимость:</p>
+                        <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
+                        </br>
+                        <input type="number" th:value="${orderDish.countOfDishes}" th:text="${orderDish.countOfDishes}" id="countOfDishes" name="countOfDishes">
+                    </div>
+                    <!--                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">-->
+                    <!--                    <input type="submit" value="Удалить блюдо">-->
+                    <!--                </form>-->
                 </div>
-<!--                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">-->
-<!--                    <input type="submit" value="Удалить блюдо">-->
-<!--                </form>-->
             </div>
         </div>
-    </div>
-</section>
-    <input type="hidden" th:value="${orders.numberOfBooking + random}" name="numberOfBooking" id="numberOfBooking">
-    <input type="datetime-local" th:value="${orders.dateTimeOfBooking}"
-           th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"
-           name="dateTimeOfBooking" id="dateTimeOfBooking">
-    <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
-        <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).CONSIDERED}"
-                th:value="${status}"></option>
-    </select>
-    <input type="submit" value="Оформить заказ">
+    </section>
+        <input type="datetime-local" th:value="${order.dateTimeOfBooking}"
+               th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"
+               name="dateTimeOfBooking" id="dateTimeOfBooking">
+        <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
+            <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).FORMALIZED}"
+                    th:value="${status}"></option>
+        </select>
+        <input type="submit" value="Оформить заказ">
 </form>
 <!--<div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">-->
 <!--    <a th:href="@{~/order/{id}/editOrder(id = ${order.getId()})}" class="btn btn-secondary">Добавить блюдо в заказ</a>-->

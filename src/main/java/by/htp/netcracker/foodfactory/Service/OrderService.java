@@ -11,6 +11,7 @@ import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +59,13 @@ public class OrderService {
         User user = userRepository.getUserByUsername(username);
         Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
         return orders;
+    }
+
+    public Orders saveActiveOrder(String username , Orders orders){
+        User user = userRepository.getUserByUsername(username);
+        orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+        orders.setDateTimeOfBooking(LocalDateTime.now());
+        return ordersRepository.save(orders);
     }
 //
 //

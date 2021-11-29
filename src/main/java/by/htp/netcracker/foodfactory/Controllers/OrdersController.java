@@ -78,16 +78,18 @@ public class OrdersController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/userOrder")
     public String findUserOrder(Model model, Principal principal) {
-//        model.addAttribute("orderDishes", orderService.findUserDishesByUser(principal.getName()));
-//        if (orderService.findUserDishesByUser(principal.getName()) == null) {
-//            return "redirect:/order/newOrder";
-//        }
+        Orders orders = orderService.findActiveOrder(principal.getName());
+        if(orders == null){
+            return "redirect:/order/newOrder";
+        }else{
+            model.addAttribute("order", orders);
+        }
         return "/order/order";
     }
 
     @PostMapping("/userOrder")
     public String ordering(@ModelAttribute("orders") Orders order, Principal principal) {
-        orderService.saveOrderByUser(principal.getName(), order);
+        orderService.saveActiveOrder(principal.getName(),order);
         return "redirect:/order/newOrder";
     }
 
