@@ -1,11 +1,23 @@
 package by.htp.netcracker.foodfactory.Model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Orders")
@@ -17,23 +29,34 @@ public class Orders implements Serializable {
     @Column(name="status")
     private String status;
     @NotNull
-    @Column(name="numberOfBooking")
-    private double numberOfBooking;
+    @Column(name="numberOfBooking" , unique = true)
+    private int numberOfBooking;
     @Column
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTimeOfBooking;
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn (name = "user")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user")
     private User user;
+    @OneToMany(mappedBy = "order")
+    private List<OrderDish> orderDishes;
 
     public Orders(){
     }
 
-    public Orders(Integer id, String status, double numberOfBooking, LocalDateTime dateTimeOfBooking, User user) {
+    public Orders(Integer id, String status, int numberOfBooking, LocalDateTime dateTimeOfBooking, User user) {
         this.id = id;
         this.status = status;
         this.numberOfBooking = numberOfBooking;
         this.dateTimeOfBooking = dateTimeOfBooking;
         this.user = user;
+    }
+
+    public List<OrderDish> getOrderDishes() {
+        return orderDishes;
+    }
+
+    public void setOrderDishes(List<OrderDish> userDishes) {
+        this.orderDishes = userDishes;
     }
 
     public Integer getId() {
@@ -52,11 +75,11 @@ public class Orders implements Serializable {
         this.status = status;
     }
 
-    public double getNumberOfBooking() {
+    public int getNumberOfBooking() {
         return numberOfBooking;
     }
 
-    public void setNumberOfBooking(double numberOfBooking) {
+    public void setNumberOfBooking(int numberOfBooking) {
         this.numberOfBooking = numberOfBooking;
     }
 
@@ -76,6 +99,7 @@ public class Orders implements Serializable {
         this.user = user;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,6 +111,18 @@ public class Orders implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, status, numberOfBooking, dateTimeOfBooking, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", numberOfBooking=" + numberOfBooking +
+                ", dateTimeOfBooking=" + dateTimeOfBooking +
+                ", user=" + user +
+                ", orderDishes=" + orderDishes +
+                '}';
     }
 }
 

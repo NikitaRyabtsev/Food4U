@@ -1,11 +1,13 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
+import by.htp.netcracker.foodfactory.Helper.MathRandom;
+import by.htp.netcracker.foodfactory.Model.OrderDish;
 import by.htp.netcracker.foodfactory.Model.Orders;
-import by.htp.netcracker.foodfactory.Model.UserDish;
-import by.htp.netcracker.foodfactory.Reposotories.*;
-import by.htp.netcracker.foodfactory.Service.DishService;
+import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
+import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
+import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-@Scope("session")
 @RequestMapping("/order")
 public class OrdersController {
 
@@ -27,80 +29,76 @@ public class OrdersController {
     private final OrdersRepository orderRepository;
     private final IngredientRepository ingredientRepository;
     private final OrderService orderService;
-    private final UserDishesRepository userDishesRepository;
+    private final OrderDishesRepository orderDishesRepository;
 
     public OrdersController(OrdersRepository orderRepository, DishRepository dishRepository,
-                            IngredientRepository ingredientRepository, OrderService orderService,
-                          UserDishesRepository  userDishesRepository) {
+                            IngredientRepository ingredientRepository, OrderService orderService, OrderDishesRepository userDishesRepository ){
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.ingredientRepository = ingredientRepository;
         this.orderService = orderService;
-        this.userDishesRepository =  userDishesRepository;
+        this.orderDishesRepository =userDishesRepository;
 
     }
 
     @GetMapping("/orders")
-    public String showOrders(Model model, Principal principal) {
-        model.addAttribute("orders", orderService.findOrdersByUserName(principal.getName()));
+    public String showOrders(Model model) {
+        model.addAttribute("orders", orderRepository.findAll());
         model.addAttribute("dishes", dishRepository.findAll());
         model.addAttribute("ingredients", ingredientRepository.findAll());
         return "order/orders";
     }
 
-    @GetMapping("/newOrderTest")
-    public String newTestOrder(Principal principal, Model model) {
-        model.addAttribute("userDish" , new UserDish());
+    @PostMapping("/confirmOrder")
+    public String confirmOrder(@ModelAttribute("order") Orders order ){
+        orderRepository.save(order);
+        return "redirect:/order/orders";
+    }
+
+    @GetMapping("/newOrder")
+    public String newOrder(Model model) {
         model.addAttribute("dishes" , dishRepository.findAll());
-        return "order/newOrderTest";
+        model.addAttribute("order" , new Orders());
+        return "order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @PostMapping("/newOrderTest")
-    public String addTestOrder(@ModelAttribute("userDish") UserDish ordersDish, Principal principal){
-        orderService.saveUserDishByUser(principal.getName(), ordersDish);
-        return "redirect:/order/newOrderTest";
-    }
-
-    @GetMapping("/{id}/order")
-    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("order", orderRepository.getById(id));
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("ingredients", ingredientRepository.findAll());
-        return "order/order";
-    }
-
-    @Transactional
-    @PostMapping("/delete/{idDish}")
-    public String deleteDishFromOrder(@PathVariable("idDish") Integer id) {
-        orderRepository.deleteDishFromOrderById(id);
-        return "redirect:/order/userOrder";
-    }
-
-    @GetMapping("/{id}/editOrder")
-    public String editOrder(Model model, Principal principal, @PathVariable("id") Integer id) {
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("order", orderService.findOrderByUserNameAndId(principal.getName(), id));
-        return "order/editOrder";
-    }
-
-    @PostMapping("/{id}/editOrder")
-    public String updateOrder(@ModelAttribute("order") Orders order, Principal principal) {
-        orderService.saveOrderByUser(principal.getName(), order);
-        return "redirect:/order/userOrder";
+    @PostMapping("/newOrder")
+    public String addOrder(@ModelAttribute("order") Orders order, Principal principal){
+        orderService.saveOrderByUser(principal.getName(),order);
+        return "redirect:/order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/userOrder")
     public String findUserOrder(Model model, Principal principal) {
-        model.addAttribute("userDish" , new Orders());
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("userDishes" , orderService.findUserDishesByUser(principal.getName()));
-        model.addAttribute("order", orderService.findOrderByUserName(principal.getName()));
-        if (orderService.findUserDishesByUser(principal.getName()) == null) {
-            return "redirect:/order/newOrderTest";
-        }
+        MathRandom mathRandom = new MathRandom();
+        model.addAttribute("random" , mathRandom.generateNumberOfBooking());
+        model.addAttribute("orders" , new Orders());
+//        model.addAttribute("orderDishes", orderService.findUserDishesByUser(principal.getName()));
+//        if (orderService.findUserDishesByUser(principal.getName()) == null) {
+//            return "redirect:/order/newOrder";
+//        }
         return "/order/order";
+    }
+
+    @PostMapping("/userOrder")
+    public String ordering(@ModelAttribute("orders") Orders order, Principal principal){
+        orderService.saveOrderByUser(principal.getName(),order);
+        return "redirect:/order/newOrder";
+    }
+
+    @Transactional
+    @PostMapping("/{id}/delete")
+    public String deleteDishFromUserDish(@PathVariable("id")Integer id){
+        orderDishesRepository.deleteByDishId(id);
+        return "redirect:/order/userOrder";
+    }
+
+    @GetMapping("/ordersHistory")
+    public String findOrdersByUser(Model model , Principal principal){
+        model.addAttribute("orders",orderService.findOrdersByUser(principal.getName()));
+        return "order/ordersHistory";
     }
 
 }

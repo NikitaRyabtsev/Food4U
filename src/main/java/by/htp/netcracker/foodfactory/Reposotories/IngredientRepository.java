@@ -3,7 +3,6 @@ package by.htp.netcracker.foodfactory.Reposotories;
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
 import by.htp.netcracker.foodfactory.Model.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

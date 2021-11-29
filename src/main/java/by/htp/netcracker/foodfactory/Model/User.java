@@ -1,11 +1,19 @@
 package by.htp.netcracker.foodfactory.Model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="User")
@@ -31,10 +39,9 @@ public class User {
     private String sex;
     @Column
     private String block;
-    @OneToOne(mappedBy="user")
-    private Orders order;
-    @OneToMany(mappedBy = "user" )
-    private List<UserDish> userDishes;
+    @OneToMany(mappedBy="user")
+    private List<Orders> orders;
+
 
 
     public User(Integer id, String role, String name, String login, String password, String email, String surname, String sex, String block) {
@@ -47,6 +54,19 @@ public class User {
         this.surname = surname;
         this.sex = sex;
         this.block = block;
+    }
+
+    public User(Integer id, String role, String name, String username, String password, String email, String surname, String sex, String block, List<Orders> orders) {
+        this.id = id;
+        this.role = role;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.surname = surname;
+        this.sex = sex;
+        this.block = block;
+        this.orders = orders;
     }
 
     public User() {
@@ -64,12 +84,12 @@ public class User {
         this.block = block;
     }
 
-    public Orders getOrder() {
-        return order;
+    public List<Orders> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Orders order) {
-        this.order = order;
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
     }
 
     public Integer getId() {

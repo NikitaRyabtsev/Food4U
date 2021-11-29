@@ -28,6 +28,7 @@
                 <p>Пожалуйста , заполните форму для регистрации</p>
                 <hr>
                 <form th:action="@{/user/registration}" th:method="POST" th:object="${user}">
+                    <input type="hidden" th:field="*{id}" id="id" name="id">
                     <label for="email"><b>E-mail</b></label>
                     <input type="email" placeholder="E-mail" th:field="*{email}" id="email" required>
                      <br/>
@@ -43,7 +44,7 @@
                     <input type="text" placeholder="Фамилия" id="secondName" th:field="*{surname}" required>
 
                     <label for="sex"><b>Пол</b></label>
-                    <select th:field="*{block}" id="sex" class="ыу">
+                    <select th:field="*{sex}" id="sex" class="ыу">
                         <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Sex).values()}"
                                 th:value="${user}" th:text="${user.displayValue}"></option>
                     </select>
@@ -64,7 +65,6 @@
                     <input type="submit" class="registerbtn" style="position: relative" value="Регистрация">
                 </form>
             </div>
-
             <div class="container signin">
                 <p>У вас уже есть аккуант?<a href="/user/authorization/a/b">Войти</a>.</p>
             </div>

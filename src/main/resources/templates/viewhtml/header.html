@@ -20,7 +20,7 @@
                 </a>
                 <ul>
                     <li><a href="/main" class="btn btn-primary">Главная</a></li>
-                    <li><a href="/order/newOrderTest">
+                    <li><a href="/order/newOrder">
                         <input type="button" sec:authorize="isAuthenticated()" class="btn btn-primary" value="Меню">
                     </a>
                     </li>
@@ -44,7 +44,7 @@
                         <a th:href="@{~/order/userOrder}" class="btn btn-primary">
                             <img src="/images/bucket.png" style="width: 30px ; height: 25px" >
                         </a>
-                        <a id="y"></a>
+                        <a id="result"></a>
                     </li>
                 </ul>
             </nav_header>

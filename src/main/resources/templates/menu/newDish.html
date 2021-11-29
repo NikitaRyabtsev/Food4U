@@ -40,11 +40,7 @@
 
 <h3>Добавить новое блюдо</h3>
 <form class="form-new-dish" th:action="@{/menu/newDish}" th:method="POST" th:object="${wrapper}" id="newDish">
-
-    <div th:each="dishIngredient , itemStat:*{dishIngredientList}">
-        <label>Введите id блюда</label>
-        <input type="number" th:field="*{dishIngredientList[__${itemStat.index}__].dish}">
-
+    <div th:each="dishIngredient , itemStat : *{dishIngredientList}">
         <input type="text" th:field="*{dishIngredientList[__${itemStat.index}__].dish.name}" id="name" class="add__btn"
                name="name" required>
         <label>Введите тип</label>

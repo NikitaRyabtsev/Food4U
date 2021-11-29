@@ -1,56 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <link rel="icon" th:href="@{/images/favicon.ico}">
-        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/popup/style.css}">
-        <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-        <link rel="stylesheet" th:href="@{/css/dish.css}">
-        <link th:href="@{/images/icon-close.svg}">
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/popup/style.css}">
+    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
+    <link rel="stylesheet" th:href="@{/css/dish.css}">
+    <link th:href="@{/images/icon-close.svg}">
 
-        <meta charset="UTF-8">
-        <title>Блюдо</title>
-    </head>
-    <body>
-        <header class="header_header">
-            <div class="container">
-                <div th:insert="/viewhtml/header :: header"></div>
+    <meta charset="UTF-8">
+    <title>Блюдо</title>
+</head>
+<body>
+<header class="header_header">
+    <div class="container">
+        <div th:insert="/viewhtml/header :: header"></div>
+    </div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+</div>
+<section class="dish__wrapper">
+    <div class="container">
+        <div class="dish" th:each="dish:${dishes}">
+            <div class="dish__banner">
+                <img class="dish__img" th:src="${dish.src}">
             </div>
-        </header>
-        <nav>
-            <div th:insert="/viewhtml/nav :: nav"></div>
-        </nav>
-        </div>
-        <section class="dish__wrapper">
-                <div class="container">
-                    <div class="dish" th:each="dish:${dishes}">
-                        <div class="dish__banner">
-                            <img class="dish__img" th:src="${dish.src}">
-                        </div>
-                        <div class="dish__info">
-                            <div class="dish__text">
-                                <h2 class="dish__title" th:text="${dish.name}">Калории:</h2>
-                                <p th:text="${'Калории ' + dish.calories}"></p>
-                                <div class="dish__ingredients">
-                                    <p th:text="${'Вес: ' + dish.weight}"></p>
-                                    <p style="display: inline">Ингредиенты:</p>
-                                    <div th:each="dish_ingredient:${dish.getDish_ingredients()}" style="display: inline">
-                                    <p th:each="ingredient:${dish_ingredient.getIngredient()}" th:text="${' , ' + ingredient.name}" style="display: inline"></p>
-                                    </div>
-                                </div>
-                                <div class="dish__footer">
-                                    <p class="dish__price" th:text="${'Цена: ' + dish.price + ' бел.р'}"></p>
-<!--                                        <button class="dish__btn">Добавить в корзину</button>-->
-                                    </div>
-                                </div>
-                            </div>
+            <div class="dish__info">
+                <div class="dish__text">
+                    <h2 class="dish__title" th:text="${dish.name}">Калории:</h2>
+                    <p th:text="${'Калории ' + dish.calories}"></p>
+                    <div class="dish__ingredients">
+                        <p th:text="${'Вес: ' + dish.weight}"></p>
+                        <p style="display: inline">Ингредиенты:</p>
+                        <div th:each="dish_ingredient:${dish.getDish_ingredients()}" style="display: inline">
+                            <p th:each="ingredient:${dish_ingredient.getIngredient()}"
+                               th:text="${' , ' + ingredient.name}" style="display: inline"></p>
                         </div>
                     </div>
+                    <div class="dish__footer">
+                        <form th:action="@{/menu/addDishInOrder}" th:method="POST" th:object="${userDish}">
+                            <button type="submit" th:field="*{dish}" th:value="${dish.id}" name="dish"
+                                    onclick="clickCounter()"
+                                    id="dish" class="product__btn">Добавить в корзину
+                            </button>
+                            <input type="number" th:field="*{countOfDishes}" name="countOfDishes" id="countOfDishes">
+                        </form>
+                    </div>
                 </div>
-        </section>
+            </div>
         </div>
+    </div>
+</section>
+</div>
 
 
 <!--        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">-->
@@ -61,16 +66,14 @@
 <!--            <input type="submit" value="Удалить блюдо">-->
 <!--        </form>-->
 
-        <!--        <div class="shopping-cart">
-                    <p class="shopping-cart__info">Товаров в корзине:</p>
-                    <p class="shopping-cart__count">0</p>
-                    <button class="shopping-cart__btn">Очистить корзину</button>
-                </div>-->
+<!--        <div class="shopping-cart">
+            <p class="shopping-cart__info">Товаров в корзине:</p>
+            <p class="shopping-cart__count">0</p>
+            <button class="shopping-cart__btn">Очистить корзину</button>
+        </div>-->
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
 
-
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
-
-    </body>
+</body>
 </html>
