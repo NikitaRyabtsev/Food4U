@@ -1,25 +1,21 @@
 package by.htp.netcracker.foodfactory.RestControllers;
 
-
-import by.htp.netcracker.foodfactory.Model.Dish;
+import by.htp.netcracker.foodfactory.Dto.OrderDishDto;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
-import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
-import org.cloudinary.json.JSONObject;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -41,9 +37,18 @@ public class OrderRestController {
         this.orderDishesRepository = userDishesRepository;
     }
 
-    @PostMapping(name="/newOrder", produces = "application/json")
-    public@ResponseBody OrderDish addOrdersDish(@RequestBody OrderDish orderDish){
-        return orderDishesRepository.save(orderDish);
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @ResponseBody
+    @RequestMapping(value = "/newOrder1" , method = RequestMethod.POST , produces ="application/json" )
+    public void addOrdersDish(@RequestBody OrderDishDto orderDishDto ,Principal principal){
+        orderService.saveOrderWithOrderDish(orderDishDto,principal.getName());
+    }
+
+
+
+    @GetMapping("/newOrder")
+    public List<OrderDish> addOrdersDish(){
+        return orderDishesRepository.findAll();
     }
 
 }

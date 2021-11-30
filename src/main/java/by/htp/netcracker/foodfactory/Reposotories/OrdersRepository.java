@@ -33,4 +33,5 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     Orders updateOrderStatusById(@Param("status") String status, @Param("id") Integer id);
 
     Orders findOrdersByUserAndStatus(User user, String status);
+
 }

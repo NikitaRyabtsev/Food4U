@@ -69,13 +69,6 @@ public class OrdersController {
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @PostMapping("/newOrder")
-    public String addOrder(@ModelAttribute("order") Orders order, Principal principal) {
-        orderService.saveOrderByUser(principal.getName(), order);
-        return "redirect:/order/newOrder";
-    }
-
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/userOrder")
     public String findUserOrder(Model model, Principal principal) {
         Orders orders = orderService.findActiveOrder(principal.getName());

@@ -55,22 +55,33 @@
             event.preventDefault();
             id = event.target.querySelector('.product__id').value;
             countOfDishes = event.target.querySelector('.product__countOfDishes').value;
-            orderDish = {
+
+            orderDishDto = {
                 'dish': id,
                 'countOfDishes': countOfDishes,
             };
-            JSON.stringify(orderDish);
-            console.log(orderDish)
-            fetch('https://localhost:8082/rest/order/newOrder',{
-                method: 'POST',
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: orderDish,
-            });
+
+            JSON.stringify( orderDishDto);
+            console.log( orderDishDto)
+            let json = JSON.stringify(orderDishDto);
+            let request = new XMLHttpRequest();
+            request.open("POST", "/rest/order/newOrder1");
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200)
+                    document.getElementById("output").innerHTML=request.responseText;
+            }
+            request.send(json);
+
+            // fetch('/rest/order/newOrder1',{
+            //     method: 'POST',
+            //     headers: {
+            //         Accept: "application/json",
+            //         "Content-Type": "application/json"
+            //     },
+            //     body:  orderDishDto,
+            // });
         }
     }
-
 </script>
 </html>

@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Service;
 
+import by.htp.netcracker.foodfactory.Dto.OrderDishDto;
 import by.htp.netcracker.foodfactory.Helper.MathRandom;
 import by.htp.netcracker.foodfactory.Helper.OrderStatus;
 import by.htp.netcracker.foodfactory.Model.Orders;
@@ -13,6 +14,7 @@ import by.htp.netcracker.foodfactory.RestControllers.OrderRestController;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +26,14 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrdersRepository ordersRepository;
     private final OrderDishesRepository orderDishesRepository;
+    private final DishRepository dishRepository;
 
     public OrderService(UserRepository userRepository, OrdersRepository ordersRepository,
-                        OrderDishesRepository userDishesRepository) {
+                        OrderDishesRepository userDishesRepository, DishRepository dishRepository) {
         this.userRepository = userRepository;
         this.ordersRepository = ordersRepository;
         this.orderDishesRepository = userDishesRepository;
+        this.dishRepository = dishRepository;
     }
 
     public Orders saveOrderByOrder(String username, Orders order) {
@@ -54,9 +58,24 @@ public class OrderService {
             orders.setUser(user);
             orders.setStatus(OrderStatus.CONSIDERED.toString());
         }
-
         orderDishesRepository.save(orderDish);
         return orders;
+    }
+
+    public void saveOrderWithOrderDish(OrderDishDto orderDishDto ,String username){
+        User user = userRepository.getUserByUsername(username);
+        OrderDish orderDish = new OrderDish();
+        orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
+        orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
+        orderDish.setOrder(findActiveOrder(user.getUsername()));
+        if (findActiveOrder(user.getUsername()) == null) {
+            Orders orders = new Orders();
+            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
+            orders.setUser(user);
+            orders.setStatus(OrderStatus.CONSIDERED.toString());
+            orderDish.setOrder(orders);
+        }
+        orderDishesRepository.save(orderDish);
     }
 
     public Orders findActiveOrder(String username) {

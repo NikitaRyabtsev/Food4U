@@ -11,12 +11,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registration(User user){
+    public User registration(User user) {
         User newUser = new User();
         newUser.setId(user.getId());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -27,6 +27,7 @@ public class UserService {
         newUser.setSex(user.getSex());
         newUser.setBlock(user.getBlock());
         newUser.setRole(user.getRole());
-       return userRepository.save(newUser);
+        return userRepository.save(newUser);
+
     }
 }
