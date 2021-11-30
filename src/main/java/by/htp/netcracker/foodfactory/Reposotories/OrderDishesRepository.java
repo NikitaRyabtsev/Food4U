@@ -21,6 +21,6 @@ public interface OrderDishesRepository extends JpaRepository<OrderDish,Integer> 
 
 
     @Modifying
-    @Query(value = "DELETE user_dish FROM user_dish WHERE dish_id= :dish_id" , nativeQuery = true)
+    @Query(value = "DELETE order_dish FROM order_dish WHERE dish_id= :dish_id" , nativeQuery = true)
     void deleteByDishId(@Param("dish_id") Integer id);
 }

@@ -82,7 +82,7 @@ public class OrdersController {
 
     @PostMapping("/userOrder")
     public String ordering(@ModelAttribute("orders") Orders order, Principal principal) {
-        orderService.saveActiveOrder(principal.getName(),order);
+//        orderService.saveActiveOrder(principal.getName());
         return "redirect:/order/newOrder";
     }
 

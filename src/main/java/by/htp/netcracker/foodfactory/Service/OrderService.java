@@ -36,46 +36,28 @@ public class OrderService {
         this.dishRepository = dishRepository;
     }
 
-    public Orders saveOrderByOrder(String username, Orders order) {
-        User user = userRepository.getUserByUsername(username);
-        order.setUser(user);
-        return ordersRepository.save(order);
-    }
-
     public List<Orders> findOrdersByUser(String username) {
         User user = userRepository.getUserByUsername(username);
         List<Orders> orders = ordersRepository.findAllByUser(user);
         return orders;
     }
 
-    public Orders saveOrderByUser(String username, Orders orders) {
+    public void saveOrderWithOrderDish(OrderDishDto orderDishDto, String username) {
         User user = userRepository.getUserByUsername(username);
-        OrderDish orderDish = new OrderDish();
-        orderDish.setOrder(findActiveOrder(user.getUsername()));
-        if (findActiveOrder(user.getUsername()) == null) {
-            orderDish.setOrder(orders);
-            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
-            orders.setUser(user);
-            orders.setStatus(OrderStatus.CONSIDERED.toString());
+        if (user != null) {
+            OrderDish orderDish = new OrderDish();
+            orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
+            orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
+            orderDish.setOrder(findActiveOrder(user.getUsername()));
+            if (findActiveOrder(user.getUsername()) == null) {
+                Orders orders = new Orders();
+                orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
+                orders.setUser(user);
+                orders.setStatus(OrderStatus.CONSIDERED.toString());
+                orderDish.setOrder(orders);
+            }
+            orderDishesRepository.save(orderDish);
         }
-        orderDishesRepository.save(orderDish);
-        return orders;
-    }
-
-    public void saveOrderWithOrderDish(OrderDishDto orderDishDto ,String username){
-        User user = userRepository.getUserByUsername(username);
-        OrderDish orderDish = new OrderDish();
-        orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
-        orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
-        orderDish.setOrder(findActiveOrder(user.getUsername()));
-        if (findActiveOrder(user.getUsername()) == null) {
-            Orders orders = new Orders();
-            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
-            orders.setUser(user);
-            orders.setStatus(OrderStatus.CONSIDERED.toString());
-            orderDish.setOrder(orders);
-        }
-        orderDishesRepository.save(orderDish);
     }
 
     public Orders findActiveOrder(String username) {
@@ -84,23 +66,19 @@ public class OrderService {
         return orders;
     }
 
-    public Orders saveActiveOrder(String username , Orders orders){
+    public void saveActiveOrder(String username , OrderDishDto orderDishDto) {
         User user = userRepository.getUserByUsername(username);
-        orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-        orders.setDateTimeOfBooking(LocalDateTime.now());
-        return ordersRepository.save(orders);
+        if (user != null) {
+            Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+            List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(orders);
+            for(int i = 0 ; i < orderDishes.size(); i ++){
+                orderDishes.get(i).setCountOfDishes(orderDishDto.getCountOfDishes());
+            }
+            if (orders != null) {
+                orders.setDateTimeOfBooking(LocalDateTime.now());
+                orders.setStatus(OrderStatus.FORMALIZED.toString());
+                ordersRepository.save(orders);
+            }
+        }
     }
-//
-//
-//    public List<OrderDish> findUserDishesByUser(String username) {
-//        User user = userRepository.getUserByUsername(username);
-//        List<OrderDish> orderDishes = orderDishesRepository.findAllByUser(user);
-//        return orderDishes ;
-//    }
-
-//    public Orders saveOrderById(Orders order){
-//        Orders order = ordersRepository.getById(id);
-//        order.
-//        ordersRepository.updateOrderStatusById()
-//    }
 }

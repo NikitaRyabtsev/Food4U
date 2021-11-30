@@ -30,7 +30,7 @@
                 <p class="product__text">Стоимость:</p>
                 <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
                 <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
-                    <input type="number" class="product__countOfDishes" th:field="*{orderDishes[0].countOfDishes}"
+                    <input type="number" class="product__countOfDishes"
                            id="countOfDishes" name="countOfDishes">
                     <input type="text" th:text="${dish.id}" class="product__id" th:value="${dish.id}" hidden>
                     <input th:field="*{orderDishes}" hidden>
@@ -65,22 +65,13 @@
             console.log( orderDishDto)
             let json = JSON.stringify(orderDishDto);
             let request = new XMLHttpRequest();
-            request.open("POST", "/rest/order/newOrder1");
+            request.open("POST", "/rest/order/newOrder");
             request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200)
                     document.getElementById("output").innerHTML=request.responseText;
             }
             request.send(json);
-
-            // fetch('/rest/order/newOrder1',{
-            //     method: 'POST',
-            //     headers: {
-            //         Accept: "application/json",
-            //         "Content-Type": "application/json"
-            //     },
-            //     body:  orderDishDto,
-            // });
         }
     }
 </script>
