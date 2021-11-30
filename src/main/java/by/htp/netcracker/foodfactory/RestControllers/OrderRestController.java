@@ -9,10 +9,15 @@ import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Service.OrderService;
+import org.cloudinary.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -36,19 +41,9 @@ public class OrderRestController {
         this.orderDishesRepository = userDishesRepository;
     }
 
-    @GetMapping("/newOrderDish")
-    public List<OrderDish> showOrderDish() {
-        return orderDishesRepository.findAll();
-    }
-
-    @PostMapping("/newOrderDish")
-    public OrderDish newOrderDish(@RequestBody OrderDish orderDish) {
-
+    @PostMapping(name="/newOrder", produces = "application/json")
+    public@ResponseBody OrderDish addOrdersDish(@RequestBody OrderDish orderDish){
         return orderDishesRepository.save(orderDish);
     }
 
-    @GetMapping("/newOrder")
-    public List<Orders> showOrders() {
-        return orderRepository.findAll();
-    }
 }

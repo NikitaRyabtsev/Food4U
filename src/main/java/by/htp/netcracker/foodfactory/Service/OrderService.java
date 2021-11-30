@@ -5,9 +5,11 @@ import by.htp.netcracker.foodfactory.Helper.OrderStatus;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
+import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
+import by.htp.netcracker.foodfactory.RestControllers.OrderRestController;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -23,7 +25,8 @@ public class OrderService {
     private final OrdersRepository ordersRepository;
     private final OrderDishesRepository orderDishesRepository;
 
-    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository, OrderDishesRepository userDishesRepository) {
+    public OrderService(UserRepository userRepository, OrdersRepository ordersRepository,
+                        OrderDishesRepository userDishesRepository) {
         this.userRepository = userRepository;
         this.ordersRepository = ordersRepository;
         this.orderDishesRepository = userDishesRepository;
@@ -51,6 +54,7 @@ public class OrderService {
             orders.setUser(user);
             orders.setStatus(OrderStatus.CONSIDERED.toString());
         }
+
         orderDishesRepository.save(orderDish);
         return orders;
     }

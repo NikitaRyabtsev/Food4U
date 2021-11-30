@@ -26,7 +26,6 @@ public interface DishRepository extends JpaRepository<Dish,Integer> {
 
     void deleteDishById(Integer id);
 
-
     List<Dish> getDishByType(String type);
 
 

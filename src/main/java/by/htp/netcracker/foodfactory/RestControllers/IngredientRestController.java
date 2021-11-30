@@ -18,7 +18,7 @@ public class IngredientRestController {
     public IngredientRestController(IngredientRepository ingredientRepository) {
         this.ingredientRepository = ingredientRepository;
     }
-    @GetMapping(produces = "application/json")
+    @RequestMapping( produces = "application/json")
     public List<Ingredient> findAll(){
         return ingredientRepository.findAll();
     }

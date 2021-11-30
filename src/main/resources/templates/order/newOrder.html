@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/products.css}">
-<!--    <script th:src="@{/js/counterDishes.js}"></script>-->
+    <!--    <script th:src="@{/js/counterDishes.js}"></script>-->
     <meta charset="UTF-8">
     <title>Добавление блюда с ингредиентами</title>
 </head>
@@ -30,12 +30,14 @@
                 <p class="product__text">Стоимость:</p>
                 <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
                 <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
-                    <input type="number" th:field="*{orderDishes[0].countOfDishes}" id="countOfDishes" name="countOfDishes">
-                    <input type="hidden" class="product__id" th:field="*{orderDishes[0].dish}" th:value="${dish.id}">
-                    <input type="hidden" th:field="*{orderDishes[0].order}" th:value="${order.id}"
+                    <input type="number" class="product__countOfDishes" th:field="*{orderDishes[0].countOfDishes}"
+                           id="countOfDishes" name="countOfDishes">
+                    <input type="text" th:text="${dish.id}" class="product__id" th:value="${dish.id}" hidden>
+                    <input th:field="*{orderDishes}" hidden>
+                    <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
                            id="order" name="order">
                     <input class="product__submit" name="submit" type="submit"
-                            value="Добавить в корзину">
+                           value="Добавить в корзину">
                 </form>
             </div>
         </div>
@@ -47,27 +49,28 @@
 </body>
 
 <script>
-
-//    var requestURL = "https://localhost:8082/rest/order/newOrder";
-//    var request = new XMLHttpRequest()
-//    request.open('GET', requestURL);
-//
-//    let formsProduct = document.querySelectorAll('.product__form');
-//    for(let formProduct of formsProduct){
-//        formProduct.onsubmit = (event) => {
-//            event.preventDefault();
-//
-//            let formData = new FormData(formProduct);
-//            for (let [name] of formData) {
-//                formData.delete(name);
-//            }
-//
-//            let id = formProduct.querySelector('.product__id').value;
-//            console.log(id);
-//    }
-//
-//    }
-
+    let formsProduct = document.querySelectorAll('.product__form');
+    for(let formProduct of formsProduct){
+        formProduct.onsubmit = (event) =>{
+            event.preventDefault();
+            id = event.target.querySelector('.product__id').value;
+            countOfDishes = event.target.querySelector('.product__countOfDishes').value;
+            orderDish = {
+                'dish': id,
+                'countOfDishes': countOfDishes,
+            };
+            JSON.stringify(orderDish);
+            console.log(orderDish)
+            fetch('https://localhost:8082/rest/order/newOrder',{
+                method: 'POST',
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: orderDish,
+            });
+        }
+    }
 
 </script>
 </html>
