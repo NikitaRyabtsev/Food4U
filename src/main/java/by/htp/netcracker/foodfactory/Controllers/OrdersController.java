@@ -50,9 +50,10 @@ public class OrdersController {
         return "order/orders";
     }
 
-    @PostMapping("/confirmOrder")
-    public String confirmOrder(@ModelAttribute("order") Orders order) {
-        orderRepository.save(order);
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping("/{id}/confirmOrder")
+    public String confirmOrder(@PathVariable("id") Integer id) {
+        orderService.confirmOrder(id);
         return "redirect:/order/orders";
     }
 
@@ -80,12 +81,6 @@ public class OrdersController {
         return "/order/order";
     }
 
-    @PostMapping("/userOrder")
-    public String ordering(@ModelAttribute("orders") Orders order, Principal principal) {
-//        orderService.saveActiveOrder(principal.getName());
-        return "redirect:/order/newOrder";
-    }
-
     @Transactional
     @PostMapping("/{id}/delete")
     public String deleteDishFromUserDish(@PathVariable("id") Integer id) {
@@ -95,7 +90,8 @@ public class OrdersController {
 
     @GetMapping("/ordersHistory")
     public String findOrdersByUser(Model model, Principal principal) {
-        model.addAttribute("orders", orderService.findOrdersByUser(principal.getName()));
+        List<Orders> orders = orderService.findOrdersByUser(principal.getName());
+        model.addAttribute("orders", orders);
         return "order/ordersHistory";
     }
 

@@ -4,6 +4,7 @@
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/table.css}">
     <link th:href="@{/images/icon-close.svg}">
@@ -26,23 +27,20 @@
                 <td>Номер заказа</td>
                 <td>Дата и время</td>
                 <td>Статус</td>
+                <td>Имя</td>
+                <td>Фамилия</td>
             </tr>
             <div th:each="order:${orders}">
-                <form th:action="@{/order/confirmOrder}" th:method="POST" th:object="${order}">
-                    <tr>
-                        <td th:value="${order.numberOfBooking}" th:text="${order.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
-                        <td th:value="${order.dateTimeOfBooking}" th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"> </td>
-                        <td><select th:value="${order.status}" name="status" id="status" class="select">
-                            <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).DONE}"
-                                    th:value="${status}" th:text="${status.displayValue}"></option>
-                        </select></td>
-                        <td><input th:field="*{user}" id="user" name="user"></td>
-                        <td> <input th:field="*{numberOfBooking}"></td>
-                        <td>
-                            <input type="submit" value="Подтвердить заказ">
-                        </td>
-                    </tr>
-                </form>
+                <tr>
+                    <td th:text="${order.numberOfBooking}" id="numberOfBooking"  name="numberOfBooking"></td>
+                    <td th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"></td>
+                    <td th:text="${order.user.getName()}" id="name" name="name"></td>
+                    <td th:text="${order.status}" id="status" name="status"></td>
+                    <td th:text="${order.user.getSurname()}" id="surname" name="surname"></td>
+                    <form th:action="@{/order/{id}/confirmOrder(id = ${order.getId()})}" th:method="POST">
+                        <td><input type="submit" value="Подтвердить заказ"></td>
+                    </form>
+                </tr>
             </div>
         </table>
         </div>

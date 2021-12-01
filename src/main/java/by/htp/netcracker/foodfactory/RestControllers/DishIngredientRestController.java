@@ -28,11 +28,11 @@ public class DishIngredientRestController {
 
     @ResponseBody
     @RequestMapping(value = "/addDish",method = RequestMethod.POST,produces ="application/json")
-    public void addDishIngredient(@RequestBody DishIngredientDto dishIngredientDto){
-        DishIngredient dishIngredient = new DishIngredient();
-        dishIngredient.setIngredient(ingredientRepository.getById(dishIngredientDto.getIngredient()));
-        dishIngredient.setWeight(dishIngredientDto.getWeight());
-        dishIngredientsRepository.save(dishIngredient);
+    public void addDishIngredient(@RequestBody List<DishIngredientDto> dishIngredientDto){
+//        DishIngredient dishIngredient = new DishIngredient();
+//        dishIngredient.setIngredient(ingredientRepository.getById(dishIngredientDto.getIngredient()));
+//        dishIngredient.setWeight(dishIngredientDto.getWeight());
+//        dishIngredientsRepository.save(dishIngredient);
     }
 
 }

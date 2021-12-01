@@ -24,21 +24,18 @@
         <table class="table" >
             <h3>История заказов</h3>
             <tr>
-                <td>Номер заказа</td>
+                <td>Номер</td>
                 <td>Дата и время</td>
-                <td>Статус заказа</td>
+                <td>Статус </td>
             </tr>
-            <div th:each="order:${orders}">
-                <form th:action="@{/order/confirmOrder}" th:method="POST" th:object="${order}">
-                    <tr>
-                        <td  th:text="${order.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
-                        <td  th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"> </td>
-                        <td  th:text="${order.status}" id="status" name="status"> </td>
-                    </tr>
-                </form>
+            <div th:each="orders:${orders}">
+                <tr>
+                    <td th:text="${orders.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
+                    <td th:text="${orders.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"></td>
+                    <td th:text="${orders.status}" id="status" name="status"></td>
+                </tr>
             </div>
         </table>
-        </div>
     </article>
 </main>
 <footer>

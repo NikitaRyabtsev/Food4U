@@ -71,17 +71,6 @@ public class OrderService {
         }
     }
 
-//    public void countDishesInOrder(String username, Integer id , OrderDishDto orderDishDto) {
-//        User user = userRepository.getUserByUsername(username);
-//        Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-//        Dish dish = dishRepository.getById(id);
-//        OrderDish orderDish = orderDishesRepository.findByOrderAndDish(orders, dish);
-//        if (orderDish != null) {
-//            orderDish.setCountOfDishes(orderDish.getCountOfDishes() + orderDishDto.getCountOfDishes());
-//            orderDishesRepository.save(orderDish);
-//        }
-//    }
-
     public Orders findActiveOrder(String username) {
         User user = userRepository.getUserByUsername(username);
         Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
@@ -103,4 +92,10 @@ public class OrderService {
             }
         }
     }
+    public void confirmOrder(Integer id){
+        Orders orders = ordersRepository.findOrdersById(id);
+        orders.setStatus(OrderStatus.DONE.toString());
+        ordersRepository.save(orders);
+    }
+
 }

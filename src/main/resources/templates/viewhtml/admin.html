@@ -35,9 +35,8 @@
             <a href="/user" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-secondary">Пользователи</a>
             <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты</a>
             <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда</a>
-            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                <a th:href="@{~/order/orders}" class="btn btn-secondary">История заказов</a>
-            </div>
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"
+               th:href="@{~/order/orders}" class="btn btn-secondary">Подтверждение заказа</a>
         </p>
     </section>
 

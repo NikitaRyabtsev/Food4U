@@ -34,4 +34,5 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
     Orders findOrdersByUserAndStatus(User user, String status);
 
+    Orders findOrdersById(Integer id);
 }
