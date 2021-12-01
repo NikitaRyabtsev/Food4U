@@ -41,11 +41,11 @@
 <h3>Добавить новое блюдо</h3>
 <form class="form-new-dish" th:action="@{~/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
     <label>Введите Название</label>
-    <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name" class="add__btn"
-           name="name" required>
+    <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name"
+           name="name" class="dish__name" required>
     <label>Введите тип</label>
     <br/>
-    <select th:field="*{type}" name="type" id="type" class="select">
+    <select th:field="*{type}" name="type" id="type" class="select__type">
         <option value="0">Выберите тип</option>
         <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
                 th:value="${dish}" th:text="${dish.displayValue}">
@@ -63,10 +63,10 @@
     </div>
 
     <label for="price">Введите цену</label>
-    <input type="number" th:field="*{price}" id="price" class="add__btn" required>
+    <input type="number" th:field="*{price}" id="price" class="dish__price" required>
 
     <label for="src">Введите путь к картинке</label>
-    <input type="text" th:field="*{src}" id="src" name="src" class="add__btn">
+    <input type="text" th:field="*{src}" id="src" name="src" class="dish__src">
 
     <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
 </form>
@@ -81,15 +81,32 @@
         let dishIngredientDto = [];
 
         let ingredients = document.querySelectorAll('.ingredient');
+        name = event.target.querySelector('.dish__name').value;
+        price = event.target.querySelector('.dish__price').value;
+        src = event.target.querySelector('.dish__src').value;
+        type = event.target.querySelector('.select__type').value;
+
+        dishDto = {
+            "name" : name,
+            "price" : price,
+            "src" : src,
+            "type" : type
+        };
+
+        dishWrapper = {
+            "dishIngredientDto" : dishIngredientDto,
+            "dishDto" : dishDto
+        }
         for( let ingredient of ingredients){
             obj = {};
             obj.ingredient = ingredient.querySelector('.ingredient__select-ing').value;
             obj.weight = ingredient.querySelector('.ingredient__input-weigth').value;
             dishIngredientDto.push(obj);
-
         }
 
-        let json = JSON.stringify(dishIngredientDto);
+        console.log(dishWrapper)
+        console.log(dishDto);
+        let json = JSON.stringify(dishWrapper);
         let request = new XMLHttpRequest();
         request.open('POST', '/rest/dishIngredient/addDish')
         request.setRequestHeader('Content-type', 'application/json; charset=utf-8');

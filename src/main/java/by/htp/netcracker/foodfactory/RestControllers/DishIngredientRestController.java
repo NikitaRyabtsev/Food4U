@@ -1,12 +1,8 @@
 package by.htp.netcracker.foodfactory.RestControllers;
 
 
-import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
-import by.htp.netcracker.foodfactory.Model.Dish;
-import by.htp.netcracker.foodfactory.Model.DishIngredient;
-import by.htp.netcracker.foodfactory.Model.Ingredient;
+import by.htp.netcracker.foodfactory.Dto.DishWrapperDto;
 import by.htp.netcracker.foodfactory.Reposotories.DishIngredientsRepository;
-import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Service.DishService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/rest/dishIngredient")
@@ -35,8 +28,8 @@ public class DishIngredientRestController {
 
     @ResponseBody
     @RequestMapping(value = "/addDish",method = RequestMethod.POST,produces ="application/json")
-    public void addDishIngredient(@RequestBody List<DishIngredientDto> dishIngredientDto ){
-        dishService.createDishWithIngredients(dishIngredientDto);
+    public void addDishIngredient(@RequestBody DishWrapperDto dishWrapper){
+        dishService.createDishWithIngredients(dishWrapper);
     }
 
 }

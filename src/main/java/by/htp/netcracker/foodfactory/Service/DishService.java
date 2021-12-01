@@ -1,6 +1,8 @@
 package by.htp.netcracker.foodfactory.Service;
 
+import by.htp.netcracker.foodfactory.Dto.DishDto;
 import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
+import by.htp.netcracker.foodfactory.Dto.DishWrapperDto;
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
 import by.htp.netcracker.foodfactory.Model.Ingredient;
@@ -31,18 +33,22 @@ public class DishService {
     }
 
 
-    public void createDishWithIngredients(List<DishIngredientDto> dishIngredientDto) {
+    public void createDishWithIngredients(DishWrapperDto dishWrapperDto) {
         Dish dish = new Dish();
-        if (dishIngredientDto != null || dishIngredientDto.isEmpty()) {
-            for (int i = 0; i < dishIngredientDto.size(); i++) {
-                Ingredient ingredient = ingredientRepository.getById(dishIngredientDto.get(i).getIngredient());
+        dish.setName(dishWrapperDto.getDishDto().getName());
+        dish.setPrice(dishWrapperDto.getDishDto().getPrice());
+        dish.setSrc(dishWrapperDto.getDishDto().getSrc());
+        dish.setType(dishWrapperDto.getDishDto().getType());
+        if (dishWrapperDto.getDishIngredientDto() != null || dishWrapperDto.getDishIngredientDto().isEmpty()) {
+            for (int i = 0; i < dishWrapperDto.getDishIngredientDto().size(); i++) {
+                Ingredient ingredient = ingredientRepository.getById(dishWrapperDto.getDishIngredientDto().get(i).getIngredient());
                 DishIngredient dishIngredient = new DishIngredient();
                 dishIngredient.setIngredient(ingredient);
-                dishIngredient.setWeight(dishIngredientDto.get(i).getWeight());
+                dishIngredient.setWeight(dishWrapperDto.getDishIngredientDto().get(i).getWeight());
                 dishIngredient.setDish(dish);
                 dishIngredientsRepository.save(dishIngredient);
             }
-            dish.setName("hello");
+
         }
         dishRepository.save(dish);
     }
