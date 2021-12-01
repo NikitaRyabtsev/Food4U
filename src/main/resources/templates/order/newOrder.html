@@ -34,7 +34,6 @@
                     <input type="number" class="product__countOfDishes"
                            id="countOfDishes" name="countOfDishes">
                     <input type="text" th:text="${dish.id}" class="product__id" th:value="${dish.id}" hidden>
-                    <input th:field="*{orderDishes}" hidden>
                     <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
                            id="order" name="order">
                     <input class="product__submit" name="submit" type="submit"
@@ -68,10 +67,6 @@
             let request = new XMLHttpRequest();
             request.open("POST", "/rest/order/newOrder");
             request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            request.onreadystatechange = function () {
-                if (request.readyState == 4 && request.status == 200)
-                    document.getElementById("output").innerHTML=request.responseText;
-            }
             request.send(json);
         }
     }

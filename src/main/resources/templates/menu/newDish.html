@@ -39,9 +39,9 @@
 </nav>
 
 <h3>Добавить новое блюдо</h3>
-<form class="form-new-dish" th:action="@{/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
+<form class="form-new-dish" th:action="@{~/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
     <label>Введите Название</label>
-    <input type="text" th:field="*{name}" id="name" class="add__btn"
+    <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name" class="add__btn"
            name="name" required>
     <label>Введите тип</label>
     <br/>
@@ -59,7 +59,7 @@
             <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
                     th:text="${ingredient.name}"></option>
         </select>
-        <input class="create-ing__weight" type="text" th:field="*{weight}" name="create-ing__weight" required>
+        <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weight" required>
     </div>
 
     <label for="price">Введите цену</label>
@@ -84,15 +84,14 @@
         for( let ingredient of ingredients){
             obj = {};
             obj.ingredient = ingredient.querySelector('.ingredient__select-ing').value;
-            obj.weigth = ingredient.querySelector('.ingredient__input-weigth').value;
+            obj.weight = ingredient.querySelector('.ingredient__input-weigth').value;
             dishIngredientDto.push(obj);
 
         }
 
-
         let json = JSON.stringify(dishIngredientDto);
         let request = new XMLHttpRequest();
-        request.open('POST', '/rest/')
+        request.open('POST', '/rest/dishIngredient/addDish')
         request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         request.onreadystatechange = function () {
             if (request.readyState == 4 && request.status == 200){

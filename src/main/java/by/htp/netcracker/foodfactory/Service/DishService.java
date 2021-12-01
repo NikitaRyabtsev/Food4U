@@ -1,8 +1,12 @@
 package by.htp.netcracker.foodfactory.Service;
 
+import by.htp.netcracker.foodfactory.Dto.DishIngredientDto;
 import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
+import by.htp.netcracker.foodfactory.Model.Ingredient;
+import by.htp.netcracker.foodfactory.Reposotories.DishIngredientsRepository;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
+import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +16,34 @@ import java.util.List;
 @Service
 public class DishService {
 
-    private final  DishRepository dishRepository;
+    private final DishRepository dishRepository;
+    private final IngredientRepository ingredientRepository;
+    private final DishIngredientsRepository dishIngredientsRepository;
 
-    public DishService(DishRepository dishRepository) {
+    public DishService(DishRepository dishRepository, IngredientRepository ingredientRepository, DishIngredientsRepository dishIngredientsRepository) {
         this.dishRepository = dishRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.dishIngredientsRepository = dishIngredientsRepository;
     }
-    public List<Dish> findDishesSortByType(){return dishRepository.findAll(Sort.by(Sort.Direction.DESC,"type"));}
 
-
-    public List<DishIngredient> createDish(){
-        List<DishIngredient> dishIngredientList = new ArrayList<>();
-        dishIngredientList.add(new DishIngredient());
-        return dishIngredientList;
+    public List<Dish> findDishesSortByType() {
+        return dishRepository.findAll(Sort.by(Sort.Direction.DESC, "type"));
     }
 
 
-
+    public void createDishWithIngredients(List<DishIngredientDto> dishIngredientDto) {
+        Dish dish = new Dish();
+        if (dishIngredientDto != null || dishIngredientDto.isEmpty()) {
+            for (int i = 0; i < dishIngredientDto.size(); i++) {
+                Ingredient ingredient = ingredientRepository.getById(dishIngredientDto.get(i).getIngredient());
+                DishIngredient dishIngredient = new DishIngredient();
+                dishIngredient.setIngredient(ingredient);
+                dishIngredient.setWeight(dishIngredientDto.get(i).getWeight());
+                dishIngredient.setDish(dish);
+                dishIngredientsRepository.save(dishIngredient);
+            }
+            dish.setName("hello");
+        }
+        dishRepository.save(dish);
+    }
 }

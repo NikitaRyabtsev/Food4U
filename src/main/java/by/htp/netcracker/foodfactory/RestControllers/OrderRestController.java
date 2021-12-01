@@ -51,8 +51,6 @@ public class OrderRestController {
         orderService.saveActiveOrder(principal.getName(),orderDishDto);
     }
 
-
-
     @GetMapping("/newOrder")
     public List<OrderDish> addOrdersDish(){
         return orderDishesRepository.findAll();

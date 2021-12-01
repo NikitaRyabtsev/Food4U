@@ -45,57 +45,60 @@ public class OrderService {
 
     public void saveOrderWithOrderDish(OrderDishDto orderDishDto, String username) {
         User user = userRepository.getUserByUsername(username);
-        if (user != null) {
-            Orders checkOrders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-            if (checkOrders != null) {
-                OrderDish orderDish = orderDishesRepository.findByOrderAndDish
-                        (checkOrders, dishRepository.getById(orderDishDto.getDish()));
-                if (orderDish != null) {
-                    orderDish.setCountOfDishes(orderDish.getCountOfDishes() + orderDishDto.getCountOfDishes());
-                    orderDishesRepository.save(orderDish);
-                }
-            } else {
-                OrderDish orderDish = new OrderDish();
+        Orders checkOrders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+        if (checkOrders != null) {
+            OrderDish orderDish = orderDishesRepository.findByOrderAndDish(checkOrders, dishRepository.getById(orderDishDto.getDish()));
+            if (orderDish != null) {
+                orderDish.setCountOfDishes(orderDish.getCountOfDishes() + orderDishDto.getCountOfDishes());
+                orderDishesRepository.save(orderDish);
+            }else{
+                orderDish = new OrderDish();
                 orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
                 orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
                 orderDish.setOrder(findActiveOrder(user.getUsername()));
-                if (findActiveOrder(user.getUsername()) == null) {
-                    Orders orders = new Orders();
-                    orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
-                    orders.setUser(user);
-                    orders.setStatus(OrderStatus.CONSIDERED.toString());
-                    orderDish.setOrder(orders);
-                }
                 orderDishesRepository.save(orderDish);
             }
+        }else{
+            Orders orders = new Orders();
+            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
+            orders.setUser(user);
+            orders.setStatus(OrderStatus.CONSIDERED.toString());
+            OrderDish orderDish = new OrderDish();
+            orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
+            orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
+            orderDish.setOrder(orders);
+            orderDishesRepository.save(orderDish);
+            ordersRepository.save(orders);
         }
     }
 
-    public Orders findActiveOrder(String username) {
-        User user = userRepository.getUserByUsername(username);
-        Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-        return orders;
-    }
-
-    public void saveActiveOrder(String username, OrderDishDto orderDishDto) {
-        User user = userRepository.getUserByUsername(username);
-        if (user != null) {
+        public Orders findActiveOrder (String username){
+            User user = userRepository.getUserByUsername(username);
             Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-            List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(orders);
-            for (int i = 0; i < orderDishes.size(); i++) {
-                orderDishes.get(i).setCountOfDishes(orderDishDto.getCountOfDishes());
-            }
-            if (orders != null) {
-                orders.setDateTimeOfBooking(LocalDateTime.now());
-                orders.setStatus(OrderStatus.FORMALIZED.toString());
-                ordersRepository.save(orders);
+            return orders;
+        }
+
+        public void saveActiveOrder (String username, OrderDishDto orderDishDto){
+            User user = userRepository.getUserByUsername(username);
+            if (user != null) {
+                Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+                List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(orders);
+                for (int i = 0; i < orderDishes.size(); i++) {
+                    orderDishes.get(i).setCountOfDishes(orderDishDto.getCountOfDishes());
+                }
+                if (orders != null) {
+                    orders.setDateTimeOfBooking(LocalDateTime.now());
+                    orders.setStatus(OrderStatus.FORMALIZED.toString());
+                    ordersRepository.save(orders);
+                }
             }
         }
-    }
-    public void confirmOrder(Integer id){
-        Orders orders = ordersRepository.findOrdersById(id);
-        orders.setStatus(OrderStatus.DONE.toString());
-        ordersRepository.save(orders);
-    }
 
-}
+        public void confirmOrder (Integer id){
+            Orders orders = ordersRepository.findOrdersById(id);
+            orders.setStatus(OrderStatus.DONE.toString());
+            ordersRepository.save(orders);
+        }
+
+
+    }

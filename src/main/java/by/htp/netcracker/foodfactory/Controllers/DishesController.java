@@ -57,11 +57,11 @@ public class DishesController {
         return "menu/newDish";
     }
 
-    @PostMapping("/newDish")
-    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish)  {
-        dishRepository.save(dish);
-        return "redirect:/menu/dishes";
-    }
+//    @PostMapping("/newDish")
+//    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish)  {
+//        dishRepository.save(dish);
+//        return "redirect:/menu/dishes";
+//    }
 
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
