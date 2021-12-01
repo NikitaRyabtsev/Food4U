@@ -6,21 +6,30 @@ import java.util.List;
 
 public class DishIngredientDto {
 
-    private List<DishIngredient> dishIngredientList;
+    private double weight;
+    private Integer ingredient;
 
     public DishIngredientDto(){
 
     }
-
-    public void addDishIngredient(DishIngredient dishIngredient){
-        this.dishIngredientList.add(dishIngredient);
+    public DishIngredientDto(double weight, Integer ingredient) {
+        this.weight = weight;
+        this.ingredient = ingredient;
     }
 
-    public List<DishIngredient> getDishIngredientList() {
-        return dishIngredientList;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setDishIngredientList(List<DishIngredient> dishIngredientList) {
-        this.dishIngredientList = dishIngredientList;
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public Integer getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Integer ingredient) {
+        this.ingredient = ingredient;
     }
 }
