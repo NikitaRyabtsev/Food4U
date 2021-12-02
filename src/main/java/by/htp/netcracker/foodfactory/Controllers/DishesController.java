@@ -12,6 +12,7 @@ import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Service.DishService;
 import by.htp.netcracker.foodfactory.Service.OrderService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -51,19 +52,14 @@ public class DishesController {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) {
         model.addAttribute("dish", new Dish());
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/newDish";
     }
-
-//    @PostMapping("/newDish")
-//    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish)  {
-//        dishRepository.save(dish);
-//        return "redirect:/menu/dishes";
-//    }
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model , Principal principal) {
         Orders orders = orderService.findActiveOrder(principal.getName());
@@ -77,25 +73,26 @@ public class DishesController {
         return "menu/dish";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id") Integer id) {
         dishRepository.deleteById(id);
         return "redirect:/menu/dishes";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
         model.addAttribute("dish", dishRepository.getById(id));
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("dish") Dish dish) {
         dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("dishes/{type}")
     public String showDishByType(Model model, @PathVariable("type") String type){
         model.addAttribute("dishes",dishRepository.getDishByType(type));

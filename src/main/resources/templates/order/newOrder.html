@@ -37,7 +37,7 @@
             <input type="hidden" class="product__id" th:value="${dish.id}" hidden>
             <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
                    id="order" name="order">
-            <button class="product__submit btn btn-secondary" name="submit" id="clickButton" onClick="changeValue()" type="submit"
+            <button class="product__submit product__btn" name="submit" id="clickButton" onClick="changeValue()" type="submit"
             >Добавить в корзину
             </button>
             <p class="product__price" style="display: inline"  th:text="${dish.price}"></p>

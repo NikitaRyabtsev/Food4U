@@ -36,7 +36,7 @@ public class IngredientsController {
         model.addAttribute("ingredient",new Ingredient());
         return "ingredients/newIngredient";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/new")
     public String addIngredient(@ModelAttribute("ingredient") Ingredient ingredient){
         ingredientRepository.save(ingredient);
@@ -49,6 +49,7 @@ public class IngredientsController {
         return "ingredients/ingredientById";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{id}/edit")
     public String editIngredient(Model model,@PathVariable("id")Integer id){
         model.addAttribute("ingredient", ingredientRepository.getById(id));
@@ -57,13 +58,13 @@ public class IngredientsController {
     }
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/edit")
-    public String updateDish(@ModelAttribute("ingredient") Ingredient ingredient){
+    public String updateIngredient(@ModelAttribute("ingredient") Ingredient ingredient){
         ingredientRepository.save(ingredient);
         return "redirect:/ingredients";
     }
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/delete")
-    public String deleteDish(@PathVariable("id")Integer id){
+    public String deleteIngredient(@PathVariable("id")Integer id){
         ingredientRepository.deleteById(id);
         return "redirect:/ingredients";
     }

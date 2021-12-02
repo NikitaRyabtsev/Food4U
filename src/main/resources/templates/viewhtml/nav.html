@@ -80,7 +80,17 @@
             </a>
         </li>
         <li>
-            <a href=/admin sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Страница админа</a>
+        <a href="/user" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Пользователи</a>
+        </li>
+        <li>
+        <a href="/ingredients" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Ингредиенты</a>
+        </li>
+        <li>
+        <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда</a>
+        </li>
+        <li>
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"
+           th:href="@{~/order/orders}" class="btn btn-primary">Заказы</a>
         </li>
     </ul>
 </nav>

@@ -3,6 +3,7 @@ package by.htp.netcracker.foodfactory.Controllers;
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import by.htp.netcracker.foodfactory.Service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public String showUsers(Model model) {
         model.addAttribute("users", userRepository.findAll());
@@ -45,19 +47,21 @@ public class UserController {
         userService.registration(user);
         return "redirect:/menu/dishes";
     }
-
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/profile")
     public String toUserProfile(Model model , Principal principal){
         model.addAttribute("user",userRepository.getUserByUsername(principal.getName()));
         return "user/profile";
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("edit/{id}")
     public String editProfile(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("user", userRepository.getById(id));
         return "user/editProfile";
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("edit/{id}")
     public String updateProfile(@ModelAttribute("user") User user) {
         userRepository.save(user);

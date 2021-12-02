@@ -5,11 +5,8 @@
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/popup/style.css}">
-    <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/select.css}">
-    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-
+    <link rel="stylesheet" th:href="@{/css/newIngredient.css}">
     <link th:href="@{/images/icon-close.svg}">
     <meta charset="UTF-8">
     <title>Редактирование</title>
@@ -21,30 +18,25 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<main role="main" style="margin-top:5% ">
-    <form th:action="@{/ingredients/{id}/edit(id = ${ingredient.getId()})}" th:method="POST" th:object="${ingredient}">
-        <label for="name">Введите название</label>
-    <br/>
-        <input type="text" th:field="*{name}" id="name" required>
-        <br/>
-        <label for="calories">Введите калории</label>
-        <br/>
-        <input type="number" th:field="*{calories}" id="calories" required>
-        <br/>
-        <label for="proteins">Введите белки</label>
-        <br/>
-        <input type="number" step="0.1" th:field="*{proteins}" id="proteins" required>
-        <br/>
-        <label for="fats">Введите жиры</label>
-        <br/>
-        <input type="number" step="0.1" th:field="*{fats}" id="fats" required>
-        <br/>
-        <label for="carbohydrates">Введите углеводы</label>
-        <br/>
-        <input type="number" step="0.1" th:field="*{carbohydrates}" id="carbohydrates" required>
-        <br/>
-        <input type="submit" class="btn btn-secondary" value="Изменить">
-    </form>
+<main role="main">
+    <article>
+        <div class="container">
+            <form th:action="@{/ingredients/{id}/edit(id = ${ingredient.getId()})}" th:method="POST"
+                  th:object="${ingredient}">
+                <label for="name">Введите название</label>
+                <input type="text" th:field="*{name}" id="name" required>
+                <label for="calories">Введите калории</label>
+                <input type="number" th:field="*{calories}" id="calories" required>
+                <label for="proteins">Введите белки</label>
+                <input type="number" step="0.1" th:field="*{proteins}" id="proteins" required>
+                <label for="fats">Введите жиры</label>
+                <input type="number" step="0.1" th:field="*{fats}" id="fats" required>
+                <label for="carbohydrates">Введите углеводы</label>
+                <input type="number" step="0.1" th:field="*{carbohydrates}" id="carbohydrates" required>
+                <input type="submit" class="btn btn-secondary" value="Изменить">
+            </form>
+        </div>
+    </article>
 </main>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
