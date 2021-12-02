@@ -5,6 +5,7 @@ import by.htp.netcracker.foodfactory.Model.Dish;
 
 import by.htp.netcracker.foodfactory.Model.DishIngredient;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
+import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishIngredientsRepository;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
@@ -64,8 +65,13 @@ public class DishesController {
 //    }
 
     @GetMapping("/{id}/dish")
-    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("userDish" , new OrderDish());
+    public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model , Principal principal) {
+        Orders orders = orderService.findActiveOrder(principal.getName());
+        if(orders == null){
+            model.addAttribute("order", new Orders());
+        }else{
+            model.addAttribute("order", orders);
+        }
         model.addAttribute("dishes", dishRepository.getById(id));
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dish";

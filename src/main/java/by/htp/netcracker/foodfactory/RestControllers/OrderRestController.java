@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -40,15 +44,17 @@ public class OrderRestController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ResponseBody
     @RequestMapping(value = "/newOrder" , method = RequestMethod.POST , produces ="application/json" )
-    public void addOrdersDish(@RequestBody OrderDishDto orderDishDto ,Principal principal){
+    public String addOrdersDish(@RequestBody OrderDishDto orderDishDto , Principal principal) throws IOException {
         orderService.saveOrderWithOrderDish(orderDishDto,principal.getName());
+        return "redirect:/order/newOrder";
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @ResponseBody
     @RequestMapping(value = "/updateOrder" , method = RequestMethod.POST , produces ="application/json" )
-    public void updateDishInOrder(@RequestBody OrderDishDto orderDishDto ,Principal principal){
+    public RedirectView updateDishInOrder(@RequestBody OrderDishDto orderDishDto , Principal principal){
         orderService.saveActiveOrder(principal.getName(),orderDishDto);
+        return new RedirectView("/order/newOrder");
     }
 
     @GetMapping("/newOrder")

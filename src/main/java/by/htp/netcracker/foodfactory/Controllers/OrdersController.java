@@ -57,6 +57,7 @@ public class OrdersController {
         return "redirect:/order/orders";
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/newOrder")
     public String newOrder(Model model, Principal principal) {
         model.addAttribute("dishes", dishRepository.findAll());
