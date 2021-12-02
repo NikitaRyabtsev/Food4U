@@ -52,21 +52,16 @@ public class DishesController {
 
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) {
-        DishIngredientDto wrapper = new DishIngredientDto();
-        List<DishIngredient> dishIngredientList = dishService.createDish();
-        wrapper.setDishIngredientList(dishIngredientList);
-        model.addAttribute("wrapper" , dishIngredientList);
+        model.addAttribute("dish", new Dish());
         model.addAttribute("ingredients" , ingredientRepository.findAll());
-        model.addAttribute("dishes" , dishRepository.findAll());
-        model.addAttribute("dish_ingredients", dishIngredientsRepository.findAll());
         return "menu/newDish";
     }
 
-    @PostMapping("/newDish")
-    public String addDishWithIngredients(@ModelAttribute("wrapper") DishIngredientDto wrapper)  {
-        dishIngredientsRepository.saveAll(wrapper.getDishIngredientList());
-        return "redirect:/menu/dishes";
-    }
+//    @PostMapping("/newDish")
+//    public String addDishWithIngredients(@ModelAttribute("dish") Dish dish)  {
+//        dishRepository.save(dish);
+//        return "redirect:/menu/dishes";
+//    }
 
     @GetMapping("/{id}/dish")
     public String getDishWithIngredientById(@PathVariable("id") Integer id, Model model) {
@@ -75,13 +70,6 @@ public class DishesController {
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dish";
     }
-
-    @PostMapping("/addDishInOrder")
-    public String addDishInOrder(@ModelAttribute("userDish") OrderDish ordersDish, Principal principal){
-//        orderService.saveOrderDishByOrder(principal.getName(), ordersDish);
-        return "redirect:/order/newOrder";
-    }
-
 
     @PostMapping("/{id}/delete")
     public String deleteDish(@PathVariable("id") Integer id) {

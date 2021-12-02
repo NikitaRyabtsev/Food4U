@@ -31,19 +31,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/main").permitAll()
+                .antMatchers("/test").permitAll()
                 .antMatchers("/user/registration").permitAll()
                 .antMatchers("/menu/dishes").permitAll()
                 .antMatchers("/menu/dish").permitAll()
                 .antMatchers("/order/newOrder").permitAll()
                 .antMatchers("/order/addOrder").authenticated()
                 .antMatchers("/order/orders").authenticated()
-                .antMatchers("/order/orders").hasAnyRole("ADMIN","USER")
+                .antMatchers("/order/orders").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/ingredients/**").authenticated()
                 .antMatchers("/ingredients/**").hasAnyRole("ADMIN")
                 .antMatchers("/user/**").authenticated()
-                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/main")
@@ -54,8 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/main")
                 .and()
                 .rememberMe();
-
-
     }
 
     @Bean

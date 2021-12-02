@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -34,14 +36,17 @@ public class Orders implements Serializable {
     @Column
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTimeOfBooking;
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user")
     private User user;
     @OneToMany(mappedBy = "order")
-    private List<OrderDish> orderDishes;
+    private List<OrderDish> orderDishes = new ArrayList<>();
 
-    public Orders(){
+
+    public Orders() {
     }
+
 
     public Orders(Integer id, String status, int numberOfBooking, LocalDateTime dateTimeOfBooking, User user) {
         this.id = id;

@@ -13,13 +13,13 @@ import java.util.List;
 
 
 @Repository
-public interface OrdersRepository extends JpaRepository<Orders,Integer> {
+public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
     @Override
     List<Orders> findAll();
 
     @Modifying
-    @Query(value = "DELETE order_has_dish FROM order_has_dish WHERE dish_id = :dish_id" , nativeQuery = true)
+    @Query(value = "DELETE order_has_dish FROM order_has_dish WHERE dish_id = :dish_id", nativeQuery = true)
     void deleteDishFromOrderById(@Param("dish_id") Integer id);
 
     List<Orders> findOrdersByUserOrderById(User user);
@@ -29,8 +29,10 @@ public interface OrdersRepository extends JpaRepository<Orders,Integer> {
     List<Orders> findAllByUser(User user);
 
     @Modifying
-    @Query(value = "UPDATE orders SET status = :status WHERE id = :id" , nativeQuery = true)
-    Orders updateOrderStatusById(@Param("status") String status ,@Param("id") Integer id);
+    @Query(value = "UPDATE orders SET status = :status WHERE id = :id", nativeQuery = true)
+    Orders updateOrderStatusById(@Param("status") String status, @Param("id") Integer id);
 
+    Orders findOrdersByUserAndStatus(User user, String status);
 
+    Orders findOrdersById(Integer id);
 }

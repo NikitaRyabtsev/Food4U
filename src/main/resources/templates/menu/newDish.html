@@ -39,115 +39,138 @@
 </nav>
 
 <h3>Добавить новое блюдо</h3>
-<form class="form-new-dish" th:action="@{/menu/newDish}" th:method="POST" th:object="${wrapper}" id="newDish">
-    <div th:each="dishIngredient , itemStat : *{dishIngredientList}">
-        <input type="text" th:field="*{dishIngredientList[__${itemStat.index}__].dish.name}" id="name" class="add__btn"
-               name="name" required>
-        <label>Введите тип</label>
-        <br/>
-        <select th:field="*{dishIngredientList[__${itemStat.index}__].dish.type}" name="type" id="type" class="select">
-            <option value="0">Выберите тип</option>
-            <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                    th:value="${dish}" th:text="${dish.displayValue}">
-            </option>
+<form class="form-new-dish" th:action="@{~/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
+    <label>Введите Название</label>
+    <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name"
+           name="name" class="dish__name" required>
+    <label>Введите тип</label>
+    <br/>
+    <select th:field="*{type}" name="type" id="type" class="select__type">
+        <option value="0">Выберите тип</option>
+        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                th:value="${dish}" th:text="${dish.displayValue}">
+        </option>
+    </select>
+    <h4 class="combo-label">Выберите ингредиенты</h4>
+    <button class="addIngredient" type="button">Добавить ингредиент</button>
+    <div class="create-ing">
+        <select class="create-ing__select select" th:field="*{dish_ingredients[0]}" id="create-ing__select"
+                name="create-ing__select">
+            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                    th:text="${ingredient.name}"></option>
         </select>
-        <h4 class="combo-label">Выберите ингредиенты</h4>
-        <button class="addIngredient" type="button">Добавить ингредиент</button>
-        <div class="create-ing">
-            <select class="create-ing__select select" th:field="*{dishIngredientList[__${itemStat.index}__].ingredient}"  id="create-ing__select"   name="create-ing__select" multiple>
-                <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                        th:text="${ingredient.name}"></option>
-            </select>
-
-            <input class="create-ing__weigth" type="text" th:field="*{dishIngredientList[__${itemStat.index}__].weight}" name="create-ing__weigth" required>
-        </div>
-
-        <label for="price">Введите цену</label>
-        <input type="number" th:field="*{dishIngredientList[__${itemStat.index}__].dish.price}" id="price" class="add__btn" required>
-
-        <label for="src">Введите путь к картинке</label>
-        <input type="text" th:field="*{dishIngredientList[__${itemStat.index}__].dish.src}" id="src" name="src" class="add__btn">
-
-        <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
+        <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weight" required>
     </div>
+
+    <label for="price">Введите цену</label>
+    <input type="number" th:field="*{price}" id="price" class="dish__price" required>
+
+    <label for="src">Введите путь к картинке</label>
+    <input type="text" th:field="*{src}" id="src" name="src" class="dish__src">
+
+    <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
 </form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
 
-<!--<script>-->
-<!--    let form = document.querySelector('.form-new-dish');-->
-<!--    form.onsubmit = (event) => {-->
-<!--        event.preventDefault();-->
+<script>
+    let form = document.querySelector('.form-new-dish');
+    form.onsubmit = (event) =>{
+        event.preventDefault();
+        let dishIngredientDto = [];
 
-<!--        let formData = new FormData(form);-->
+        let ingredients = document.querySelectorAll('.ingredient');
+        name = event.target.querySelector('.dish__name').value;
+        price = event.target.querySelector('.dish__price').value;
+        src = event.target.querySelector('.dish__src').value;
+        type = event.target.querySelector('.select__type').value;
 
-<!--        // delete useless data from create-ing-->
-<!--        //formData.delete('ingredient');-->
-<!--        formData.delete('create-ing__weigth');-->
+        dishDto = {
+            "name" : name,
+            "price" : price,
+            "src" : src,
+            "type" : type
+        };
 
-<!--        for (let [name, value] of formData) {-->
-<!--            console.log(name + ':' + value)-->
-<!--        }-->
+        dishWrapper = {
+            "dishIngredientDto" : dishIngredientDto,
+            "dishDto" : dishDto
+        }
+        for( let ingredient of ingredients){
+            obj = {};
+            obj.ingredient = ingredient.querySelector('.ingredient__select-ing').value;
+            obj.weight = ingredient.querySelector('.ingredient__input-weigth').value;
+            dishIngredientDto.push(obj);
+        }
 
-<!--        fetch('/menu/newDish', {-->
-<!--            method: 'POST',-->
-<!--            body: formData-->
-<!--        });-->
-<!--        alert('Блюдо добавлено')-->
-<!--    }-->
+        console.log(dishWrapper)
+        console.log(dishDto);
+        let json = JSON.stringify(dishWrapper);
+        let request = new XMLHttpRequest();
+        request.open('POST', '/rest/dishIngredient/addDish')
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200){
+                alert('Отправлено')
+            }
 
-<!--    const addIngredient = document.querySelector('.addIngredient');-->
+        }
+        request.send(json);
+        console.log(json)
 
-<!--    addIngredient.onclick = (event) => {-->
-<!--        event.preventDefault();-->
-<!--        const createIng = document.querySelector('.create-ing');-->
-<!--        const select = document.querySelector('.create-ing__select');-->
-<!--        const selectClone = select.cloneNode(true);-->
-<!--        const selectCloneValue = select.options[select.selectedIndex].value;-->
-<!--        const weigth = document.querySelector('.create-ing__weigth');-->
+    }
 
-<!--        if (weigth.value == '') {-->
-<!--            alert('Введите вес продукта')-->
-<!--        } else if (selectClone.options[selectClone.selectedIndex].value == 0) {-->
-<!--            alert('Выберите тип ингредиента')-->
-<!--        } else {-->
+    const addIngredient = document.querySelector('.addIngredient');
 
-<!--            // create block ingredient-->
-<!--            let divIng = document.createElement('div');-->
-<!--            divIng.className = 'ingredient';-->
+    addIngredient.onclick = (event) =>{
+        event.preventDefault();
+        const createIng = document.querySelector('.create-ing');
+        const select = document.querySelector('.create-ing__select');
+        const selectClone = select.cloneNode(true);
+        const selectCloneValue = select.options[select.selectedIndex].value;
+        const weigth = document.querySelector('.create-ing__weigth');
 
-<!--            // create select of ingedients-->
-<!--            let selectIng = selectClone;-->
-<!--            selectIng.className = 'ingredient__select-ing';-->
-<!--            selectIng.name = 'id';-->
-<!--            selectIng.value = selectCloneValue;-->
+        if(weigth.value == ''){
+            alert('Введите вес продукта')
+        } else if(selectClone.options[selectClone.selectedIndex].value == 0) {
+            alert('Выберите тип ингредиента')
+        } else{
 
-<!--            // create input for weigth-->
-<!--            let inputWeigth = document.createElement('input');-->
-<!--            inputWeigth.className = 'ingredient__input-weigth';-->
-<!--            inputWeigth.name = 'weigth';-->
-<!--            inputWeigth.value = weigth.value;-->
+            // create block ingredient
+            let divIng = document.createElement('div');
+            divIng.className = 'ingredient';
 
-<!--            // create del btn-->
-<!--            let btnDel = document.createElement('button');-->
-<!--            btnDel.textContent = 'Удалить ингредиент';-->
-<!--            btnDel.className = 'ingredient__del';-->
-<!--            btnDel.onclick = () => {-->
-<!--                btnDel.parentNode.remove();-->
-<!--            }-->
+            // create select of ingedients
+            let selectIng = selectClone;
+            selectIng.className = 'ingredient__select-ing';
+            selectIng.name = 'id';
+            selectIng.value = selectCloneValue;
 
-<!--            divIng.appendChild(selectIng);-->
-<!--            divIng.appendChild(inputWeigth);-->
-<!--            divIng.appendChild(btnDel);-->
-<!--            createIng.after(divIng);-->
-<!--        }-->
+            // create input for weigth
+            let inputWeigth = document.createElement('input');
+            inputWeigth.className = 'ingredient__input-weigth';
+            inputWeigth.name = 'weigth';
+            inputWeigth.value = weigth.value;
+
+            // create del btn
+            let btnDel = document.createElement('button');
+            btnDel.textContent = 'Удалить ингредиент';
+            btnDel.className = 'imgredient__del';
+            btnDel.onclick = () => {
+                btnDel.parentNode.remove();
+            }
+
+            divIng.appendChild(selectIng);
+            divIng.appendChild(inputWeigth);
+            divIng.appendChild(btnDel);
+            createIng.after(divIng);
+        }
 
 
-<!--    }-->
 
-<!--</script>-->
-
+    }
+</script>
 </body>
 
 </html>

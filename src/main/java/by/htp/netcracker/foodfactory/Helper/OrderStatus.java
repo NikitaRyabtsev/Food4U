@@ -2,8 +2,10 @@ package by.htp.netcracker.foodfactory.Helper;
 
 public enum OrderStatus {
 
-    DONE("Подтверждён"),
-    CONSIDERED("Рассматривается");
+    CONSIDERED("Оформляется"),
+    FORMALIZED("Оформлен"),
+    DONE("Подтверждён");
+
 
     private final String displayValue;
 

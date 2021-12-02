@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Reposotories;
 
+import by.htp.netcracker.foodfactory.Model.Dish;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
 import by.htp.netcracker.foodfactory.Model.OrderDish;
@@ -19,7 +20,9 @@ public interface OrderDishesRepository extends JpaRepository<OrderDish,Integer> 
 
     List<OrderDish> findAllByOrder(Orders order);
 
+    OrderDish findByOrderAndDish(Orders order , Dish dish);
+
     @Modifying
-    @Query(value = "DELETE user_dish FROM user_dish WHERE dish_id= :dish_id" , nativeQuery = true)
+    @Query(value = "DELETE order_dish FROM order_dish WHERE dish_id= :dish_id" , nativeQuery = true)
     void deleteByDishId(@Param("dish_id") Integer id);
 }
