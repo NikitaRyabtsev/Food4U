@@ -30,4 +30,8 @@ public class UserService {
         return userRepository.save(newUser);
 
     }
+    public User editProfile(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
+    }
 }

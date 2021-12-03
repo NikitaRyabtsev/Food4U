@@ -64,7 +64,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PostMapping("edit/{id}")
     public String updateProfile(@ModelAttribute("user") User user) {
-        userRepository.save(user);
+        userService.editProfile(user);
         return "redirect:/user/profile";
     }
 

@@ -41,7 +41,7 @@
                         <a th:href="@{~/order/userOrder}" class="btn btn-primary">
                             <img src="/images/bucket.png" style="width: 30px ; height: 25px" >
                         </a>
-                        <a id="clicks"></a>
+                        <a id="clicks" sec:authorize="isAuthenticated()">0</a>
                     </li>
                 </ul>
             </nav_header>

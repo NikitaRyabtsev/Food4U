@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/popup/style.css}">
-    <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
     <link rel="stylesheet" th:href="@{/css/dish.css}">
     <link rel="stylesheet" th:href="@{/css/products.css}">
     <meta charset="UTF-8">
@@ -56,25 +55,23 @@
                             <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}"
                                    th:value="${order.id}"
                                    id="order" name="order">
-                            <input class="product__submit product__btn" name="submit" type="submit"
+                            <input class="product__submit dish__btn" name="submit" type="submit"
                                    value="Добавить в корзину">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
+            <button sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn"  style="width: 20%" type="button">Редактировать</button>
+        </a>
+        <br/>
+        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
+            <input sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn" style="width: 20%" type="submit" value="Удалить блюдо">
+        </form>
     </div>
 </section>
 </div>
-
-
-<!--        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">-->
-<!--            <button type="button">Редактировать</button>-->
-<!--        </a>-->
-
-<!--        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">-->
-<!--            <input type="submit" value="Удалить блюдо">-->
-<!--        </form>-->
 
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

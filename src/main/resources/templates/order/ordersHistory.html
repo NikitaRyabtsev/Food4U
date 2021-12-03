@@ -32,7 +32,11 @@
                 <tr>
                     <td th:text="${orders.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"></td>
                     <td th:text="${orders.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"></td>
-                    <td th:text="${orders.status}" id="status" name="status"></td>
+                    <td>
+                        <p th:if="${orders.status == 'DONE'}"  style="color: #00C851" >Подтверждён</p>
+                        <p th:if="${orders.status == 'FORMALIZED'}" style="color: rgba(255,0,0,0.72)">Ждёт подтверждения</p>
+                        <p th:if="${orders.status == 'CONSIDERED'}">Оформляется</p>
+                    </td>
                 </tr>
             </div>
         </table>

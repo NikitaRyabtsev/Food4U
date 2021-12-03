@@ -24,7 +24,7 @@
 <nav class="nav">
     <label for="nav-toggle" class="nav-toggle" onclick></label>
     <h2 class="logo">
-        <a href="/menu/main">Food4U</a>
+        <a href="/main">Food4U</a>
         <br/>
         <a>Быстро , вкусно!!!</a>
     </h2>
@@ -89,8 +89,7 @@
         <a href=/menu/dishes sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-primary">Блюда</a>
         </li>
         <li>
-        <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"
-           th:href="@{~/order/orders}" class="btn btn-primary">Заказы</a>
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{~/order/orders}" class="btn btn-primary">Заказы</a>
         </li>
     </ul>
 </nav>

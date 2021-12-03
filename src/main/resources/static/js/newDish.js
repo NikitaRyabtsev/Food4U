@@ -1,5 +1,5 @@
 let form = document.querySelector('.form-new-dish');
-form.onsubmit = (event) =>{
+form.onsubmit = (event) => {
     event.preventDefault();
 
     // Take info about product
@@ -9,17 +9,17 @@ form.onsubmit = (event) =>{
     type = event.target.querySelector('.select__type').value;
 
     dishDto = {
-        "name" : name,
-        "price" : price,
-        "src" : src,
-        "type" : type
+        "name": name,
+        "price": price,
+        "src": src,
+        "type": type
     };
 
 
     // Add ingredients
     let dishIngredientDto = [];
     let ingredients = document.querySelectorAll('.ingredient');
-    for( let ingredient of ingredients){
+    for (let ingredient of ingredients) {
         obj = {};
         obj.ingredient = ingredient.querySelector('.ingredient__select-ing').value;
         obj.weight = ingredient.querySelector('.ingredient__input-weigth').value;
@@ -28,8 +28,8 @@ form.onsubmit = (event) =>{
 
     // Create wrapper of info
     dishWrapper = {
-        "dishIngredientDto" : dishIngredientDto,
-        "dishDto" : dishDto
+        "dishIngredientDto": dishIngredientDto,
+        "dishDto": dishDto
     }
 
     let json = JSON.stringify(dishWrapper);
@@ -37,7 +37,7 @@ form.onsubmit = (event) =>{
     request.open('POST', '/rest/dishIngredient/addDish')
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     request.onreadystatechange = function () {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             alert('Отправлено')
         }
 
@@ -49,7 +49,7 @@ form.onsubmit = (event) =>{
 
 const addIngredient = document.querySelector('.addIngredient');
 let oldIngredients = [];
-addIngredient.onclick = (event) =>{
+addIngredient.onclick = (event) => {
     event.preventDefault();
     const createIng = document.querySelector('.create-ing');
     const select = document.querySelector('.create-ing__select');
@@ -57,16 +57,16 @@ addIngredient.onclick = (event) =>{
     const selectCloneValue = select.options[select.selectedIndex].value;
     const weigth = document.querySelector('.create-ing__weigth');
 
-    if(weigth.value == '' || weigth.value == 0){
+    if (weigth.value == '' || weigth.value == 0) {
         alert('Введите вес продукта');
         return;
     }
-    if(selectClone.options[selectClone.selectedIndex].value == 0) {
+    if (selectClone.options[selectClone.selectedIndex].value == 0) {
         alert('Выберите тип ингредиента');
         return;
     }
-    for(let i = 0; i < oldIngredients.length;i++){
-        if(oldIngredients[i] == selectCloneValue){
+    for (let i = 0; i < oldIngredients.length; i++) {
+        if (oldIngredients[i] == selectCloneValue) {
             alert('Ингредиент должен быть уникальным!!!');
             return;
         }

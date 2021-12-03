@@ -1,21 +1,27 @@
 var clicks = 0;
 
-function initiateClicks() {
-    var clickStr = localStorage.getItem("clicks");
-    if (clickStr == undefined) {
-        localStorage.setItem("clicks", 0);
-        clicks = 0;
-    } else {
-        clicks = parseInt(clickStr);
-    }
+function callClicks() {
+    clicks = parseInt(localStorage.getItem("actualClicks"), 10) || 0;
     document.getElementById("clicks").innerHTML = clicks;
 }
 
-function doClick() {
+function onClick() {
     clicks += 1;
-    localStorage.setItem("clicks", clicks);
+    document.getElementById("clicks").innerHTML = clicks;
+    saveClicks();
+};
+
+function saveClicks() {
+    localStorage.setItem("actualClicks", clicks);
+};
+
+function trash() {
+    clicks = -1;
     document.getElementById("clicks").innerHTML = clicks;
 }
 
-document.getElementById("clickButton").onclick = doClick;
-initiateClicks();
+function cleanLocalStorage() {
+    localStorage.clear();
+}
+
+callClicks(); // Kind of like your onload="datenAbrufen()"

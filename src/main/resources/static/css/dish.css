@@ -58,9 +58,24 @@
     align-items: center ;
 }
 .dish__btn {
-    margin-left: 30px;
     padding: 10px 25px;
     border: 2px solid #16a085;
     border-radius: 10em;
     transition-duration: 0.2s;
+    background-color: #16a085;
+    color:white;
+    cursor: pointer;
+    width: 76%;
+    opacity: 0.9;
 }
+/*.product__btn {*/
+/*    padding: 10px 25px;*/
+/*    border: 2px solid #16a085;*/
+/*    border-radius: 10em;*/
+/*    transition-duration: 0.2s;*/
+/*    background-color: #16a085;*/
+/*    color:white;*/
+/*    cursor: pointer;*/
+/*    width: 76%;*/
+/*    opacity: 0.9;*/
+/*}*/

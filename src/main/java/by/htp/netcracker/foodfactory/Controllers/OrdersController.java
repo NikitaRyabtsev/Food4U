@@ -44,9 +44,7 @@ public class OrdersController {
 
     @GetMapping("/orders")
     public String showOrders(Model model) {
-        model.addAttribute("orders", orderRepository.findAll());
-        model.addAttribute("dishes", dishRepository.findAll());
-        model.addAttribute("ingredients", ingredientRepository.findAll());
+        model.addAttribute("orders", orderService.showOrdersOrderByDateAndTime());
         return "order/orders";
     }
 
@@ -89,6 +87,7 @@ public class OrdersController {
         return "redirect:/order/userOrder";
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/ordersHistory")
     public String findOrdersByUser(Model model, Principal principal) {
         List<Orders> orders = orderService.findOrdersByUser(principal.getName());

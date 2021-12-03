@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
@@ -21,7 +21,6 @@
 </nav>
 <main role="main">
     <article>
-        <div>
             <table class="table">
                 <tr>
                     </br>
@@ -45,9 +44,11 @@
             <a th:href="@{/user/edit/{id}(id = ${user.getId()})}">
                 <button type="button" class="btn btn-secondary">Редактировать</button>
             </a>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" style="text-align: center">
+                <a th:href="@{/order/ordersHistory}" class="btn btn-secondary">История заказов</a>
+            </div>
             </p>
             <hr>
-        </div>
     </article>
 </main>
 <footer>

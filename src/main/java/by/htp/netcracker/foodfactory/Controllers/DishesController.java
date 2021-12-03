@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class DishesController {
         this.orderService = orderService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/dishes")
     public String showDishesWithIngredients(Model model) {
         model.addAttribute("dishes", dishRepository.findAll());
@@ -75,10 +77,14 @@ public class DishesController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/delete")
+    @Transactional
     public String deleteDish(@PathVariable("id") Integer id) {
+        dishIngredientsRepository.deleteByDishId(id);
         dishRepository.deleteById(id);
         return "redirect:/menu/dishes";
     }
+
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{id}/edit")
     public String editDish(Model model, @PathVariable("id") Integer id) {
@@ -86,16 +92,24 @@ public class DishesController {
         model.addAttribute("ingredients" , ingredientRepository.findAll());
         return "menu/dishEdit";
     }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/edit")
     public String updateDish(@ModelAttribute("dish") Dish dish) {
         dishRepository.save(dish);
         return "redirect:/menu/dishes";
     }
+
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("dishes/{type}")
-    public String showDishByType(Model model, @PathVariable("type") String type){
+    public String showDishByType(Model model, @PathVariable("type") String type , Principal principal){
         model.addAttribute("dishes",dishRepository.getDishByType(type));
+        Orders orders = orderService.findActiveOrder(principal.getName());
+        if(orders == null){
+            model.addAttribute("order", new Orders());
+        }else{
+            model.addAttribute("order", orders);
+        }
         return "menu/dishesType";
     }
 }

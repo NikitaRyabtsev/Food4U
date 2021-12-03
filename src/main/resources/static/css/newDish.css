@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 60%;
+    width: 70%;
+    padding: 30px 50px;
+    background-color: #fff;
+    border-radius: 50px;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+
+/* Full-width input fields */
+input[type=text], input[type=password],input[type=number]{
+    border-radius: 50px;
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus ,input[type=number]:focus ,select:focus{
+    border-radius: 50px;
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+    border-radius: 50px;
+    background-color: #16a085;
+    color:white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+}
+
+.registerbtn:hover {
+
+    opacity: 1;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+    margin-top:0px;
+    background: #f1f1f1;
+
+    text-align: center;
+}
+
+.registerbtn:hover {
+
+    opacity: 1;
+}
+
+.dropcontainer_demo2 {
+    position:relative;
+    font-size: 16px;
+    color: #777;
+}
+
+.trigger_demo2 {
+    color: #777;
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
+    background: #fff url(../images/select-arrow-open.png) 98% center no-repeat;
+    display: block;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.trigger_demo2:hover {
+    color: #777;
+    background: #f5f5f5 url(../images/select-arrow-open.png) 98% center no-repeat;
+}
+
+.activetrigger_demo2 {
+    color: #777;
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
+    background: #f5f5f5 url(../images/select-arrow-close.png) 98% center no-repeat;
+    display: block;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.activetrigger_demo2:hover {
+    background: #f5f5f5 url(../images/select-arrow-close.png) 98% center no-repeat;
+    color: #777;
+}
+
+.activetrigger_demo2:active {
+    background: #f5f5f5 url(../images/select-arrow-close.png) 98% center no-repeat;
+    color: #777;
+}
+
+.dropcontainer_demo2 ul {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background: #fff;
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+    width: 50%;
+    z-index: 100;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.dropcontainer_demo2 ul li {
+    padding: 5px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.dropcontainer_demo2 ul li:hover {
+    background: #f5f5f5;
+    outline: none;
+}
+
+.dropcontainer_demo2 ul li:first-child {
+    display: none;
+}
+
+.dropcontainer_demo2 ul li:last-child {
+    border-bottom: none;
+}
+
+.dropdownhidden_demo2 {
+    display: none;
+}
+
+.dropdownvisible_demo2 {
+    height: auto;
+}
+
+.dropdownvisible_demo2 {
+    height: 200px;
+    overflow-y: scroll;
+}
