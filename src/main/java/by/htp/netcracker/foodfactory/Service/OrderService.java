@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -81,13 +82,18 @@ public class OrderService {
 
         public void saveActiveOrder (String username, OrderDishDto orderDishDto){
             User user = userRepository.getUserByUsername(username);
+            double counter = 0;
             if (user != null) {
                 Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
                 List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(orders);
                 for (int i = 0; i < orderDishes.size(); i++) {
                     orderDishes.get(i).setCountOfDishes(orderDishDto.getCountOfDishes());
+                    int countOfDishes = orderDishes.get(i).getCountOfDishes();
+                    double price = orderDishes.get(i).getDish().getPrice().doubleValue();
+                    counter += countOfDishes*price;
                 }
                 if (orders != null) {
+                    orders.setPrice(BigDecimal.valueOf(counter));
                     orders.setDateTimeOfBooking(LocalDateTime.now());
                     orders.setStatus(OrderStatus.FORMALIZED.toString());
                     ordersRepository.save(orders);

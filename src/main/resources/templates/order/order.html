@@ -50,7 +50,8 @@
         <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).FORMALIZED}"
                 th:value="${status}"></option>
     </select>
-    <input type="submit" onclick="redirectToNewOrder();cleanLocalStorage()" on class="product__btn" value="Оформить заказ">
+    <p th:text="${order.price}" th:value="${order.price}"></p>
+    <input type="submit" onclick="cleanLocalStorage()" on class="product__btn" value="Оформить заказ">
 </form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

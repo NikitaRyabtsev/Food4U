@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,6 +34,8 @@ public class Orders implements Serializable {
     @NotNull
     @Column(name="numberOfBooking" , unique = true)
     private int numberOfBooking;
+    @Column
+    private BigDecimal price;
     @Column
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTimeOfBooking;
@@ -62,6 +65,14 @@ public class Orders implements Serializable {
 
     public void setOrderDishes(List<OrderDish> userDishes) {
         this.orderDishes = userDishes;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getId() {

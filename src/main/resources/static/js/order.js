@@ -8,6 +8,7 @@ for (let formProduct of formsProduct) {
             'countOfDishes': countOfDishes,
         };
 
+
         JSON.stringify(orderDishDto);
         console.log(orderDishDto)
         let json = JSON.stringify(orderDishDto);
