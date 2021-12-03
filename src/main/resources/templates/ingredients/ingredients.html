@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/popup/style.css}">
     <link rel="stylesheet" th:href="@{/css/table.css}">
     <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-    <link th:href="@{/images/icon-close.svg}">
-
     <meta charset="UTF-8">
     <title>Ингредиенты</title>
 </head>
@@ -22,6 +19,9 @@
 </nav>
 <main role="main">
     <article>
+        <a href="/ingredients/new" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+            <button type="button" class="btn btn-secondary">Добавить новый ингредиент</button>
+        </a>
         <h3>Ингредиенты(на 100г веса)</h3>
             <table class="table">
                 <tr>
@@ -43,9 +43,6 @@
                 </div>
             </table>
         </div>
-        <a href="/ingredients/new">
-            <button type="button" class="btn btn-secondary">Добавить новый ингредиент</button>
-        </a>
     </article>
 </main>
 <footer>

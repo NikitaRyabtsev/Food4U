@@ -26,19 +26,28 @@
             <tr>
                 <td>Номер заказа</td>
                 <td>Дата и время</td>
-                <td>Статус</td>
                 <td>Имя</td>
                 <td>Фамилия</td>
+                <td>Статус</td>
             </tr>
             <div th:each="order:${orders}">
                 <tr>
-                    <td th:text="${order.numberOfBooking}" id="numberOfBooking"  name="numberOfBooking"></td>
+                    <td>
+                        <p  th:text="${order.numberOfBooking}" id="numberOfBooking" name="numberOfBooking"> </p>
+                    </td>
                     <td th:text="${order.dateTimeOfBooking}" id="dateTimeOfBooking" name="dateTimeOfBooking"></td>
                     <td th:text="${order.user.getName()}" id="name" name="name"></td>
-                    <td th:text="${order.status}" id="status" name="status"></td>
+<!--                    <td>-->
+<!--                        <p th:if="${order.status == 'CONSIDERED'}">Оформляется</p>-->
+<!--                        <p th:if="${order.status == 'FORMALIZED'}">Оформлен</p>-->
+<!--                        <p th:if="${order.status == 'DONE'}">Подтверждён</p>-->
+<!--                    </td>-->
                     <td th:text="${order.user.getSurname()}" id="surname" name="surname"></td>
                     <form th:action="@{/order/{id}/confirmOrder(id = ${order.getId()})}" th:method="POST">
-                        <td><input type="submit" value="Подтвердить заказ"></td>
+                        <td>
+                            <p th:if="${order.status == 'DONE'}"  style="color: #00C851">Подтвержден</p>
+                            <input th:if="${order.status == 'FORMALIZED'}" type="submit" value="Подтвердить заказ">
+                        </td>
                     </form>
                 </tr>
             </div>

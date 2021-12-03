@@ -2,32 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="icon" th:href="@{/images/favicon.ico}">
-    <link rel="stylesheet" th:href="@{/css/select.css}">
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/newDish.css}">
     <meta charset="UTF-8">
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: sans-serif;
-        }
 
-        .add {
-            border: 2px solid #000;
-        }
-
-        input {
-            margin: 10px 0px;
-        }
-
-        .form-new-dish {
-            border: 2px solid #000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-    </style>
     <title>Добавление блюда с ингредиентами</title>
 </head>
 <body role="main" style="text-align: center">
@@ -39,138 +19,55 @@
 </nav>
 
 <h3>Добавить новое блюдо</h3>
-<form class="form-new-dish" th:action="@{~/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
-    <label>Введите Название</label>
-    <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name"
-           name="name" class="dish__name" required>
-    <label>Введите тип</label>
-    <br/>
-    <select th:field="*{type}" name="type" id="type" class="select__type">
-        <option value="0">Выберите тип</option>
-        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                th:value="${dish}" th:text="${dish.displayValue}">
-        </option>
-    </select>
-    <h4 class="combo-label">Выберите ингредиенты</h4>
-    <button class="addIngredient" type="button">Добавить ингредиент</button>
-    <div class="create-ing">
-        <select class="create-ing__select select" th:field="*{dish_ingredients[0]}" id="create-ing__select"
-                name="create-ing__select">
-            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                    th:text="${ingredient.name}"></option>
-        </select>
-        <input class="create-ing__weigth" type="text" th:field="*{weight}" name="create-ing__weight" required>
-    </div>
+<main role="main">
+    <article>
+        <div class="container">
+            <form class="form-new-dish" th:action="@{~/menu/newDish}" th:method="POST" th:object="${dish}" id="newDish">
+                <label>Введите Название</label>
+                <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name"
+                       name="name" class="dish__name" required>
+                <label>Введите тип</label>
+                <p>
+                    <select th:field="*{type}" name="type" id="type" class="select__type" style="width: 100%">
+                        <option value="0" disabled>Тип блюда</option>
+                        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                                th:value="${dish}" th:text="${dish.displayValue}">
+                        </option>
+                    </select>
+                </p>
+                <h4 class="combo-label">Выберите ингредиенты</h4>
+                <button class="addIngredient" type="button">Добавить ингредиент</button>
+                <div class="create-ing">
+                    <p>
+                    <select class="create-ing__select" th:field="*{dish_ingredients[0]}" id="create-ing__select"
+                            name="create-ing__select">
+                        <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                                th:text="${ingredient.name}"></option>
+                    </select>
+                    <input style="width: 50%" class="create-ing__weigth" min="0" type="number" th:field="*{weight}"
+                           name="create-ing__weight"
+                           required>
+                    </p>
+                </div>
 
-    <label for="price">Введите цену</label>
-    <input type="number" th:field="*{price}" id="price" class="dish__price" required>
+                <label for="price">Введите цену</label>
+                <input type="number" th:field="*{price}" id="price" class="dish__price" required>
 
-    <label for="src">Введите путь к картинке</label>
-    <input type="text" th:field="*{src}" id="src" name="src" class="dish__src">
+                <label for="src">Введите путь к картинке</label>
+                <input type="text" th:field="*{src}" id="src" name="src" class="dish__src">
 
-    <input type="submit" value="Создать" class="btn btn-secondary" id="btn">
-</form>
-<footer>
-    <div th:insert="/viewhtml/footer :: footer"></div>
-</footer>
-
-<script>
-    let form = document.querySelector('.form-new-dish');
-    form.onsubmit = (event) =>{
-        event.preventDefault();
-        let dishIngredientDto = [];
-
-        let ingredients = document.querySelectorAll('.ingredient');
-        name = event.target.querySelector('.dish__name').value;
-        price = event.target.querySelector('.dish__price').value;
-        src = event.target.querySelector('.dish__src').value;
-        type = event.target.querySelector('.select__type').value;
-
-        dishDto = {
-            "name" : name,
-            "price" : price,
-            "src" : src,
-            "type" : type
-        };
-
-        dishWrapper = {
-            "dishIngredientDto" : dishIngredientDto,
-            "dishDto" : dishDto
-        }
-        for( let ingredient of ingredients){
-            obj = {};
-            obj.ingredient = ingredient.querySelector('.ingredient__select-ing').value;
-            obj.weight = ingredient.querySelector('.ingredient__input-weigth').value;
-            dishIngredientDto.push(obj);
-        }
-
-        console.log(dishWrapper)
-        console.log(dishDto);
-        let json = JSON.stringify(dishWrapper);
-        let request = new XMLHttpRequest();
-        request.open('POST', '/rest/dishIngredient/addDish')
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        request.onreadystatechange = function () {
-            if (request.readyState == 4 && request.status == 200){
-                alert('Отправлено')
-            }
-
-        }
-        request.send(json);
-        console.log(json)
-
-    }
-
-    const addIngredient = document.querySelector('.addIngredient');
-
-    addIngredient.onclick = (event) =>{
-        event.preventDefault();
-        const createIng = document.querySelector('.create-ing');
-        const select = document.querySelector('.create-ing__select');
-        const selectClone = select.cloneNode(true);
-        const selectCloneValue = select.options[select.selectedIndex].value;
-        const weigth = document.querySelector('.create-ing__weigth');
-
-        if(weigth.value == ''){
-            alert('Введите вес продукта')
-        } else if(selectClone.options[selectClone.selectedIndex].value == 0) {
-            alert('Выберите тип ингредиента')
-        } else{
-
-            // create block ingredient
-            let divIng = document.createElement('div');
-            divIng.className = 'ingredient';
-
-            // create select of ingedients
-            let selectIng = selectClone;
-            selectIng.className = 'ingredient__select-ing';
-            selectIng.name = 'id';
-            selectIng.value = selectCloneValue;
-
-            // create input for weigth
-            let inputWeigth = document.createElement('input');
-            inputWeigth.className = 'ingredient__input-weigth';
-            inputWeigth.name = 'weigth';
-            inputWeigth.value = weigth.value;
-
-            // create del btn
-            let btnDel = document.createElement('button');
-            btnDel.textContent = 'Удалить ингредиент';
-            btnDel.className = 'imgredient__del';
-            btnDel.onclick = () => {
-                btnDel.parentNode.remove();
-            }
-
-            divIng.appendChild(selectIng);
-            divIng.appendChild(inputWeigth);
-            divIng.appendChild(btnDel);
-            createIng.after(divIng);
-        }
-
-
-
-    }
-</script>
+                <input type="submit" value="Создать" onclick="redirectToNewOrder()" class="btn btn-secondary" id="btn">
+            </form>
+            <footer>
+                <div th:insert="/viewhtml/footer :: footer"></div>
+            </footer>
+        </div>
+    </article>
+</main>
+<script src="/js/select.js"></script>
+<script src="/js/select_demo2.js"></script>
+<script src="/js/newDish.js"></script>
+<script src="/js/redirectToNewOrder.js"></script>
 </body>
 
 </html>

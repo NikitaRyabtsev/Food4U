@@ -12,6 +12,7 @@ import by.htp.netcracker.foodfactory.Reposotories.OrdersRepository;
 import by.htp.netcracker.foodfactory.Reposotories.OrderDishesRepository;
 import by.htp.netcracker.foodfactory.Reposotories.UserRepository;
 import by.htp.netcracker.foodfactory.RestControllers.OrderRestController;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -39,7 +40,7 @@ public class OrderService {
 
     public List<Orders> findOrdersByUser(String username) {
         User user = userRepository.getUserByUsername(username);
-        List<Orders> orders = ordersRepository.findAllByUser(user);
+        List<Orders> orders = ordersRepository.findAllByUser(user,Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
         return orders;
     }
 
@@ -101,4 +102,7 @@ public class OrderService {
         }
 
 
+        public List<Orders> showOrdersOrderByDateAndTime(){
+            return ordersRepository.findAll(Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
+        }
     }

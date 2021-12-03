@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/block.css}">
     <link rel="stylesheet" th:href="@{/css/products.css}">
     <link rel="icon" th:href="@{/images/favicon.ico}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--    <script th:src="@{/js/counterDishes.js}"></script>-->
     <meta charset="UTF-8">
     <title>Добавление блюда с ингредиентами</title>
@@ -25,50 +26,31 @@
         <div class="product" th:each="dish:${dishes}">
             <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
                 <img class="product__img" th:src="${dish.src}" th:value="${dish.id}"></a>
-            <p th:text="${dish.name}"></p>
+           <p class="product__name" th:text="${dish.name}"></p>
             <div class="product__info">
-                <!--                    th:each="orderDish, rowStat : *{orderDishes}"-->
                 <p class="product__text">Стоимость:</p>
-                <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-                <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
-                    <input type="number" class="product__countOfDishes"
-                           id="countOfDishes" name="countOfDishes">
-                    <input type="text" th:text="${dish.id}" class="product__id" th:value="${dish.id}" hidden>
-                    <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
-                           id="order" name="order">
-                    <input class="product__submit" name="submit" type="submit"
-                           value="Добавить в корзину">
-                </form>
+                <p class="product__price" th:text="${dish.price}"></p>
+                <!--                    th:each="orderDish, rowStat : *{orderDishes}"-->
             </div>
+            <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
+                <input type="number" class="product__countOfDishes quantity-num btn-secondary" id="countOfDishes"
+                       name="countOfDishes"
+                       value="1" min="1">
+                <input type="hidden" class="product__id" th:value="${dish.id}" hidden>
+                <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
+                       id="order" name="order">
+                <button class="product__submit product__btn" name="submit" onclick="onClick()" id="clickButton"
+                        type="submit">Добавить в корзину
+                </button>
+            </form>
         </div>
     </div>
 </section>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
+<script src="/js/newOrder.js"></script>
+<script src="/js/counterDishes.js"></script>
 </body>
 
-<script>
-    let formsProduct = document.querySelectorAll('.product__form');
-    for(let formProduct of formsProduct){
-        formProduct.onsubmit = (event) =>{
-            event.preventDefault();
-            id = event.target.querySelector('.product__id').value;
-            countOfDishes = event.target.querySelector('.product__countOfDishes').value;
-
-            orderDishDto = {
-                'dish': id,
-                'countOfDishes': countOfDishes,
-            };
-
-            JSON.stringify( orderDishDto);
-            console.log( orderDishDto)
-            let json = JSON.stringify(orderDishDto);
-            let request = new XMLHttpRequest();
-            request.open("POST", "/rest/order/newOrder");
-            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            request.send(json);
-        }
-    }
-</script>
 </html>

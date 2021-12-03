@@ -21,11 +21,8 @@
                 <ul>
                     <li><a href="/main" class="btn btn-primary">Главная</a></li>
                     <li><a href="/order/newOrder">
-                        <input type="button" sec:authorize="isAuthenticated()" class="btn btn-primary" value="Меню">
+                        <input type="button" class="btn btn-primary" value="Меню">
                     </a>
-                    </li>
-                    <li>
-                        <a href=/menu/dishes  sec:authorize="isAnonymous()" class="btn btn-primary">Меню</a>
                     </li>
                     <li></li>
                     <li><a th:href="@{~/user/profile}" class="btn btn-primary">Профиль</a>
@@ -44,7 +41,7 @@
                         <a th:href="@{~/order/userOrder}" class="btn btn-primary">
                             <img src="/images/bucket.png" style="width: 30px ; height: 25px" >
                         </a>
-                        <a id="result"></a>
+                        <a id="clicks" sec:authorize="isAuthenticated()">0</a>
                     </li>
                 </ul>
             </nav_header>

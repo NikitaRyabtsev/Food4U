@@ -1,60 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <link rel="icon" th:href="@{/images/favicon.ico}">
-        <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
-        <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
-        <link rel="stylesheet" th:href="@{/css/header.css}">
-        <link rel="stylesheet" th:href="@{/popup/style.css}">
-        <link rel="stylesheet" th:href="@{/css/block.css}">
-        <link rel="stylesheet" th:href="@{/css/select.css}">
-        <link rel="stylesheet" th:href="@{/images/icon-close.svg}">
-        <link th:href="@{/images/icon-close.svg}">
-        <meta charset="UTF-8">
-        <title>Редактирование</title>
-    </head>
-    <body role="main" style="text-align: center">
-        <header>
-            <div th:insert="/viewhtml/header :: header"></div>
-        </header>
-        <nav>
-            <div th:insert="/viewhtml/nav :: nav"></div>
-        </nav>
+<head>
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
+    <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/newDish.css}">
+    <meta charset="UTF-8">
+    <title>Редактирование</title>
+</head>
+<body>
+<header>
+    <div th:insert="/viewhtml/header :: header"></div>
+</header>
+<nav>
+    <div th:insert="/viewhtml/nav :: nav"></div>
+</nav>
+<h3>Редактирование блюда</h3>
+<main role="main">
+    <article>
+        <div class="container">
+            <form class="form-new-dish" th:action="@{/menu/{id}/edit/(id=${dish.getId()})}" th:method="POST" th:object="${dish}">
+                <label>Введите Название</label>
+                <input type="text" th:value="${dish.name}" th:text="${dish.name}" id="name"
+                       name="name" class="dish__name" required>
+                <label>Введите тип</label>
+                <p>
+                    <select th:field="*{type}" name="type" id="type" class="select__type" style="width: 100%">
+                        <option value="0" disabled>Тип блюда</option>
+                        <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
+                                th:value="${dish}" th:text="${dish.displayValue}">
+                        </option>
+                    </select>
+                </p>
+                <h4 class="combo-label">Выберите ингредиенты</h4>
+                <button class="addIngredient" type="button">Добавить ингредиент</button>
+                <div class="create-ing">
+                    <p>
+                        <select class="create-ing__select" th:field="*{dish_ingredients[0]}" id="create-ing__select"
+                                name="create-ing__select">
+                            <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
+                                    th:text="${ingredient.name}"></option>
+                        </select>
+                        <input style="width: 50%" class="create-ing__weigth" min="0" type="number" th:field="*{weight}"
+                               name="create-ing__weight"
+                               required>
+                    </p>
+                </div>
 
-        <h3>Редактирование блюда</h3>
-        <form th:action="@{/menu/{id}/edit/(id=${dish.getId()})}" th:method="POST" th:object="${dish}">
-            <label for="name">Введите название</label>
-            <br/>
-            <input type="text" th:field="*{name}" id="name" class="add__btn" required>
-            <br/>
-            <label for="type">Введите тип</label>
-            <br/>
-            <select th:field="*{type}" name="TYPE" id="type" class="select">
-                <option value="0">Выберите тип</option>
-                <option th:each="dish : ${T(by.htp.netcracker.foodfactory.Helper.Type).values()}"
-                        th:value="${dish}" th:text="${dish.displayValue}"></option>
-            </select>
-            <br/>
-            <div>
-                <select id="selectIngredients" class="multi-select" name="selectIngredients" th:field="*{ingredients}"
-                        multiple="multiple">
-                    <option th:each="ingredient:${ingredients}" th:value="${ingredient.id}"
-                            th:text="${ingredient.name}"></option>
-                </select>
-            </div>
-            <br/>
-            <label for="price">Введите цену</label>
-            <br/>
-            <input type="number" th:field="*{price}" id="price" class="add__btn" required>
-            <br/>
-            <label for="src">Путь картинки:</label>
-            <br/>
-            <input type="text" th:field="*{src}" id="src" class="add__btn" required>
-            <br/>
-            <input type="submit" value="Изменить">
-        </form>
-        <footer>
-            <div th:insert="/viewhtml/footer :: footer"></div>
-        </footer>
-    </body>
+                <label for="price">Введите цену</label>
+                <input type="number" th:field="*{price}" id="price" class="dish__price" required>
+
+                <label for="src">Введите путь к картинке</label>
+                <input type="text" th:field="*{src}" id="src" name="src" class="dish__src">
+
+                <input type="submit" value="Создать" onclick="redirectToNewOrder()" class="btn btn-secondary" id="btn">
+            </form>
+            <footer>
+                <div th:insert="/viewhtml/footer :: footer"></div>
+            </footer>
+        </div>
+    </article>
+</main>
+<footer>
+    <div th:insert="/viewhtml/footer :: footer"></div>
+</footer>
+<script src="/js/select.js"></script>
+<script src="/js/select_demo2.js"></script>
+<script src="/js/newDish.js"></script>
+<script src="/js/redirectToNewOrder.js"></script>
+</body>
 </html>

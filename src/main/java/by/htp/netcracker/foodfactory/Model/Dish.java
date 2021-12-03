@@ -1,7 +1,9 @@
 package by.htp.netcracker.foodfactory.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +36,7 @@ public class Dish implements Serializable {
     private double weight;
     private double calories;
     @JsonIgnore
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(mappedBy = "dish" , cascade = CascadeType.ALL)
     private List<DishIngredient> dish_ingredients;
     @JsonIgnore
     @OneToMany(mappedBy = "dish")

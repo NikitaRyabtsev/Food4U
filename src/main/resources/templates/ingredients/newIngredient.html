@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/nav/stylenav.css}">
     <link rel="stylesheet" th:href="@{/nav/leftnav.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/newIngredient.css}">
     <meta charset="UTF-8">
     <title>Добавить ингредиент</title>
 </head>
@@ -17,25 +18,29 @@
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
 <main role="main">
-    <h3>Добавить новый ингредиент</h3>
-    <form th:action="@{/ingredients/new}" th:method="POST" th:object="${ingredient}" style="text-align: center">
-        <label for="name">Введите название</label>
-        <input type="text" th:field="*{name}" id="name" required>
-        <br/>
-        <label for="calories">Введите калории</label>
-        <input type="number" th:field="*{calories}" id="calories" required>
-        <br/>
-        <label for="proteins">Введите белки</label>
-        <input type="number" step="0.1" th:field="*{proteins}" id="proteins" required>
-        <br/>
-        <label for="fats">Введите жиры</label>
-        <input type="number" step="0.1" th:field="*{fats}" id="fats" required>
-        <br/>
-        <label for="carbohydrates">Введите углеводы</label>
-        <input type="number" step="0.1" th:field="*{carbohydrates}" id="carbohydrates" required>
-        <br/>
-        <input type="button" class="btn btn-secondary" value="Создать">
-    </form>
+    <article>
+        <div class="container">
+            <h3>Добавить новый ингредиент</h3>
+            <form th:action="@{/ingredients/new}" th:method="POST" th:object="${ingredient}" style="text-align: center">
+                <label for="name">Введите название</label>
+                <input type="text" th:field="*{name}" id="name" required>
+                <br/>
+                <label for="calories">Введите калории</label>
+                <input type="number" th:field="*{calories}" id="calories" required>
+                <br/>
+                <label for="proteins">Введите белки</label>
+                <input type="number" step="0.1" th:field="*{proteins}" id="proteins" required>
+                <br/>
+                <label for="fats">Введите жиры</label>
+                <input type="number" step="0.1" th:field="*{fats}" id="fats" required>
+                <br/>
+                <label for="carbohydrates">Введите углеводы</label>
+                <input type="number" step="0.1" th:field="*{carbohydrates}" id="carbohydrates" required>
+                <br/>
+                <input type="submit" class="btn btn-secondary" value="Создать">
+            </form>
+        </div>
+    </article>
 </main>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

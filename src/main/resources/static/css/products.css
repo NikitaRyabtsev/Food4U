@@ -20,7 +20,6 @@ body {
 .shopping-cart__btn{
 
 }
-
 .products {
     width: 100%;
     padding: 30px 5%;
@@ -31,6 +30,7 @@ body {
     margin: 0 auto;
 }
 .product {
+    transition-duration: 0.2s;
     padding: 30px 15px;
     width: 31%;
     height: 430px;
@@ -39,15 +39,20 @@ body {
     justify-content: space-between;
     align-items: center;
     border: 2px solid rgba(67,43,73,0.3);
-    border-radius: 15px;
+    border-radius: 25px;
     box-shadow: 0px 0px 5px rgba(67,43,73,0.3);
     margin: 15px ;
 }
+.product:hover{
+    box-shadow: 5px 5px 5px rgba(67, 43, 73, 0.33) ;
+    transform: scale(1.04);
+}
+
 .product__link {
 }
 .product__img {
-    height: auto;
-    width: auto;
+    max-height: 95%;
+    max-width: 95%;
     background-size: cover;
 }
 .select {
@@ -65,17 +70,27 @@ body {
 .product__info{
     display: flex;
 }
-.product__price {
+
+.product__name {
+    font-weight: bold;
+}
+.product__countOfDishes{
+    width: 50px;
 }
 .product__btn {
     padding: 10px 25px;
     border: 2px solid #16a085;
     border-radius: 10em;
     transition-duration: 0.2s;
+    background-color: #16a085;
+    color:white;
+    cursor: pointer;
+    width: 70%;
+    opacity: 0.9;
 }
 .product__btn:hover{
     color: #fff;
-    background-color: rgba(22, 160, 133,0.6);
+    /*background-color: rgba(22, 160, 133,0.6);*/
     box-shadow: 0px 0px 5px #16a085;
 }
 

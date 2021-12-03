@@ -2,6 +2,7 @@ package by.htp.netcracker.foodfactory.Reposotories;
 
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Model.User;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +27,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
     Orders findByUser(User user);
 
-    List<Orders> findAllByUser(User user);
+    List<Orders> findAllByUser(User user, Sort dateTimeOfBooking);
 
     @Modifying
     @Query(value = "UPDATE orders SET status = :status WHERE id = :id", nativeQuery = true)
