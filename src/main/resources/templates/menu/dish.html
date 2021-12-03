@@ -61,14 +61,14 @@
                     </div>
                 </div>
             </div>
+            <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
+                <input sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn" style="width: 100%" type="submit" value="Удалить блюдо">
+            </form>
         </div>
-        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
-            <button sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn"  style="width: 20%" type="button">Редактировать</button>
-        </a>
+<!--        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">-->
+<!--            <button sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn"  style="width: 20%" type="button">Редактировать</button>-->
+<!--        </a>-->
         <br/>
-        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
-            <input sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn" style="width: 20%" type="submit" value="Удалить блюдо">
-        </form>
     </div>
 </section>
 </div>
