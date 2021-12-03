@@ -35,6 +35,8 @@ public class DishService {
 
     public void createDishWithIngredients(DishWrapperDto dishWrapperDto) {
         Dish dish = new Dish();
+        double caloriesCounter = 0;
+        double weightCounter = 0;
         dish.setName(dishWrapperDto.getDishDto().getName());
         dish.setPrice(dishWrapperDto.getDishDto().getPrice());
         dish.setSrc(dishWrapperDto.getDishDto().getSrc());
@@ -46,9 +48,12 @@ public class DishService {
                 dishIngredient.setIngredient(ingredient);
                 dishIngredient.setWeight(dishWrapperDto.getDishIngredientDto().get(i).getWeight());
                 dishIngredient.setDish(dish);
+                caloriesCounter += dishIngredient.getIngredient().getCalories();
+                weightCounter += dishIngredient.getWeight();
                 dishIngredientsRepository.save(dishIngredient);
             }
-
+            dish.setWeight(Math.round(weightCounter));
+            dish.setCalories(Math.round((caloriesCounter * 100)/dish.getWeight()));
         }
         dishRepository.save(dish);
     }
