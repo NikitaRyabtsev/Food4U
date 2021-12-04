@@ -51,7 +51,7 @@
                 th:value="${status}"></option>
     </select>
     <p th:text="${order.price}" th:value="${order.price}"></p>
-    <input type="submit" onclick="cleanLocalStorage()" on class="product__btn" value="Оформить заказ">
+    <input type="submit" onclick="cleanLocalStorage();redirectToNewOrder()" on class="product__btn" value="Оформить заказ">
 </form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>

@@ -51,8 +51,8 @@ body {
 .product__link {
 }
 .product__img {
-    max-height: 95%;
-    max-width: 95%;
+    max-height: 85%;
+    max-width: 85%;
     background-size: cover;
 }
 .select {

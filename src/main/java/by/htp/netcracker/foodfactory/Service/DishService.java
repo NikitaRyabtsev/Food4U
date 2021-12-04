@@ -41,6 +41,9 @@ public class DishService {
         dish.setPrice(dishWrapperDto.getDishDto().getPrice());
         dish.setSrc(dishWrapperDto.getDishDto().getSrc());
         dish.setType(dishWrapperDto.getDishDto().getType());
+        if(dish.getSrc() == null) {
+            dish.setSrc("https://res.cloudinary.com/finishhim123nik/image/upload/v1638612922/dishes2/85268e4c799b9e91a6f9d209ea1cc1f3_lvwbbi.jpg");
+        }
         if (dishWrapperDto.getDishIngredientDto() != null || dishWrapperDto.getDishIngredientDto().isEmpty()) {
             for (int i = 0; i < dishWrapperDto.getDishIngredientDto().size(); i++) {
                 Ingredient ingredient = ingredientRepository.getById(dishWrapperDto.getDishIngredientDto().get(i).getIngredient());
