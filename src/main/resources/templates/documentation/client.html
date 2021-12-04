@@ -31,7 +31,7 @@
 </head>
 
 <header class="header_header">
-    <div th:insert="/viewhtml/header :: header"></div>
+        <div th:insert="/viewhtml/header :: header"></div>
 </header>
 <body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
 <!-- Document Wrapper
@@ -120,16 +120,13 @@
                         <li>1.Создание собственных ингредиентов с удобным интерфейсом.(Доступное только админу)
                         </li>
                         <li>2.Создание собственных блюд исходя из добавленных ингредиентов(Доступное только админу).То есть для каждого имеющегося
-                            ингредиента можно задать собственную массу в блюде.Масса высчитывается из ингредиентов , состоящих
-                            в этом блюде , а калории блюда считаются по специальной формуле , в зависимости от массы.
+                            ингредиента можно задать собственную массу в блюде.Масса блюда высчитывается из ингредиентов , а калории считаются по специальной формуле , в зависимости от массы.
                         </li>
-                        <li>3.
+                        <li>3.Удобный интерфейс для заказа блюд в меню. Возможность заказывать несколько блюд по одному клику.
                         </li>
-                        <li>Красивая сервировка. Мы украшаем каждое блюдо, поэтому его не стыдно подать даже на
-                            праздничный стол.
+                        <li>4.Возможность просматривать блюдо , его состав , вес и калории.
                         </li>
-                        <li>Приемлемые цены. Благодаря налаженным связям с поставщиками и оптимизации своей работы, нам
-                            удается держать цены на докризисном уровне.
+                        <li>5.Возможность редактирования заказа.
                         </li>
                     </ul>
                     </p>
@@ -141,8 +138,10 @@
                 <!-- Item 2 -->
                 <section id="item_2">
                     <h2 class="h2">2.Просмотр меню</h2>
-                    <p>При посещение сайта , мы попадаем в меню , где видим множество прекрасных блюд:</p>
-                    <img src="/images/documentation/menu1.png" class="img-fluid" alt="Responsive image">
+                    <p>1.При посещение сайта вас попросят залогиниться , если у вас еще нет профиля , то перейдите по ссылке и создайте его</p>
+                    <img src="/images/documentation/login1_1.png" class="img-fluid" alt="Responsive image">
+                    <p>2.После этого вас перебросит на меню оформления заказа.</p>
+                    <img src="/images/documentation/login2.png" class="img-fluid" alt="Responsive image">
                 </section>
                 <br/>
                 <br/>
@@ -151,16 +150,9 @@
                 <!-- Item 2.1 -->
                 <section id="item_2_1">
                     <h2 class="h2">2.1.Оформление заказа</h2>
-                    <p>Для оформления заказа вам потребуется выбрать понравившиеся блюда и нажать "Добавить в
-                        корзину"</p>
-                    <img src="/images/documentation/order1.png" class="img-fluid" alt="Responsive image">
-                    <p>Если вы не авторизированы , то вас перебросит на страницу авторизации.Заполните форму.</p>
-                    <img src="/images/documentation/login.png" class="img-fluid" alt="Responsive image">
-                    <p>Если вы не зарегестрированы на данном сайте , то вам следует перейти по ссылке внизу
-                        авторизации:</p>
-                    <img src="/images/documentation/reg1.png" class="img-fluid" alt="Responsive image">
-                    <p>Вам следует заполнить форму для регистрации и продолжить оформлять заказа</p>
-                    <img src="/images/documentation/reg2.png" class="img-fluid" alt="Responsive image">
+                    <p>Для оформления заказа вам следует выбрать количество блюд и нажать "Добавить в корзину".</p>
+                    <p>Если блюдо добавилось в корзину , то вы увидете счётчик в правом верхнем углу и кнопка изменится</p>
+                    <img src="/images/documentation/newOrder1.png" class="img-fluid" alt="Responsive image">
                 </section>
                 <br/>
                 <br/>
@@ -169,33 +161,22 @@
                 <!-- Item 2.2 -->
                 <section id="item_2_2">
                     <h2 class="h2">2.2.Корзина</h2>
-                    <p>Чтобы просмотреть заказ , который мы добавили в корзину </p>
-                    <img src="/images/documentation/order2.png" class="img-fluid" alt="Responsive image">
+                    <p>Чтобы просмотреть заказ , который мы добавили в корзину нажмите на картинку в виде корзины </p>
+                    <img src="/images/documentation/newOrder2.png" class="img-fluid" alt="Responsive image">
                     <p>Наша корзина:</p>
-                    <img src="/images/documentation/order3.png" class="img-fluid" alt="Responsive image">
+                    <img src="/images/documentation/order.png" class="img-fluid" alt="Responsive image">
                 </section>
                 <br/>
                 <br/>
                 <hr class="divider">
 
                 <section id="item_2_3">
-                    <h2 class="h2">2.3.Удаление блюда из корзины</h2>
-                    <p>Для этого нам понадобится нажать на кнопку "Удалить блюдо"</p>
-                    <img src="/images/documentation/order4.png" class="img-fluid" alt="Responsive image">
-                    <p>Результат:</p>
-                    <img src="/images/documentation/order5.png" class="img-fluid" alt="Responsive image">
-                </section>
-                <br/>
-                <br/>
-                <hr class="divider">
-
-                <section id="item_2_4">
-                    <h2 class="h2">2.4.Просмотр истории заказов</h2>
-                    <p>В корзине нажмите на кнопку : история заказов"</p>
-                    <img src="/images/documentation/order_history1.png" class="img-fluid" alt="Responsive image">
-                    <p>Здесь вы увидите номер вашего заказа и его статус.Для просмотра подробной информации нажмите на
-                        него</p>
-                    <img src="/images/documentation/order_history.png" class="img-fluid" alt="Responsive image">
+                    <h2 class="h2">2.3.Просмотр истории заказов</h2>
+                    <p>Для просмотра истории заказов надо перейти на страницу профиля  и нажать на кнопку "История заказов"</p>
+                    <img src="/images/documentation/orderHistory.png" class="img-fluid" alt="Responsive image">
+                    <p>Здесь можно посмотреть время , номер и статус заказа. Оформляется - блюда лежат корзине , но вы еще не подтвердили заказ
+                    Подтверждён - оформлен и подтверждён админом.Ждёт подтверждения - вы заказли , но админ еще не подтвердил</p>
+                    <img src="/images/documentation/orderHistory2.png" class="img-fluid" alt="Responsive image">
                 </section>
                 <br/>
                 <br/>
@@ -205,7 +186,6 @@
                 <section id="item_3_1">
                     <h2 class="h2">3.1.Профиль</h2>
                     <p>Для просмотра профиля нам понадобится нажать клавишу "Профиль" в правом верхнем углу </p>
-                    <img src="/images/documentation/profile.png" class="img-fluid" alt="Responsive image">
                     <img src="/images/documentation/profile1.png" class="img-fluid" alt="Responsive image">
                 </section>
                 <br/>
@@ -213,9 +193,8 @@
                 <hr class="divider">
                 <section id="item_3_2">
                     <h2 class="h2">3.2.Редактирование профиля</h2>
-                    <p>Для этого нужно нажать кнопку "Редактировать" в вашем профиле</p>
-                    <img src="/images/documentation/profile_red.png" class="img-fluid" alt="Responsive image">
-                    <img src="/images/documentation/profile_red2.png" class="img-fluid" alt="Responsive image">
+                    <p>Для этого нужно нажать кнопку "Редактировать" в вашем профиле.И вы окажитесь на данной странице</p>
+                    <img src="/images/documentation/profile2.png" class="img-fluid" alt="Responsive image">
                 </section>
 
                 <br/>
@@ -228,7 +207,7 @@
                 </section>
                 <br class="br"/>
                 <section id="item_4_1">
-                    <h2 class="h2">4.1.Версия 1.0(17.11.2021) </h2>
+                    <h2 class="h2">4.1.Версия 2.0(04.12.2021) </h2>
                 </section>
                 <br/>
                 <br/>
