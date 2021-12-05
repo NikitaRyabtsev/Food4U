@@ -1,15 +1,29 @@
 package by.htp.netcracker.foodfactory.Dto;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class OrderDishDto {
 
     private int countOfDishes;
+    private BigDecimal price;
     private Integer dish;
 
 
     public OrderDishDto(){
 
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setDish(Integer dish) {
+        this.dish = dish;
     }
 
     public int getCountOfDishes() {

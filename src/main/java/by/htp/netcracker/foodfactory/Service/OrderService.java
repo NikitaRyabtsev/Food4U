@@ -30,6 +30,7 @@ public class OrderService {
     private final OrdersRepository ordersRepository;
     private final OrderDishesRepository orderDishesRepository;
     private final DishRepository dishRepository;
+    private  BigDecimal counter = null;
 
     public OrderService(UserRepository userRepository, OrdersRepository ordersRepository,
                         OrderDishesRepository userDishesRepository, DishRepository dishRepository) {
@@ -41,7 +42,7 @@ public class OrderService {
 
     public List<Orders> findOrdersByUser(String username) {
         User user = userRepository.getUserByUsername(username);
-        List<Orders> orders = ordersRepository.findAllByUser(user,Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
+        List<Orders> orders = ordersRepository.findAllByUser(user, Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
         return orders;
     }
 
@@ -49,66 +50,86 @@ public class OrderService {
         User user = userRepository.getUserByUsername(username);
         Orders checkOrders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
         if (checkOrders != null) {
-            OrderDish orderDish = orderDishesRepository.findByOrderAndDish(checkOrders, dishRepository.getById(orderDishDto.getDish()));
-            if (orderDish != null) {
-                orderDish.setCountOfDishes(orderDish.getCountOfDishes() + orderDishDto.getCountOfDishes());
-                orderDishesRepository.save(orderDish);
-            }else{
-                orderDish = new OrderDish();
-                orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
-                orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
-                orderDish.setOrder(findActiveOrder(user.getUsername()));
-                orderDishesRepository.save(orderDish);
-            }
-        }else{
-            Orders orders = new Orders();
-            orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
-            orders.setUser(user);
-            orders.setStatus(OrderStatus.CONSIDERED.toString());
+            counter = counter.add(orderDishDto.getPrice().multiply(BigDecimal.valueOf(orderDishDto.getCountOfDishes())));
+            checkOrders.setPrice(counter);
+            Dish dish =  dishRepository.getById(orderDishDto.getDish());
+            OrderDish orderDish = orderDishesRepository.findByOrderAndDish(checkOrders, dish);
+            initAndCheckOrderDish(orderDish,orderDishDto,user);
+        } else {
+            Orders order = initOrder(user,orderDishDto);
             OrderDish orderDish = new OrderDish();
             orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
             orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
-            orderDish.setOrder(orders);
+            orderDish.setOrder(order);
             orderDishesRepository.save(orderDish);
-            ordersRepository.save(orders);
+            ordersRepository.save(order);
         }
     }
 
-        public Orders findActiveOrder (String username){
-            User user = userRepository.getUserByUsername(username);
-            Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-            return orders;
-        }
-
-        public void saveActiveOrder (String username, OrderDishDto orderDishDto){
-            User user = userRepository.getUserByUsername(username);
-            double counter = 0;
-            if (user != null) {
-                Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
-                List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(orders);
-                for (int i = 0; i < orderDishes.size(); i++) {
-                    orderDishes.get(i).setCountOfDishes(orderDishDto.getCountOfDishes());
-                    int countOfDishes = orderDishes.get(i).getCountOfDishes();
-                    double price = orderDishes.get(i).getDish().getPrice().doubleValue();
-                    counter += countOfDishes*price;
-                }
-                if (orders != null) {
-                    orders.setPrice(BigDecimal.valueOf(counter));
-                    orders.setDateTimeOfBooking(LocalDateTime.now());
-                    orders.setStatus(OrderStatus.FORMALIZED.toString());
-                    ordersRepository.save(orders);
-                }
-            }
-        }
-
-        public void confirmOrder (Integer id){
-            Orders orders = ordersRepository.findOrdersById(id);
-            orders.setStatus(OrderStatus.DONE.toString());
-            ordersRepository.save(orders);
-        }
+    public Orders findActiveOrder(String username) {
+        User user = userRepository.getUserByUsername(username);
+        Orders orders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+        return orders;
+    }
 
 
-        public List<Orders> showOrdersOrderByDateAndTime(){
-            return ordersRepository.findAll(Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
+    public void saveActiveOrder(Orders order, String username) {
+        User user = userRepository.getUserByUsername(username);
+        order = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
+        order.setDateTimeOfBooking(LocalDateTime.now());
+        order.setStatus(OrderStatus.FORMALIZED.toString());
+        ordersRepository.save(order);
+    }
+
+    public void deleteDishFromOrder(Integer id, String username) {
+        Orders checkOrder = findActiveOrder(username);
+        OrderDish orderDish = orderDishesRepository.findOrderDishByDishIdAndOrderId(id,checkOrder.getId());
+        counter = checkOrder.getPrice();
+        counter = counter.subtract(orderDish.getDish().getPrice().multiply(BigDecimal.valueOf(orderDish.getCountOfDishes())));
+        checkOrder.setPrice(counter);
+        orderDishesRepository.deleteByDishId(id);
+        ordersRepository.save(checkOrder);
+        deleteEmptyOrder(checkOrder);
+    }
+
+    public void confirmOrderByAdmin(Integer id) {
+        Orders orders = ordersRepository.findOrdersById(id);
+        orders.setStatus(OrderStatus.DONE.toString());
+        ordersRepository.save(orders);
+    }
+
+    public List<Orders> showOrdersOrderByDateAndTime() {
+        return ordersRepository.findAll(Sort.by(Sort.Direction.DESC, "dateTimeOfBooking"));
+    }
+
+    private void deleteEmptyOrder(Orders checkOrder) {
+        List<OrderDish> orderDishes = orderDishesRepository.findAllByOrder(checkOrder);
+        if(orderDishes == null || orderDishes.isEmpty()) {
+            ordersRepository.deleteOrdersById(checkOrder.getId());
         }
     }
+
+    private Orders initOrder(User user, OrderDishDto orderDishDto){
+        Orders orders = new Orders();
+        orders.setNumberOfBooking(MathRandom.generateNumberOfBooking());
+        orders.setUser(user);
+        counter = orderDishDto.getPrice().multiply(BigDecimal.valueOf(orderDishDto.getCountOfDishes()));
+        orders.setPrice(counter);
+        orders.setStatus(OrderStatus.CONSIDERED.toString());
+        return orders;
+    }
+
+    private OrderDish initAndCheckOrderDish(OrderDish orderDish ,OrderDishDto orderDishDto , User user){
+        if (orderDish != null) {
+            orderDish.setCountOfDishes(orderDish.getCountOfDishes() + orderDishDto.getCountOfDishes());
+            orderDishesRepository.save(orderDish);
+        } else {
+            orderDish = new OrderDish();
+            orderDish.setDish(dishRepository.getById(orderDishDto.getDish()));
+            orderDish.setCountOfDishes(orderDishDto.getCountOfDishes());
+            orderDish.setOrder(findActiveOrder(user.getUsername()));
+            orderDishesRepository.save(orderDish);
+        }
+        return orderDish;
+    }
+}

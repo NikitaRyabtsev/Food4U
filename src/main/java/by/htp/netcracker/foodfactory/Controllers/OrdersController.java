@@ -1,7 +1,5 @@
 package by.htp.netcracker.foodfactory.Controllers;
 
-import by.htp.netcracker.foodfactory.Helper.MathRandom;
-import by.htp.netcracker.foodfactory.Model.OrderDish;
 import by.htp.netcracker.foodfactory.Model.Orders;
 import by.htp.netcracker.foodfactory.Reposotories.DishRepository;
 import by.htp.netcracker.foodfactory.Reposotories.IngredientRepository;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,7 +48,7 @@ public class OrdersController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/{id}/confirmOrder")
     public String confirmOrder(@PathVariable("id") Integer id) {
-        orderService.confirmOrder(id);
+        orderService.confirmOrderByAdmin(id);
         return "redirect:/order/orders";
     }
 
@@ -80,10 +77,18 @@ public class OrdersController {
         return "/order/order";
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PostMapping("/userOrder")
+    public String saveActiveOrder(@ModelAttribute("order")Orders order , Principal principal){
+        orderService.saveActiveOrder(order , principal.getName());
+        return "redirect:/order/newOrder";
+    }
+
+
     @Transactional
     @PostMapping("/{id}/delete")
-    public String deleteDishFromUserDish(@PathVariable("id") Integer id) {
-        orderDishesRepository.deleteByDishId(id);
+    public String deleteDishFromOrder(@PathVariable("id") Integer id , Principal principal) {
+        orderService.deleteDishFromOrder(id , principal.getName());
         return "redirect:/order/userOrder";
     }
 

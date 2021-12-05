@@ -43,7 +43,7 @@
                     <input type="text" placeholder="Фамилия" id="secondName" th:field="*{surname}" required>
 
                     <label for="sex"><b>Пол</b></label>
-                    <select th:field="*{sex}" id="sex" class="ыу">
+                    <select th:field="*{sex}" id="sex" class="select-css">
                         <option th:each="user : ${T(by.htp.netcracker.foodfactory.Helper.Sex).values()}"
                                 th:value="${user}" th:text="${user.displayValue}"></option>
                     </select>

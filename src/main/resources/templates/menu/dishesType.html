@@ -25,7 +25,7 @@
             <p class="product__name" th:text="${dish.name}"></p>
             <div class="product__info">
                 <p class="product__text">Стоимость:</p>
-                <p class="product__price" th:text="${dish.price}"></p>
+                <p class="product__price" th:text="${dish.price + ' бел.р.'}"></p>
                 <!--                    th:each="orderDish, rowStat : *{orderDishes}"-->
             </div>
             <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">

@@ -19,7 +19,6 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<form class="product__form" th:action="@{/order/userOrder}" th:method="POST" th:object="${order}">
 <section class="products">
     <div class="products__body">
         <div class="product" th:each="orderDish:${order.getOrderDishes()}">
@@ -32,32 +31,26 @@
                     <p class="product__text">Стоимость:</p>
                     <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
                     </br>
-                    <input type="number" class="product__countOfDishes" th:value="${orderDish.countOfDishes}"
-                            id="countOfDishes" name="countOfDishes"
-                           value="1" min="1">
+<!--                    <input type="number" class="product__countOfDishes" th:value="${orderDish.countOfDishes}"-->
+<!--                            id="countOfDishes" name="countOfDishes"-->
+<!--                            min="0" >-->
+                    <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">
+                        <input type="submit" class="product__delete" value="Удалить">
+                    </form>
                 </div>
-<!--                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">-->
-                    <input type="submit" class="product__delete" value="Удалить">
-<!--                </form>-->
             </div>
         </div>
     </div>
 </section>
-    <input type="hidden" th:value="${order.dateTimeOfBooking}"
-           th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"
-           name="dateTimeOfBooking" id="dateTimeOfBooking">
-    <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
-        <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).FORMALIZED}"
-                th:value="${status}"></option>
-    </select>
+<form class="product__form" th:action="@{/order/userOrder}" th:method="POST" th:object="${order}">
     <p th:text="${order.price}" th:value="${order.price}"></p>
-    <input type="submit" onclick="cleanLocalStorage();redirectToNewOrder()" on class="product__btn" value="Оформить заказ">
+    <input type="submit" onclick="cleanLocalStorage()" class="product__btn" value="Оформить заказ">
 </form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
-<script src="/js/redirectToNewOrder.js"></script>
-<script src="/js/order.js"></script>
+<!--<script src="/js/redirectToNewOrder.js"></script>-->
+<!--<script src="/js/order.js"></script>-->
 <script src="/js/counterDishes.js"></script>
 </body>
 </html>
