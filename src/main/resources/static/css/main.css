@@ -1,0 +1,10 @@
+.main__h1{
+    color: white;
+    font: bold 24px/45px Helvetica, Sans-Serif;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    font-size: 250%;
+
+}

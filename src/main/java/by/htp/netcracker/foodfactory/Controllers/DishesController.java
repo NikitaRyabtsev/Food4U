@@ -53,7 +53,6 @@ public class DishesController {
         return "menu/dishes";
     }
 
-
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/newDish")
     public String createDishWithIngredients(Model model) {
