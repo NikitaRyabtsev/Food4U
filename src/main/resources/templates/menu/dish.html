@@ -55,20 +55,21 @@
                             <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}"
                                    th:value="${order.id}"
                                    id="order" name="order">
-                            <input class="product__submit dish__btn" name="submit" type="submit"
-                                   value="Добавить в корзину">
+                            <button class="product__submit dish__btn" name="submit" onclick="onClick();clickChange()" type="submit">
+                                <span>Добавить в корзину</span>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
+            <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
+                <input sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn" style="width: 100%" type="submit"  value="Удалить блюдо">
+            </form>
         </div>
-        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">
-            <button sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn"  style="width: 20%" type="button">Редактировать</button>
-        </a>
+<!--        <a th:href="@{/menu/{id}/edit(id = ${dishes.getId()})}">-->
+<!--            <button sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn"  style="width: 20%" type="button">Редактировать</button>-->
+<!--        </a>-->
         <br/>
-        <form th:method="POST" th:action="@{/menu/{id}/delete(id = ${dishes.getId()})} ">
-            <input sec:authorize="hasAnyRole('ROLE_ADMIN')" class="dish__btn" style="width: 20%" type="submit" value="Удалить блюдо">
-        </form>
     </div>
 </section>
 </div>
@@ -77,5 +78,7 @@
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
 <script src="/js/newOrder.js"></script>
+<script src="/js/counterDishes.js"></script>
+<script src="/js/clickChange.js"></script>
 </body>
 </html>

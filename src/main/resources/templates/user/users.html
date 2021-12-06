@@ -23,7 +23,6 @@
 </nav>
 <main role="main">
     <article>
-        <div>
             <hr>
             <table class="table">
                 <tr>
@@ -39,12 +38,14 @@
                         <td th:text="${user.surname}"></td>
                         <td th:text="${user.email}"></td>
                         <td th:text="${user.username}">/td>
-                        <td th:text="${user.sex}"></td>
+                        <td>
+                            <p th:if="${user.sex == 'MALE'}">Мужской</p>
+                            <p th:if="${user.sex == 'FEMALE'}">Женский</p>
+                        </td>
                     </tr>
                 </div>
             </table>
             <hr>
-        </div>
     </article>
 </main>
 <footer>

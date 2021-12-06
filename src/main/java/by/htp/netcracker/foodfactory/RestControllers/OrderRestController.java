@@ -48,12 +48,12 @@ public class OrderRestController {
         orderService.saveOrderWithOrderDish(orderDishDto,principal.getName());
     }
 
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @ResponseBody
-    @RequestMapping(value = "/updateOrder" , method = RequestMethod.POST , produces ="application/json" )
-    public void updateDishInOrder(@RequestBody OrderDishDto orderDishDto , Principal principal){
-        orderService.saveActiveOrder(principal.getName(),orderDishDto);
-    }
+//    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+//    @ResponseBody
+//    @RequestMapping(value = "/updateOrder" , method = RequestMethod.POST , produces ="application/json" )
+//    public void updateDishInOrder(@RequestBody OrderDishDto orderDishDto , Principal principal){
+//        orderService.saveActiveOrder(principal.getName(),orderDishDto);
+//    }
 
     @GetMapping("/newOrder")
     public List<OrderDish> addOrdersDish(){

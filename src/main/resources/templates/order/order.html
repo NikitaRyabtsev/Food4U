@@ -19,44 +19,36 @@
 <nav>
     <div th:insert="/viewhtml/nav :: nav"></div>
 </nav>
-<form class="product__form" th:action="@{/order/userOrder}" th:method="POST" th:object="${order}">
 <section class="products">
     <div class="products__body">
-        <div class="product" th:each="orderDish:${order.getOrderDishes()}">
-            <div th:each="dish:${orderDish.getDish()}">
-                <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
-                    <img class="product__img" th:src="${dish.src}">
-                </a>
-                <p class="product__name" th:text="${dish.name}"></p>
-                <div class="product__info">
-                    <p class="product__text">Стоимость:</p>
-                    <p class="product__price" th:text="${dish.price + ' бел.р'}"></p>
-                    </br>
-                    <input type="number" class="product__countOfDishes" th:value="${orderDish.countOfDishes}"
-                           th:text="${orderDish.countOfDishes}" id="countOfDishes" name="countOfDishes"
-                           value="1" min="1">
-                </div>
-<!--                <form th:method="POST" th:action="@{/order/{id}/delete(id = ${dish.getId()})} ">-->
-                    <input type="submit" class="product__delete" value="Удалить">
-<!--                </form>-->
+        <div class="product" th:each="dish:${dishes}">
+            <a class="product__link" th:href="@{/menu/{id}/dish(id=${dish.getId()})}">
+                <img class="product__img" th:src="${dish.src}" th:value="${dish.id}"></a>
+            <p class="product__name" th:text="${dish.name}"></p>
+            <div class="product__info">
+                <p class="product__text">Стоимость:</p>
+                <p class="product__price" th:value="${dish.price}" th:text="${dish.price} + ' бел.р.'"></p>
+                <!--                    th:each="orderDish, rowStat : *{orderDishes}"-->
             </div>
+            <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
+                <input type="hidden" class="product__price" th:value="${dish.price}">
+                <input type="number" class="product__countOfDishes quantity-num btn-secondary" id="countOfDishes"
+                       name="countOfDishes"
+                       value="1" min="1" max="10">
+                <input type="hidden" class="product__id" th:value="${dish.id}" hidden>
+                <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
+                       id="order" name="order">
+                <button class="product__submit product__btn" name="submit" onclick="onClick();clickChange()" id="clickButton"
+                        type="submit"><span>Добавить в корзину</span>
+                </button>
+            </form>
         </div>
     </div>
 </section>
-    <input type="hidden" th:value="${order.dateTimeOfBooking}"
-           th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"
-           name="dateTimeOfBooking" id="dateTimeOfBooking">
-    <select th:field="*{status}" name="type" id="type" class="select" style="display: none">
-        <option th:each="status : ${T(by.htp.netcracker.foodfactory.Helper.OrderStatus).FORMALIZED}"
-                th:value="${status}"></option>
-    </select>
-    <input type="submit" onclick="redirectToNewOrder();cleanLocalStorage()" on class="product__btn" value="Оформить заказ">
-</form>
 <footer>
     <div th:insert="/viewhtml/footer :: footer"></div>
 </footer>
-<script src="/js/redirectToNewOrder.js"></script>
-<script src="/js/order.js"></script>
+<!--<script src="/js/order.js"></script>-->
 <script src="/js/counterDishes.js"></script>
 </body>
 </html>

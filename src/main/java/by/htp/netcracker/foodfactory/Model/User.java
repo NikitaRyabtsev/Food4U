@@ -1,5 +1,6 @@
 package by.htp.netcracker.foodfactory.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class User {
     private String sex;
     @Column
     private String block;
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user" , cascade = CascadeType.ALL)
     private List<Orders> orders;
 
 

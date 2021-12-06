@@ -36,4 +36,9 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
     Orders findOrdersByUserAndStatus(User user, String status);
 
     Orders findOrdersById(Integer id);
+
+    @Modifying
+    @Query(value = "DELETE FROM Orders WHERE id=:id" , nativeQuery = true)
+    void deleteOrdersById(Integer id);
+
 }
