@@ -34,14 +34,18 @@
             </div>
             <form class="product__form" th:action="@{~/order/newOrder}" th:method="POST" th:object="${order}">
                 <input type="hidden" class="product__price" th:value="${dish.price}">
-                <input type="number" class="product__countOfDishes quantity-num btn-secondary" id="countOfDishes"
-                       name="countOfDishes"
-                       value="1" min="1" max="10">
-                <input type="hidden" class="product__id" th:value="${dish.id}" hidden>
+                <div class="number">
+                    <button class="number-minus" type="button" onclick="this.nextElementSibling.stepDown();">-</button>
+                    <input type="number" class="product__countOfDishes quantity-num btn-secondary" id="countOfDishes"
+                           name="countOfDishes"
+                           value="1" min="1" max="10" readonly>
+                    <button class="number-plus" type="button" onclick="this.previousElementSibling.stepUp();">+</button>
+                </div>
+                <input type="text" class="product__id" th:value="${dish.id}" >
                 <input type="hidden" class="order__id" th:field="*{orderDishes[0].order}" th:value="${order.id}"
                        id="order" name="order">
-                <button class="product__submit product__btn" name="submit" onclick="onClick();clickChange()" id="clickButton"
-                        type="submit"><span>Добавить в корзину</span>
+                <button class="product__submit product__btn" name="submit" id="clickButton"
+                        type="submit">Добавить в корзину
                 </button>
             </form>
         </div>
@@ -52,7 +56,6 @@
 </footer>
 <script src="/js/newOrder.js"></script>
 <script src="/js/counterDishes.js"></script>
-<script src="/js/clickChange.js"></script>
 </body>
 
 </html>

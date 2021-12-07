@@ -59,6 +59,9 @@ public class Orders implements Serializable {
         this.user = user;
     }
 
+    public Orders(int i, String wer, int i1) {
+    }
+
     public List<OrderDish> getOrderDishes() {
         return orderDishes;
     }

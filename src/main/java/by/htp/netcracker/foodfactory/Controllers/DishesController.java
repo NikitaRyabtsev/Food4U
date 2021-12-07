@@ -45,7 +45,6 @@ public class DishesController {
         this.orderService = orderService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/dishes")
     public String showDishesWithIngredients(Model model) {
         model.addAttribute("dishes", dishRepository.findAll());

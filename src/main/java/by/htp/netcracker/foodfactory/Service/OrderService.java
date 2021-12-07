@@ -50,6 +50,7 @@ public class OrderService {
         User user = userRepository.getUserByUsername(username);
         Orders checkOrders = ordersRepository.findOrdersByUserAndStatus(user, OrderStatus.CONSIDERED.toString());
         if (checkOrders != null) {
+            counter = checkOrders.getPrice();
             counter = counter.add(orderDishDto.getPrice().multiply(BigDecimal.valueOf(orderDishDto.getCountOfDishes())));
             checkOrders.setPrice(counter);
             Dish dish =  dishRepository.getById(orderDishDto.getDish());
